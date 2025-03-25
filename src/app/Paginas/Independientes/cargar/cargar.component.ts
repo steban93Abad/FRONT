@@ -2355,9 +2355,13 @@ descargarArchivoExcelTrabajo() {
     const resultado: any = {};
     if (this.itemFiles.value === '1') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 4, 7, 8].includes(indiceInf)) {
+        if ([1, 4, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 5, 10, 11, 12, 13].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -2402,12 +2406,16 @@ descargarArchivoExcelTrabajo() {
           }
         if (
           [
-            1, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 19, 22, 23, 25, 29, 30,
+            5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 19, 22, 23, 25, 29, 30,
             31, 32, 33, 34, 35, 36, 38,
           ].includes(indiceInf)
         ) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([1].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 4, 18, 21, 24, 26, 27, 28, 37, 39].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -2445,9 +2453,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '3') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 2].includes(indiceInf)) {
+        if ([2].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([1].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -2485,9 +2497,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '4') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 4, 5].includes(indiceInf)) {
+        if ([1, 4, 5].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([3, 4, 6, 7, 8, 9].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -2525,9 +2541,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '5') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 3, 6, 7, 8].includes(indiceInf)) {
+        if ([1, 3, 6, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 4, 5, 9].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -2561,9 +2581,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '6') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 5, 6, 7].includes(indiceInf)) {
+        if ([5, 6, 7].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 4].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -2602,9 +2626,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '7') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 4, 7].includes(indiceInf)) {
+        if ([1, 4, 7].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 6].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3376,9 +3404,13 @@ descargarArchivoExcelTrabajo() {
     const resultado: any = {};
     if (this.itemFiles.value === '1') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 4, 7, 8].includes(indiceInf)) {
+        if ([1, 4, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 5, 10, 11, 12, 13].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3404,12 +3436,16 @@ descargarArchivoExcelTrabajo() {
             resultado[indiceInf] = esCodigo;
           }
         if (
-          [1, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 19, 22, 23, 25, 29, 30,
+          [5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 19, 22, 23, 25, 29, 30,
             31, 32, 33, 34, 35, 36, 38,
           ].includes(indiceInf)
         ) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([1].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 4, 18, 21, 24, 26, 27, 28, 37, 39].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3429,9 +3465,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '3') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 2].includes(indiceInf)) {
+        if ([2].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([1].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3451,9 +3491,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '4') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 4, 5].includes(indiceInf)) {
+        if ([1, 4, 5].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([3, 4, 6, 7, 8, 9].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3473,9 +3517,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '5') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 3, 6, 7, 8].includes(indiceInf)) {
+        if ([1, 3, 6, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 4, 5, 9].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3491,9 +3539,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '6') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0,5, 6, 7].includes(indiceInf)) {
+        if ([5, 6, 7].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 4].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3513,9 +3565,13 @@ descargarArchivoExcelTrabajo() {
     }
     if (this.itemFiles.value === '7') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1, 4, 7].includes(indiceInf)) {
+        if ([1, 4, 7].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esIdentificacion = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esIdentificacion;
         }
         if ([2, 3, 6].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3906,21 +3962,22 @@ descargarArchivoExcelTrabajo() {
     //const expresionRegular = /^[A-Za-z0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=]*$/u;
     return expresionRegular.test(textoLimpio);
   }
-contieneSoloDireccion(valor: string | null): boolean {
-  if (valor === 'NULL' || valor === 'null' || valor === null || valor === '') {
-    return true; // Permite valores vacíos o nulos
-  }
-
-  const textoLimpio = valor
-    ?.replace(/[\u200E\u200F\u202A-\u202E]/g, '') // Elimina caracteres invisibles Unicode
-    .replace(/\s+/g, ' ') // Reemplaza múltiples espacios por uno
-    .trim(); // Elimina espacios iniciales y finales
-
-  const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%"'¨\/º×\n\r?&=–$´' \[\]+]+$/u;
-
-  return expresionRegular.test(textoLimpio);
   
-}
+  contieneSoloDireccion(valor: string | null): boolean {
+    if (valor === 'NULL' || valor === 'null' || valor === null || valor === '') {
+      return true; // Permite valores vacíos o nulos
+    }
+
+    const textoLimpio = valor
+      ?.replace(/[\u200E\u200F\u202A-\u202E]/g, '') // Elimina caracteres invisibles Unicode
+      .replace(/\s+/g, ' ') // Reemplaza múltiples espacios por uno
+      .trim(); // Elimina espacios iniciales y finales
+
+    const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%"'¨\/º×\n\r?&=–$´' \[\]+]+$/u;
+
+    return expresionRegular.test(textoLimpio);
+    
+  }
 
 
   contieneSoloNumeros(valor: string | null): boolean {
@@ -3935,6 +3992,18 @@ contieneSoloDireccion(valor: string | null): boolean {
     }
     const expresionRegular = /^(?:[0-9]+([.,][0-9]+)?)?$|^VACIO$|^ $|^$/;
     //const expresionRegular = /^(?:[0-9]+(\.,[0-9]+)?)?$|^VACIO$|^ $|^$/;
+    return expresionRegular.test(valor);
+  }
+  contieneSoloIdentificacion(valor: string | null): boolean {
+    if (!valor || valor.toUpperCase() === "NULL" || valor.trim() === "VACIO") {
+      console.log("entroVacio" + " " + valor);
+      return true;
+    }
+  
+    // Expresión regular para aceptar los formatos requeridos
+    valor = valor.trim();
+    const expresionRegular = /^(?:\d{10}|\d{13}|[A-Z]\d{9})$/;
+  
     return expresionRegular.test(valor);
   }
   contieneSoloCodigo(valor:string|null):boolean
@@ -3977,7 +4046,8 @@ contieneSoloDireccion(valor: string | null): boolean {
       return true;
     }
     const v= valor.trim()
-    const expresionRegular = /^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|VACIO)?$/;
+    // const expresionRegular = /^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}|VACIO)?$/;
+    const expresionRegular = /^(?:[a-zA-ZñÑ0-9._%+-]+@[a-zA-ZñÑ0-9.-]+\.[a-zA-ZñÑ]{2,}|VACIO)?$/;
     return expresionRegular.test(v);
   }
   contieneSoloHora(valor: string | null): boolean {
@@ -4050,8 +4120,11 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
   aplicarValidacionElemento(valor: string, posicion: number): boolean {
     let res: boolean = false;
     if (this.itemFiles.value === '1') {
-      if ([0, 1, 4, 7, 8].includes(posicion)) {
+      if ([1, 4, 7, 8].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([2, 3, 5, 10, 11, 12, 13].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -4067,11 +4140,14 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
           res = this.contieneSoloCodigo(valor);
         }
       if (
-        [1, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 19, 22, 23, 25, 29, 30,
+        [5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 19, 22, 23, 25, 29, 30,
           31, 32, 33, 34, 35, 36, 38,
         ].includes(posicion)
       ) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([1].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([2, 3, 4, 18, 21, 24, 26, 27, 28, 37, 39].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -4081,8 +4157,11 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //CXC
     if (this.itemFiles.value === '3') {
-      if ([0, 2].includes(posicion)) {
+      if ([2].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([1].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -4092,8 +4171,11 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //Correo
     if (this.itemFiles.value === '4') {
-      if ([0, 1, 4, 5].includes(posicion)) {
+      if ([1, 4, 5].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([ 3, 4, 6, 7, 8, 9].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -4103,16 +4185,22 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //Direccion
     if (this.itemFiles.value === '5') {
-      if ([0, 1, 3, 6, 7, 8].includes(posicion)) {
+      if ([1, 3, 6, 7, 8].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([2, 4, 5, 9].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
       }
     } //garante
     if (this.itemFiles.value === '6') {
-      if ([0,5, 6, 7].includes(posicion)) {
+      if ([5, 6, 7].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([2, 3, 4].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -4123,8 +4211,11 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       //contieneSoloCelularesCorreo
     } //telefono
     if (this.itemFiles.value === '7') {
-      if ([0, 1, 4, 7].includes(posicion)) {
+      if ([1, 4, 7].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([2, 3, 6].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -10333,8 +10424,8 @@ guardarMasiva()
       for (const rowf of this.data) {
         let ocD: any = {
           id_cxc_operacion: 0,
-          ope_cod_credito: rowf[0],
-          cli_identificacion: rowf[1],
+          ope_cod_credito: rowf[0].toString(),
+          cli_identificacion: rowf[1].toString(),
           ope_descripcion: (rowf[2] === '' || rowf[2] === 'VACIO'||rowf[2] === 'vacio'||rowf[2] === ' ') ? null : rowf[2].toUpperCase(),
           ope_linea: (rowf[3] === '' || rowf[3] === 'VACIO'||rowf[3] === 'vacio'||rowf[3] === ' ') ? null : rowf[3].toUpperCase(),
           ope_producto: (rowf[4] === '' || rowf[4] === 'VACIO'||rowf[4] === 'vacio'||rowf[4] === ' ') ? null : rowf[4].toUpperCase(),
@@ -10463,6 +10554,7 @@ guardarMasiva()
               }),
               catchError((error) => {
                 this.alerta.ErrorEnLaOperacion();
+                console.log(error);
                 throw new Error(error);
               })
             )
@@ -10473,7 +10565,7 @@ guardarMasiva()
     if (this.valorSelecEntidad === '3') {
       for (const rowf of this.data) {
         let ocD: any = {
-          cli_identificacion:rowf[0].toUpperCase(),
+          cli_identificacion:rowf[0].toString(),
           cor_descripcion:(rowf[1] === '' || rowf[1] === 'VACIO'||rowf[1] === 'vacio'||rowf[1] === ' ') ? null : rowf[1].toUpperCase(),
           cor_id_tipo_correo:rowf[2].toString(),
           cor_email:rowf[3]
@@ -10639,7 +10731,7 @@ guardarMasiva()
     if (this.valorSelecEntidad === '5') {
       for (const rowf of this.data) {
         let ocD: any = {
-          cli_identificacion:rowf[0],
+          cli_identificacion:rowf[0].toString(),
           gar_identificacion:rowf[1],
           gar_nombres:(rowf[2] === '' || rowf[2] === 'VACIO'||rowf[2] === 'vacio'||rowf[2] === ' ') ? null : rowf[2].toUpperCase(),
           gar_trabajo:(rowf[3] === '' || rowf[3] === 'VACIO'||rowf[3] === 'vacio'||rowf[3] === ' ') ? null : rowf[3].toString(),
@@ -10725,7 +10817,7 @@ guardarMasiva()
     if (this.valorSelecEntidad === '6') {
       for (const rowf of this.data) {
         let ocD: any = {
-          cli_identificacion:rowf[0],
+          cli_identificacion:rowf[0].toString(),
           tel_numero:rowf[1].toString(),
           tel_observacion:rowf[2]===' '?null:rowf[2].toUpperCase(),
           tel_operadora:rowf[3]===' '?null:rowf[3].toString(),
@@ -10808,7 +10900,7 @@ guardarMasiva()
     if (this.valorSelecEntidad === '7') {
       for (const rowf of this.data) {
         let ocD: any = {
-          cli_identificacion:rowf[0],
+          cli_identificacion:rowf[0].toString(),
           tra_ruc:rowf[1],
           tra_descripcion:rowf[2]===' '?null:rowf[2].toUpperCase(),
           tra_direccion:rowf[3]===' '?null:rowf[3].toUpperCase(),
@@ -12280,4 +12372,3 @@ guardarMasiva()
   }
   }
 }
-
