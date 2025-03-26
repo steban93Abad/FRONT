@@ -2676,22 +2676,23 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '7') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([1, 4, 7].includes(indiceInf)) {
+        if ([6,7].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
-        if ([0].includes(indiceInf)) {
+        if ([0,5].includes(indiceInf)) {
           const esIdentificacion = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esIdentificacion;
         }
-        if ([2, 3, 6].includes(indiceInf)) {
+        if ([1,2,3,4].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
           resultado[indiceInf] = esLetras;
         }
-        if ([5].includes(indiceInf)) {
-          const esLetras = this.contieneSoloCorreo(objeto);
-          resultado[indiceInf] = esLetras;
-        }
+        // if ([2].includes(indiceInf)) {
+        //   const esCorreo = this.contieneSoloCorreo(objeto);
+        //   resultado[indiceInf] = esCorreo;
+        // }
+        
       }
       let aux = this.todoCorrecto(resultado);
       if (aux === 'Correcto') {
@@ -3615,22 +3616,22 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '7') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([1, 4, 7].includes(indiceInf)) {
+        if ([6,7].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
-        if ([0].includes(indiceInf)) {
+        if ([0,5].includes(indiceInf)) {
           const esIdentificacion = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esIdentificacion;
         }
-        if ([2, 3, 6].includes(indiceInf)) {
+        if ([1,2,3,4].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
           resultado[indiceInf] = esLetras;
         }
-        if ([5].includes(indiceInf)) {
-          const esLetras = this.contieneSoloCorreo(objeto);
-          resultado[indiceInf] = esLetras;
-        }
+        // if ([2].includes(indiceInf)) {
+        //   const esLetras = this.contieneSoloCorreo(objeto);
+        //   resultado[indiceInf] = esLetras;
+        // }
       }
       let aux = this.todoCorrecto(resultado);
       if (aux === 'Correcto') {
@@ -4008,7 +4009,7 @@ async onLimpiar3() {
     //const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=]+$/u;
     //const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=–$]+$/u;
     //const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=–$´'+]+$/u;
-    const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=–$´'\[\]+]+$/u;
+    const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:"/\-$*()@_°#~¿¡!%\/º×\n\r?&=–$´'\[\]+]+$/u;
     //const expresionRegular = /^[A-Za-z0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=]*$/u;
     return expresionRegular.test(textoLimpio);
   }
@@ -4040,7 +4041,13 @@ async onLimpiar3() {
       console.log('entroVacio' + ' ' + valor);
       return true;
     }
-    const expresionRegular = /^(?:[0-9]+([.,][0-9]+)?)?$|^VACIO$|^ $|^$/;
+    const expresionRegular = /^(?:[0-9]+(?:[.,/\-][0-9]+)?(?: ?[,\-/]? ?[0-9]+(?:[.,/\-][0-9]+)?)*)?$|^VACIO$|^ $|^$/;
+    //const expresionRegular = /^(?:[0-9]+(?:[.,/\-][0-9]+)?(?: ?[,\-/]? ?[0-9]+(?:[.,/\-][0-9]+)?)*)?$|^VACIO$|^ $|^$/;
+    //const expresionRegular = /^(?:[0-9]+(?:[.,/\-][0-9]+)?(?: ?[,\-/]? ?[0-9]+(?:[.,/\-][0-9]+)?)*[,]?)?$|^VACIO$|^ $|^$/;
+    //const expresionRegular = /^(?:[0-9]+(?:[.,/][0-9]+)?(?: ?[,/]? ?[0-9]+(?:[.,/][0-9]+)?)*[,]?)?$|^VACIO$|^ $|^$/;2
+    //const expresionRegular = /^(?:[0-9]+(?:[.,/][0-9]+)?(?: ?, ?[0-9]+(?:[.,/-][0-9]+)?)*[,-/]?)?$|^VACIO$|^ $|^$/;1
+    //const expresionRegular = /^(?:[0-9]+([.,/][0-9]+)?[,-/]?)?$|^VACIO$|^ $|^$/;
+    //const expresionRegular = /^(?:[0-9]+([.,/][0-9]+)?)?$|^VACIO$|^ $|^$/;
     //const expresionRegular = /^(?:[0-9]+(\.,[0-9]+)?)?$|^VACIO$|^ $|^$/;
     return expresionRegular.test(valor);
   }
@@ -4051,10 +4058,10 @@ async onLimpiar3() {
     }
   
     // Expresión regular para aceptar los formatos requeridos
-    valor = valor.trim();
+    const v= valor.trim()
     const expresionRegular = /^(?:\d{10}|\d{13}|[A-Z]\d{9})$/;
   
-    return expresionRegular.test(valor);
+    return expresionRegular.test(v);
   }
   contieneSoloCodigo(valor:string|null):boolean
   {
@@ -4261,18 +4268,18 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       //contieneSoloCelularesCorreo
     } //telefono
     if (this.itemFiles.value === '7') {
-      if ([1, 4, 7].includes(posicion)) {
+      if ([6,7].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
       }
-      if ([0].includes(posicion)) {
+      if ([0,5].includes(posicion)) {
         res = this.contieneSoloIdentificacion(valor);
       }
-      if ([2, 3, 6].includes(posicion)) {
+      if ([1,2,3,4].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
       }
-      if ([5].includes(posicion)) {
-        res = this.contieneSoloCorreo(valor);
-      }
+      // if ([2].includes(posicion)) {
+      //   res = this.contieneSoloCorreo(valor);
+      // }
     } //trabajo
     if (this.itemFiles.value === '8') {
       if ([0].includes(posicion)) {
@@ -10951,12 +10958,12 @@ guardarMasiva()
       for (const rowf of this.data) {
         let ocD: any = {
           cli_identificacion:rowf[0].toString(),
-          tra_ruc:rowf[1],
-          tra_descripcion:rowf[2]===' '?null:rowf[2].toUpperCase(),
+          tra_ruc:rowf[5].toString(),
+          tra_descripcion:rowf[1]===' '?null:rowf[1].toUpperCase(),
           tra_direccion:rowf[3]===' '?null:rowf[3].toUpperCase(),
-          tra_telefono:rowf[4]===' '?null:rowf[4],
-          tra_correo:rowf[5]===' '?null:rowf[5].toString(),
-          tra_observacion:rowf[6]===' '?null:rowf[6].toUpperCase(),
+          tra_telefono:rowf[6]===' '?null:rowf[6].toString(),
+          tra_correo:rowf[2]===' '?null:rowf[2].toString(),
+          tra_observacion:rowf[4]===' '?null:rowf[4],
           tra_id_tipo_trabajo:rowf[7],
         };
         this.CargaMasivaPost.push(ocD);
