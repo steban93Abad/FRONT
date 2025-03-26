@@ -2194,6 +2194,34 @@ descargarArchivoExcelTrabajo() {
     this.filtroCartera.patchValue('');
     // Limpiar el FormControl
   }
+  /***Para limpiar el archivo cargado de la seccion Carga Masiva para cambiar hojas*/
+  clearFileCargaInput(input: HTMLInputElement) {
+    this.banderaGuardar=false;
+    // this.banderaCartera =false;
+    this.banderaMenajeError=false;
+    this.banderaBusqueda=false;
+    // input.value = '';
+    //window.location.reload();
+    // this.archivo = null;
+    this.ocultar = true;
+    // this.form.get('title')?.patchValue('');
+    // this.form.get('archivo')?.reset;
+    // this.form.patchValue({ archivo: this.archivo });
+    // this.itemFiles.patchValue('');
+    // this.itemFile.patchValue('');
+    // this.urlAbs = '';
+    // this.hojaFile.patchValue('');
+    this.countColumns.patchValue('');
+    this.countRows.patchValue('');
+    this.ListaErroresXRow = [];
+    this.filtroMensaje.patchValue('');
+    // this.indicesDeHojas = [];
+    // this.data = [];
+    this.esImagen = false;
+    this.esPdf = false;
+    this.filtroCartera.patchValue('');
+    // Limpiar el FormControl para cambiar fila en caso de que una hoja sea vacia.
+  }
   async onCleanSelect()
   {
     const miInput: HTMLInputElement = document.getElementById('SubirArchivos') as HTMLInputElement;
@@ -2261,6 +2289,14 @@ descargarArchivoExcelTrabajo() {
     // Llamando a clearFileInput
     this.clearFileInput(miInput);
 }
+async onLimpiar3() {
+  // Obtener la referencia al elemento input
+  const miInput: HTMLInputElement = document.getElementById(
+    'SubirArchivos'
+  ) as HTMLInputElement;
+  // Llamando a clearFileInput
+  this.clearFileCargaInput(miInput);
+}
   verificarSiContieneCartera():boolean
   {
     let valor:boolean=false;
@@ -2288,32 +2324,46 @@ descargarArchivoExcelTrabajo() {
           const sheetName = workbook.SheetNames[valorComoNumero];
           const sheet = workbook.Sheets[sheetName];
           const result: any[] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-          this.headers = result[0];
-          if (this.verificar(this.entidad) === true) {
-            this.dataBad = [];
-            this.dataGood = [];
-            this.ListaErroresXRow = [];
-            this.esCorrecto = true;
-            //console.log('Valido');
-            this.banderaFiltroCartera = this.verificarSiContieneCartera();
+
+          if (Array.isArray(result) && result.length > 0) {
+            this.headers = result[0];
             this.data = result.slice(1);
-            //console.log(this.headers);
-            this.data.forEach((elementos) => {
-              this.obtencionErroresRow(elementos);
-            });
-            let contadorVLetras: number = 0;
-            let contadorVNumericos: number = 0;
-            this.countColumns.patchValue(this.headers.length);
-            this.countRows.patchValue(this.data.length.toString());
+
+            // Proceed only if headers and data are valid
+            if (this.headers && this.data) {
+              if (this.verificar(this.entidad) === true) {
+                this.dataBad = [];
+                this.dataGood = [];
+                this.ListaErroresXRow = [];
+                this.esCorrecto = true;
+                this.banderaFiltroCartera = this.verificarSiContieneCartera();
+                this.data.forEach((elementos) => {
+                  this.obtencionErroresRow(elementos);
+                });
+                this.countColumns.patchValue(this.headers.length);
+                this.countRows.patchValue(this.data.length.toString());
+              } else {
+                this.alerta.ErrorEnLaPeticion('invalido');
+                this.headers = [];
+                this.data = [];
+                this.onLimpiar2();
+              }
+            } else {
+              this.alerta.ErrorEnLaPeticion('Los encabezados o datos no son válidos.');
+              this.data = [];
+              this.onLimpiar3();
+              //this.onCleanSelect();
+            }
           } else {
-            this.alerta.ErrorEnLaPeticion('invalido');
-            this.headers = [];
+            this.alerta.ErrorEnLaPeticion('La hoja está vacía o el resultado no es una matriz válida. Seleccione otra hoja.');
             this.data = [];
-            this.onLimpiar2();
+            this.onLimpiar3();
+            //this.onCleanSelect();
           }
+
         };
         this.ListarElementos(Number(this.itemFiles.value));
-        reader.readAsBinaryString(valorArchivo);
+        reader.readAsArrayBuffer(valorArchivo);
       }
     } else {
       this.alerta.ErrorEnLaPeticion('El control del archivo no está presente en el formulario.');
