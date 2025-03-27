@@ -3157,9 +3157,13 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '20') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1].includes(indiceInf)) {
+        if ([1].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esCedula = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esCedula;
         }
         if ([2].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3313,9 +3317,17 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '24') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0,1,3,4,5,7,10,11,12].includes(indiceInf)) {
+        if ([0,3,4,5,10,11,12].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([7].includes(indiceInf)) {
+          const esCodigo = this.contieneSoloCodigo(objeto);
+          resultado[indiceInf] = esCodigo;
+        }
+        if ([1].includes(indiceInf)) {
+          const esCedula = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esCedula;
         }
         if ([6,9,13,16].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3862,9 +3874,13 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '20') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0, 1].includes(indiceInf)) {
+        if ([1].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esCedula = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esCedula;
         }
         if ([2].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3946,9 +3962,17 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '24') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0,1,3,4,5,7,10,11,12].includes(indiceInf)) {
+        if ([0,3,4,5,10,11,12].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([7].includes(indiceInf)) {
+          const esCodigo = this.contieneSoloCodigo(objeto);
+          resultado[indiceInf] = esCodigo;
+        }
+        if ([1].includes(indiceInf)) {
+          const esCedula = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esCedula;
         }
         if ([6,9,13,16].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -4076,6 +4100,7 @@ async onLimpiar3() {
     }
     //const expresionRegular = /^(?:[0-9]+|[a-zA-Z]*[0-9]+)?$|^VACIO$|^ $|^$/;
     const expresionRegular = /^[a-zA-Z0-9]*$|^VACIO$|^ $|^$/;
+    const v= valor.trim()
     return expresionRegular.test(valor);
   }
   contieneSoloFecha(valor: string | null): boolean {
@@ -4381,8 +4406,11 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //gestor
     if (this.itemFiles.value === '20') {
-      if ([0, 1].includes(posicion)) {
+      if ([1].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([2].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -4422,8 +4450,14 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //Gestiones
     if (this.itemFiles.value === '24') {
-      if ([0,1,3,4,5,7,10,11,12].includes(posicion)) {
+      if ([0,3,4,5,10,11,12].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([7].includes(posicion)) {
+        res = this.contieneSoloCodigo(valor);
+      }
+      if ([1].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([6,9,13,16].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -11990,7 +12024,7 @@ guardarMasiva()
   if (this.valorSelecEntidad === '20') {
     for (const rowf of this.data) {
       let ocD: any = {
-        cli_identificacion: rowf[0],
+        cli_identificacion: rowf[0].toString(),
         id_gestor: rowf[1].toString(),
         id_cartera:this.filtroCartera.value,
         cgc_observacion: (rowf[2] === '' || rowf[2] === 'VACIO'||rowf[2] === 'vacio'||rowf[2] === ' ') ? null : rowf[2].toUpperCase(),
@@ -12338,7 +12372,7 @@ guardarMasiva()
       const minDaten = new Date(rowf[14]).toISOString().split('T')[0];
       const minDatesa = new Date(rowf[15]).toISOString().split('T')[0];
       let ocD: any = {
-        cli_identificacion: (rowf[1] === '' || rowf[1] === 'VACIO'||rowf[1] === 'vacio'||rowf[1] === ' ') ? null : rowf[1],
+        cli_identificacion: (rowf[1].toString() === '' || rowf[1].toString() === 'VACIO'||rowf[1].toString() === 'vacio'||rowf[1].toString() === ' ') ? null : rowf[1].toString(),
         id_gestor: (rowf[0] === '' || rowf[0] === 'VACIO'||rowf[0] === 'vacio'||rowf[0] === ' ') ? null : rowf[0],
         ope_cod_credito: (rowf[2].toString() === '' || rowf[2].toString() === 'VACIO'||rowf[2].toString() === 'vacio'||rowf[2].toString() === ' '||rowf[2].toString() === '0') ? null : rowf[2].toString(),
         id_cuenta:(rowf[3] === '' || rowf[3] === 'VACIO'||rowf[3] === 'vacio'||rowf[3] === ' ') ? null : rowf[3],
