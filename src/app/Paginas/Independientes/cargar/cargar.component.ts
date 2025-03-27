@@ -4059,7 +4059,7 @@ async onLimpiar3() {
   
     // Expresión regular para aceptar los formatos requeridos
     const v= valor.trim()
-    const expresionRegular = /^(?:\d{10}|\d{13}|[A-Z]\d{9})$/;
+    const expresionRegular = /^(?:\d{10}|\d{13}|[A-Z]\d{9}|^VACIO$|^VACíO$)$/;
   
     return expresionRegular.test(v);
   }
@@ -10964,7 +10964,7 @@ guardarMasiva()
           tra_telefono:rowf[6]===' '?null:rowf[6].toString(),
           tra_correo:rowf[2]===' '?null:rowf[2].toString(),
           tra_observacion:rowf[4]===' '?null:rowf[4],
-          tra_id_tipo_trabajo:rowf[7],
+          tra_id_tipo_trabajo:rowf[7].toString(),
         };
         this.CargaMasivaPost.push(ocD);
       }
