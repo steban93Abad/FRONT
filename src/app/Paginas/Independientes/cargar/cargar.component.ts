@@ -2591,11 +2591,11 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '5') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([1, 3, 6, 7, 8].includes(indiceInf)) {
+        if ([3, 6, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
-        if ([0].includes(indiceInf)) {
+        if ([0, 1].includes(indiceInf)) {
           const esIdentificacion = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esIdentificacion;
         }
@@ -3265,9 +3265,13 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '23') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0,2,3,4,5,6,12,13,14,15,16,17,24,25,28].includes(indiceInf)) {
+        if ([2,3,4,5,6,12,13,14,15,16,17,24,25,28].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esCedula = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esCedula;
         }
         if ([8,11,23].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3317,7 +3321,7 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '24') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0,3,4,5,10,11,12].includes(indiceInf)) {
+        if ([1,3,4,5,10,11,12].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
@@ -3325,7 +3329,7 @@ async onLimpiar3() {
           const esCodigo = this.contieneSoloCodigo(objeto);
           resultado[indiceInf] = esCodigo;
         }
-        if ([1].includes(indiceInf)) {
+        if ([0].includes(indiceInf)) {
           const esCedula = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esCedula;
         }
@@ -3580,11 +3584,11 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '5') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([1, 3, 6, 7, 8].includes(indiceInf)) {
+        if ([3, 6, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
-        if ([0].includes(indiceInf)) {
+        if ([0, 1].includes(indiceInf)) {
           const esIdentificacion = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esIdentificacion;
         }
@@ -3928,9 +3932,13 @@ async onLimpiar3() {
     }//
     if (this.itemFiles.value === '23') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0,2,3,4,5,6,12,13,14,15,16,17,24,25,28].includes(indiceInf)) {
+        if ([2,3,4,5,6,12,13,14,15,16,17,24,25,28].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
+        }
+        if ([0].includes(indiceInf)) {
+          const esCedula = this.contieneSoloIdentificacion(objeto);
+          resultado[indiceInf] = esCedula;
         }
         if ([8,11,23].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
@@ -3962,7 +3970,7 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '24') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([0,3,4,5,10,11,12].includes(indiceInf)) {
+        if ([1,3,4,5,10,11,12].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
@@ -3970,7 +3978,7 @@ async onLimpiar3() {
           const esCodigo = this.contieneSoloCodigo(objeto);
           resultado[indiceInf] = esCodigo;
         }
-        if ([1].includes(indiceInf)) {
+        if ([0].includes(indiceInf)) {
           const esCedula = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esCedula;
         }
@@ -4033,7 +4041,10 @@ async onLimpiar3() {
     //const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=]+$/u;
     //const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=–$]+$/u;
     //const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=–$´'+]+$/u;
-    const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:"/\-$*()@_°#~¿¡!%\/º×\n\r?&=–$´'\[\]+]+$/u;
+    //const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:"/\-$*()@_°#~¿¡!<>`¨{}+%\/º×\n\r?&=–$´'\[\]+]+$/u;
+    
+    // const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%<>`¨{}+"'`\/º×\n\r?&=–$´'| \[\]+]+$/u;
+    const expresionRegular = /^[\p{L}0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%<>`¨{}+"'`\/º×\n\r?&=–$´'| \[\]+]+$/u;
     //const expresionRegular = /^[A-Za-z0-9 áéíóúÁÉÍÓÚñÑ.,;:/\-$*()@_°#~¿¡!%\/º×\n\r?&=]*$/u;
     return expresionRegular.test(textoLimpio);
   }
@@ -4267,10 +4278,10 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //Direccion
     if (this.itemFiles.value === '5') {
-      if ([1, 3, 6, 7, 8].includes(posicion)) {
+      if ([3, 6, 7, 8].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
       }
-      if ([0].includes(posicion)) {
+      if ([0, 1].includes(posicion)) {
         res = this.contieneSoloIdentificacion(valor);
       }
       if ([2, 4, 5, 9].includes(posicion)) {
@@ -4430,8 +4441,11 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //TipoGestionConectividadContactavilidad
     if (this.itemFiles.value === '23') {
-      if ([0,2,3,4,5,6,12,13,14,15,16,17,24,25,28].includes(posicion)) {
+      if ([2,3,4,5,6,12,13,14,15,16,17,24,25,28].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
+      }
+      if ([0].includes(posicion)) {
+        res = this.contieneSoloIdentificacion(valor);
       }
       if ([8,11,23].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
@@ -4450,13 +4464,13 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //Gestiones
     if (this.itemFiles.value === '24') {
-      if ([0,3,4,5,10,11,12].includes(posicion)) {
+      if ([1,3,4,5,10,11,12].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
       }
       if ([7].includes(posicion)) {
         res = this.contieneSoloCodigo(valor);
       }
-      if ([1].includes(posicion)) {
+      if ([0].includes(posicion)) {
         res = this.contieneSoloIdentificacion(valor);
       }
       if ([6,9,13,16].includes(posicion)) {
@@ -10823,7 +10837,7 @@ guardarMasiva()
       for (const rowf of this.data) {
         let ocD: any = {
           cli_identificacion:rowf[0].toString(),
-          gar_identificacion:rowf[1],
+          gar_identificacion:rowf[1].toString(),
           gar_nombres:(rowf[2] === '' || rowf[2] === 'VACIO'||rowf[2] === 'vacio'||rowf[2] === ' ') ? null : rowf[2].toUpperCase(),
           gar_trabajo:(rowf[3] === '' || rowf[3] === 'VACIO'||rowf[3] === 'vacio'||rowf[3] === ' ') ? null : rowf[3].toString(),
           gar_direccion_dom:(rowf[4] === '' || rowf[4] === 'VACIO'||rowf[4] === 'vacio'||rowf[4] === ' ') ? null : rowf[4].toUpperCase(),
@@ -12266,7 +12280,7 @@ guardarMasiva()
 
       let ocD: any = {
         id_gestor: (rowf[2] === '' || rowf[2] === 'VACIO'||rowf[2] === 'vacio'||rowf[2] === ' ') ? null : Number(rowf[2]),
-        cli_identificacion: (rowf[0] === '' || rowf[0] === 'VACIO'||rowf[0] === 'vacio'||rowf[0] === ' ') ? null : rowf[0].toString(),
+        cli_identificacion: (rowf[0].toString() === '' || rowf[0].toString() === 'VACIO'||rowf[0].toString() === 'vacio'||rowf[0].toString() === ' ') ? null : rowf[0].toString(),
         ope_cod_credito: (rowf[1].toString() === '' || rowf[1].toString() === 'VACIO'||rowf[1].toString() === 'vacio'||rowf[1].toString() === ' '||rowf[1].toString() === '0') ? null : rowf[1].toString(),
         gest_id_gestor_asign:(rowf[3] === '' || rowf[3] === 'VACIO'||rowf[3] === 'vacio'||rowf[3] === ' ') ? null : rowf[3],
         gest_id_tipo_gestion:(rowf[4] === '' || rowf[4] === 'VACIO'||rowf[4] === 'vacio'||rowf[4] === ' ') ? null : rowf[4],
@@ -12372,8 +12386,8 @@ guardarMasiva()
       const minDaten = new Date(rowf[14]).toISOString().split('T')[0];
       const minDatesa = new Date(rowf[15]).toISOString().split('T')[0];
       let ocD: any = {
-        cli_identificacion: (rowf[1].toString() === '' || rowf[1].toString() === 'VACIO'||rowf[1].toString() === 'vacio'||rowf[1].toString() === ' ') ? null : rowf[1].toString(),
-        id_gestor: (rowf[0] === '' || rowf[0] === 'VACIO'||rowf[0] === 'vacio'||rowf[0] === ' ') ? null : rowf[0],
+        cli_identificacion: (rowf[0].toString() === '' || rowf[0].toString() === 'VACIO'||rowf[0].toString() === 'vacio'||rowf[0].toString() === ' ') ? null : rowf[0].toString(),
+        id_gestor: (rowf[1] === '' || rowf[1] === 'VACIO'||rowf[1] === 'vacio'||rowf[1] === ' ') ? null : rowf[1],
         ope_cod_credito: (rowf[2].toString() === '' || rowf[2].toString() === 'VACIO'||rowf[2].toString() === 'vacio'||rowf[2].toString() === ' '||rowf[2].toString() === '0') ? null : rowf[2].toString(),
         id_cuenta:(rowf[3] === '' || rowf[3] === 'VACIO'||rowf[3] === 'vacio'||rowf[3] === ' ') ? null : rowf[3],
         pag_pago:(rowf[4] === '' || rowf[4] === 'VACIO'||rowf[4] === 'vacio'||rowf[4] === ' ') ? null : rowf[4].toString(),
