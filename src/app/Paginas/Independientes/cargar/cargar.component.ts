@@ -2591,7 +2591,7 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '5') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([3, 6, 7, 8].includes(indiceInf)) {
+        if ([6, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
@@ -2599,7 +2599,7 @@ async onLimpiar3() {
           const esIdentificacion = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esIdentificacion;
         }
-        if ([2, 4, 5, 9].includes(indiceInf)) {
+        if ([2, 3, 4, 5, 9].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
           resultado[indiceInf] = esLetras;
         }
@@ -3584,7 +3584,7 @@ async onLimpiar3() {
     }
     if (this.itemFiles.value === '5') {
       for (const [indiceInf, objeto] of row.entries()) {
-        if ([3, 6, 7, 8].includes(indiceInf)) {
+        if ([6, 7, 8].includes(indiceInf)) {
           const esNumero = this.contieneSoloNumeros(objeto);
           resultado[indiceInf] = esNumero;
         }
@@ -3592,7 +3592,7 @@ async onLimpiar3() {
           const esIdentificacion = this.contieneSoloIdentificacion(objeto);
           resultado[indiceInf] = esIdentificacion;
         }
-        if ([2, 4, 5, 9].includes(indiceInf)) {
+        if ([2, 3, 4, 5, 9].includes(indiceInf)) {
           const esLetras = this.contieneSoloLetras(objeto);
           resultado[indiceInf] = esLetras;
         }
@@ -4278,13 +4278,13 @@ contieneSoloCelularesCorreo(valor: string | null): boolean {
       }
     } //Direccion
     if (this.itemFiles.value === '5') {
-      if ([3, 6, 7, 8].includes(posicion)) {
+      if ([6, 7, 8].includes(posicion)) {
         res = this.contieneSoloNumeros(valor);
       }
       if ([0, 1].includes(posicion)) {
         res = this.contieneSoloIdentificacion(valor);
       }
-      if ([2, 4, 5, 9].includes(posicion)) {
+      if ([2, 3, 4, 5, 9].includes(posicion)) {
         res = this.contieneSoloLetras(valor);
       }
     } //garante
@@ -10837,7 +10837,7 @@ guardarMasiva()
       for (const rowf of this.data) {
         let ocD: any = {
           cli_identificacion:rowf[0].toString(),
-          gar_identificacion:rowf[1].toString(),
+          gar_identificacion:rowf[1],
           gar_nombres:(rowf[2] === '' || rowf[2] === 'VACIO'||rowf[2] === 'vacio'||rowf[2] === ' ') ? null : rowf[2].toUpperCase(),
           gar_trabajo:(rowf[3] === '' || rowf[3] === 'VACIO'||rowf[3] === 'vacio'||rowf[3] === ' ') ? null : rowf[3].toString(),
           gar_direccion_dom:(rowf[4] === '' || rowf[4] === 'VACIO'||rowf[4] === 'vacio'||rowf[4] === ' ') ? null : rowf[4].toUpperCase(),
@@ -12373,6 +12373,7 @@ guardarMasiva()
               }),
               catchError((error) => {
                 this.alerta.ErrorEnLaOperacion();
+                console.log(error);
                 throw new Error(error);
               })
             )
