@@ -48,7 +48,7 @@ export class TokenGuard {
             icon: 'warning',
             title: 'Token expirado',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1800,
           });
           return false;
         }
