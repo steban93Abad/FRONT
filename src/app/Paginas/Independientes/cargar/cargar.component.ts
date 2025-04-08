@@ -1607,7 +1607,7 @@ export class CargarComponent implements OnInit {
         XLSX.writeFile(wb, 'ModeloClienteCartera.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Clientes actuales en la Base de Datos que no existan en este archivo se perderan'
+          'Los clientes actuales en la base de datos que no existan en este archivo se perderan'
         );
       }
     });
@@ -1664,7 +1664,7 @@ export class CargarComponent implements OnInit {
         XLSX.writeFile(wb, 'ModeloCxCCartera.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para proceder la descarga de la plantilla es necesario llenar los datos en Cartera!!'
+          'Para proceder la descarga de la plantilla es necesario llenar los datos en Cartera'
         );
       }
     });
@@ -1745,7 +1745,7 @@ export class CargarComponent implements OnInit {
         XLSX.writeFile(wb, 'Correo.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'No se puede descargar  la  plantilla de Correo ,debido a que no cuenta con datos de Tipos de Correo'
+          'No se puede descargar la plantilla de Correo, porque no cuenta con estos datos: Tipo de Correo'
         );
       }
     });
@@ -1778,7 +1778,7 @@ descargarArchivoExcelDireccion() {
     XLSX.writeFile(wb, 'Direccion.xlsx');
     }else
     {
-      this.alerta.ErrorEnLaPeticion('No se puede obtener el modelo de Direccion ,debido a que no cuenta con datos en Tipo de Direccion');
+      this.alerta.ErrorEnLaPeticion('No se puede obtener el modelo de Direccion, debido a que no cuenta con estos datos: Tipo de Direccion');
     }
   });
 }
@@ -2070,7 +2070,7 @@ getDireccion(): Observable<any[]> {
       // Escribir el archivo Excel
       XLSX.writeFile(wb, 'Telefono.xlsx');
     }else{
-      this.alerta.ErrorEnLaPeticion('No se puede obtener el modelo de Telefono ,debido a que no cuenta con datos en Tipo de Telefono y Detalle telefono');
+      this.alerta.ErrorEnLaPeticion('No se puede obtener el modelo de Telefono, porque no cuenta con estos datos: Tipo de Telefono y Detalle Telefono');
     }
   });
 }
@@ -2092,7 +2092,7 @@ descargarArchivoCartera() {
           XLSX.writeFile(wb, 'cartera.xlsx');
         }else
         {
-          this.alerta.ErrorEnLaPeticion('No se puede obtener el modelo Cartera,debido que no cuenta con datos de Tipo Cartera en su Base de Datos');
+          this.alerta.ErrorEnLaPeticion('No se puede obtener el modelo Cartera, debido que no cuenta con estos datos: Tipo Cartera');
         }
         
 
@@ -2163,7 +2163,7 @@ descargarArchivoExcelTrabajo() {
         XLSX.writeFile(wb, 'Trabajo.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'No se puede obtener el modelo de Trabajo ,debido a que no cuenta con datos en Tipo de Trabajo'
+          'No se puede obtener el modelo de Trabajo, debido a que no cuenta con estos datos: Tipo de Trabajo'
         );
       }
     });
@@ -4561,13 +4561,13 @@ let listrowsB:any[]=[];
       this.banderaGuardar=true;
     } else {
       const msg1='Se han procesado correctamente '+listrowsG.length;
-      const msg2='Se han procesado incorrectamente '+listrowsB.length+',se procedio a la eliminacion de las filas incorrectas. Al precionar en guardar solo se guardara los filas correctas y no las incorrectas';
+      const msg2='Se han procesado incorrectamente '+listrowsB.length+', se procede la eliminacion de las filas incorrectas. Al presionar en Guardar solo se guardara los filas correctas.';
       if(listrowsB.length>0&& retorno!='si')
         {
-          const msg3='Se genero el archivo con los errores para su descarga';
+          const msg3='Se genero el archivo con los errores para su descarga.';
           this.mostrar2Alertas(msg1,msg2,msg3,1);
         }else{
-          const msg3='No se genero el archivo con los errores para su descarga';
+          const msg3='No se genero el archivo con los errores para su descarga.';
           this.mostrar2Alertas(msg1,msg2,msg3,0);
         }
     }
@@ -5143,7 +5143,7 @@ validarDatosRow(row:any):any
                     if (elemento['cor_esactivo'] === '1') {
                       console.log('entroEsActivo');
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales, se Mantienen los datos!!!!!'
+                        'Son iguales, Se mantienen los datos'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -5408,7 +5408,7 @@ validarDatosRow(row:any):any
                   ) {
                     if (elemento['dir_esactivo'] === '1') {
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales, y se Mantiene los Datos!!!!!'
+                        'Son iguales, Se mantienen los datos'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -5685,7 +5685,7 @@ validarDatosRow(row:any):any
                   ) {
                     if (elemento['gar_esactivo'] === '1') {
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales;se Mantiene los Datos!!!!!!!!!!'
+                        'Son iguales, Se mantienen los datos'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -6177,7 +6177,7 @@ validarDatosRow(row:any):any
                     elemento['tra_id_tipo_trabajo'] === row[7].toString()
                   ) {
                     if (elemento['tra_esactivo'] === '1') {
-                      this.alerta.ErrorEnLaPeticion('Son iguales');
+                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
                       this.eliminarObjeto(row);
                       break;
                     } else {
@@ -6367,7 +6367,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['corr_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6486,7 +6486,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['tel_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6605,7 +6605,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['dir_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6727,7 +6727,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['tel_detal_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6848,7 +6848,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['trab_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -10623,10 +10623,10 @@ guardarMasiva()
                       listaDNoInsertados=row['data'];
                     }
                     if (row['exito'] === 2) {
-                      datosactualizados=row['data'].length;
+                      datosactualizados=row['data'];
                     }
                     if (row['exito'] === 1) {
-                      datosinsertados=row['data'].length;
+                      datosinsertados=row['data'];
                     }
                     cont += 1;
                   }//fin del for
@@ -12436,7 +12436,7 @@ guardarMasiva()
                       listaDNoInsertados=row['data'];
                     }
                     if (row['exito'] === 1) {
-                      datosinsertados=row['data'].length;
+                      datosinsertados=row['data'];
                     }
                     cont += 1;
                   }//fin del for

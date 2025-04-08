@@ -16,8 +16,8 @@ export class Alertas {
   }
   ErrorAlRecuperarElementos() {
     Swal.fire({
-      title: 'Oops....!',
-      text: 'Error al intentar recuperar la información!',
+      title: '¡Oops....!',
+      text: '¡Error al intentar recuperar la información!',
       icon: 'error',
       confirmButtonColor: 'var(--color-terciario)',
       confirmButtonText: 'OK',
@@ -34,8 +34,8 @@ export class Alertas {
   }
   ErrorEnLaOperacion() {
     Swal.fire({
-      title: 'Error inesperado!',
-      text: 'Error al intentar realizar una acción dentro del formulario!',
+      title: '¡Error inesperado!',
+      text: '¡Error al intentar realizar una acción dentro del formulario!',
       icon: 'error',
       confirmButtonColor: 'var(--color-terciario)',
       confirmButtonText: 'OK',
@@ -44,7 +44,7 @@ export class Alertas {
 
   ErrorEnLaPeticion(mensaje: string) {
     Swal.fire({
-        title: "Error inesperado!",
+        title: "¡Error inesperado!",
         text: mensaje,
         icon: "error",
         confirmButtonColor: "var(--color-terciario)",
