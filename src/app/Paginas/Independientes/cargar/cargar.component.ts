@@ -12340,7 +12340,7 @@ guardarMasiva()
                       listaDNoInsertados=row['data'];
                     }
                     if (row['exito'] === 1) {
-                      datosinsertados=row['mensaje'].length;
+                      datosinsertados=row['data'];
                     }
                     cont += 1;
                   }//fin del for
