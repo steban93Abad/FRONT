@@ -1607,7 +1607,7 @@ export class CargarComponent implements OnInit {
         XLSX.writeFile(wb, 'ModeloClienteCartera.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Los clientes actuales en la base de datos que no existan en este archivo se perderan'
+          'Los clientes actuales en la base de datos que no existan en este archivo se perderan.'
         );
       }
     });
@@ -1664,7 +1664,7 @@ export class CargarComponent implements OnInit {
         XLSX.writeFile(wb, 'ModeloCxCCartera.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para proceder la descarga de la plantilla es necesario llenar los datos en Cartera'
+          'Para proceder la descarga de la plantilla es necesario llenar los datos en Cartera.'
         );
       }
     });
@@ -5143,7 +5143,7 @@ validarDatosRow(row:any):any
                     if (elemento['cor_esactivo'] === '1') {
                       console.log('entroEsActivo');
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales, Se mantienen los datos'
+                        'Son iguales, Se mantienen los datos.'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -5408,7 +5408,7 @@ validarDatosRow(row:any):any
                   ) {
                     if (elemento['dir_esactivo'] === '1') {
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales, Se mantienen los datos'
+                        'Son iguales, Se mantienen los datos.'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -5685,7 +5685,7 @@ validarDatosRow(row:any):any
                   ) {
                     if (elemento['gar_esactivo'] === '1') {
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales, Se mantienen los datos'
+                        'Son iguales, Se mantienen los datos.'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -6177,7 +6177,7 @@ validarDatosRow(row:any):any
                     elemento['tra_id_tipo_trabajo'] === row[7].toString()
                   ) {
                     if (elemento['tra_esactivo'] === '1') {
-                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
+                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos.');
                       this.eliminarObjeto(row);
                       break;
                     } else {
@@ -6367,7 +6367,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['corr_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6486,7 +6486,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['tel_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6605,7 +6605,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['dir_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6727,7 +6727,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['tel_detal_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6848,7 +6848,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['trab_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -6968,7 +6968,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['contac_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7088,7 +7088,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['conec_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7222,7 +7222,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['cuent_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7355,7 +7355,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['gestion_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7503,7 +7503,7 @@ validarDatosRow(row:any):any
                   ) {
                     if (elemento['cart_esactivo'] === '1') {
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales, Se mantienen los datos'
+                        'Son iguales, Se mantienen los datos.'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -7716,7 +7716,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['cart_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7867,7 +7867,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['ges_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales, Se mantienen los datos'
+                    'Son iguales, Se mantienen los datos.'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -8374,7 +8374,7 @@ validarDatosRow(row:any):any
                       objetoRow['id_contactabilidad']&&elemento['tipges_per_edi'] ===objetoRow['tipges_per_edi']
                   ) {
                     if (elemento['tipges_esactivo'] === '1') {
-                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
+                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos.');
                       this.eliminarObjeto(this.row);
                       break;
                     }else
@@ -8627,7 +8627,7 @@ validarDatosRow(row:any):any
                     .subscribe();
                 }else
                 {
-                  this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
+                  this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos.');
                   this.eliminarObjeto(this.row);
                 }
               
@@ -8775,12 +8775,12 @@ validarDatosRow(row:any):any
                         )
                         .subscribe();
                     }else{
-                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
+                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos.');
                       this.eliminarObjeto(this.row);
                     }
                 }else
                 {
-                  this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
+                  this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos.');
                   this.eliminarObjeto(this.row);
                 }
             }
@@ -8909,7 +8909,7 @@ validarDatosRow(row:any):any
                         if(cliente['cli_esactivo']==='1')
                           {
                             console.log('entro3');
-                            this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
+                            this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos.');
                             this.eliminarObjeto(row);
                           }else
                           {
@@ -8969,7 +8969,7 @@ validarDatosRow(row:any):any
                         if(cliente['cli_esactivo']==='1')
                           {
                             console.log('entro3');
-                            this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
+                            this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos.');
                             this.eliminarObjeto(this.row);
                           }else
                           {
@@ -9976,7 +9976,7 @@ buscarClienteObservable(valor: string, tipo: number): Observable<any> {
         XLSX.writeFile(wb, 'ModeloAsignacion.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para iniciar la descarga de esta plantilla es necesario agregar datos en Clientes, Gestor, Cartera'
+          'Para iniciar la descarga de esta plantilla debe agregar antes los datos en Clientes, Gestor, Cartera'
         );
       }
     });
@@ -10004,7 +10004,7 @@ buscarClienteObservable(valor: string, tipo: number): Observable<any> {
         XLSX.writeFile(wb, 'ModeloCuentaCartera.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para poder descargar esta plantilla debere agregar antes los datos en Cartera'
+          'Para poder descargar esta plantilla debe agregar antes los datos en Cartera'
         );
       }
     });
@@ -10035,7 +10035,7 @@ buscarClienteObservable(valor: string, tipo: number): Observable<any> {
         XLSX.writeFile(wb, 'ModeloTipoGestionConectvidadContactavidad.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para descargar esta plantilla es necesario agregar datos en Tipo Gestion, Conectividad y Contactividad'
+          'Para descargar esta plantilla debe agregar antes los datos en Tipo Gestion, Conectividad y Contactividad'
         );
       }
     });
@@ -10482,10 +10482,10 @@ guardarMasiva()
                     datosnoinsertados=row['data'].length;
                   }
                   if (row['exito'] === 2) {
-                    datosactualizados=row['data'].length;
+                    datosactualizados=row['data'];
                   }
                   if (row['exito'] === 1) {
-                    datosinsertados=row['data'].length;
+                    datosinsertados=row['data'];
                   }
                   cont += 1;
                 }//fin del for
@@ -12318,7 +12318,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosMantienen:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 20 a 40 min.').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere.').then((result) => {
         if (result) {
           let listaDNoInsertados:any[]=[];
           this.isLoading=true;
