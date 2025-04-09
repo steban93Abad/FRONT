@@ -6968,7 +6968,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['contac_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7088,7 +7088,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['conec_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7222,7 +7222,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['cuent_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7355,7 +7355,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['gestion_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7503,7 +7503,7 @@ validarDatosRow(row:any):any
                   ) {
                     if (elemento['cart_esactivo'] === '1') {
                       this.alerta.ErrorEnLaPeticion(
-                        'Son iguales, se Mantienen los datos!!!!!'
+                        'Son iguales, Se mantienen los datos'
                       );
                       this.eliminarObjeto(row);
                       break;
@@ -7716,7 +7716,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['cart_tip_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -7867,7 +7867,7 @@ validarDatosRow(row:any):any
               ) {
                 if (valorRecuperado['ges_esactivo'] === '1') {
                   this.alerta.ErrorEnLaPeticion(
-                    'Son iguales , se Mantiene los datos'
+                    'Son iguales, Se mantienen los datos'
                   );
                   this.eliminarObjeto(row);
                 } else {
@@ -8374,7 +8374,7 @@ validarDatosRow(row:any):any
                       objetoRow['id_contactabilidad']&&elemento['tipges_per_edi'] ===objetoRow['tipges_per_edi']
                   ) {
                     if (elemento['tipges_esactivo'] === '1') {
-                      this.alerta.ErrorEnLaPeticion('Son iguales, se Mantienen los datos!!!!!');
+                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
                       this.eliminarObjeto(this.row);
                       break;
                     }else
@@ -8627,7 +8627,7 @@ validarDatosRow(row:any):any
                     .subscribe();
                 }else
                 {
-                  this.alerta.ErrorEnLaPeticion('Son iguales, se Mantienen los datos!!!!!');
+                  this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
                   this.eliminarObjeto(this.row);
                 }
               
@@ -8775,12 +8775,12 @@ validarDatosRow(row:any):any
                         )
                         .subscribe();
                     }else{
-                      this.alerta.ErrorEnLaPeticion('Son iguales, se Mantienen los datos!!!!!');
+                      this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
                       this.eliminarObjeto(this.row);
                     }
                 }else
                 {
-                  this.alerta.ErrorEnLaPeticion('Son iguales, se Mantienen los datos!!!!!');
+                  this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
                   this.eliminarObjeto(this.row);
                 }
             }
@@ -8909,7 +8909,7 @@ validarDatosRow(row:any):any
                         if(cliente['cli_esactivo']==='1')
                           {
                             console.log('entro3');
-                            this.alerta.ErrorEnLaPeticion('Son iguales, se Mantienen los datos!!!!!');
+                            this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
                             this.eliminarObjeto(row);
                           }else
                           {
@@ -8969,7 +8969,7 @@ validarDatosRow(row:any):any
                         if(cliente['cli_esactivo']==='1')
                           {
                             console.log('entro3');
-                            this.alerta.ErrorEnLaPeticion('Son iguales, se Mantienen los datos!!!!!');
+                            this.alerta.ErrorEnLaPeticion('Son iguales, Se mantienen los datos');
                             this.eliminarObjeto(this.row);
                           }else
                           {
@@ -9976,7 +9976,7 @@ buscarClienteObservable(valor: string, tipo: number): Observable<any> {
         XLSX.writeFile(wb, 'ModeloAsignacion.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para iniciar la descarga de esta plantilla es necesario agregar datos en Clientes,Gestor,Cartera'
+          'Para iniciar la descarga de esta plantilla es necesario agregar datos en Clientes, Gestor, Cartera'
         );
       }
     });
@@ -10035,7 +10035,7 @@ buscarClienteObservable(valor: string, tipo: number): Observable<any> {
         XLSX.writeFile(wb, 'ModeloTipoGestionConectvidadContactavidad.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para descargar esta Plantilla es necesario agregar datos en Tipo Gestion ,Conectividad y Contactividad!!!.'
+          'Para descargar esta plantilla es necesario agregar datos en Tipo Gestion, Conectividad y Contactividad'
         );
       }
     });
@@ -10126,7 +10126,7 @@ buscarClienteObservable(valor: string, tipo: number): Observable<any> {
         XLSX.writeFile(wb, 'ModeloPlantillaGestiones.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para descargar esta Plantilla es necesario agregar datos en Tipo Gestion ,Conectividad y Contactividad!!!.'
+          'Para descargar esta plantilla es necesario agregar datos en Tipo Gestion, Conectividad y Contactividad'
         );
       }
     });
@@ -10190,7 +10190,7 @@ buscarClienteObservable(valor: string, tipo: number): Observable<any> {
         XLSX.writeFile(wb, 'ModeloPlantillaPagosCargaMasiva.xlsx');
       } else {
         this.alerta.ErrorEnLaPeticion(
-          'Para descargar esta Plantilla es necesario agregar datos en Tipo Gestion ,Conectividad y Contactividad!!!.'
+          'Para descargar esta plantilla es necesario agregar datos en Tipo Gestion, Conectividad y Contactividad'
         );
       }
     });
@@ -10461,7 +10461,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos 1min , luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 2 a 3 min.').then((result) => {
       if (result) {
         this.isLoading=true;
         let listaDNoInsertados:any[]=[];
@@ -10602,7 +10602,7 @@ guardarMasiva()
       let datosinsertados:number=0;
       let datosactualizados:number=0;
       let datosnoinsertados:number=0;
-      this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 2 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+      this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 2 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -10683,7 +10683,7 @@ guardarMasiva()
       let datosinsertados:number=0;
       let datosactualizados:number=0;
       let datosnoinsertados:number=0;
-      this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+      this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           let listaDNoInsertados:any[]=[];
           this.isLoading=true;
@@ -10769,7 +10769,7 @@ guardarMasiva()
       let datosinsertados:number=0;
       let datosactualizados:number=0;
       let datosnoinsertados:number=0;
-      this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+      this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -10855,7 +10855,7 @@ guardarMasiva()
       let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -10938,7 +10938,7 @@ guardarMasiva()
       let datosinsertados:number=0;
       let datosactualizados:number=0;
       let datosnoinsertados:number=0;
-      this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 2 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+      this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 2 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11022,7 +11022,7 @@ guardarMasiva()
       let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           let listaDNoInsertados:any[]=[];
           this.isLoading=true;
@@ -11100,7 +11100,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11178,7 +11178,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11256,7 +11256,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11334,7 +11334,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 2 a 4 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11412,7 +11412,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11490,7 +11490,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11568,7 +11568,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11647,7 +11647,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11725,7 +11725,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11804,7 +11804,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11882,7 +11882,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -11970,7 +11970,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -12051,7 +12051,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 2 a 4 min.').then((result) => {
         if (result) {
           let listaDNoInsertados:any[]=[];
           this.isLoading=true;
@@ -12132,7 +12132,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
@@ -12212,7 +12212,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosactualizados:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 1 a 3 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           const start = performance.now();
@@ -12318,7 +12318,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosMantienen:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 20 a 40 min.').then((result) => {
         if (result) {
           let listaDNoInsertados:any[]=[];
           this.isLoading=true;
@@ -12414,7 +12414,7 @@ guardarMasiva()
     let datosinsertados:number=0;
     let datosmantienen:number=0;
     let datosnoinsertados:number=0;
-    this.alerta.AlertaProcesadosBien('!Esperar por lo menos de 1 a 3 min, luego de este tiempo se podra apreciar las otras alertas informativas que saben aparecer cuando este proceso de carga finalice!!').then((result) => {
+    this.alerta.AlertaProcesadosBien('Se esta procesando y guardando los registros de la hoja seleccionada. Por favor espere entre 5 a 10 min.').then((result) => {
         if (result) {
           this.isLoading=true;
           let listaDNoInsertados:any[]=[];
