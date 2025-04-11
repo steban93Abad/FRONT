@@ -10479,7 +10479,7 @@ guardarMasiva()
                   }
                   if (row['exito'] === 3) {
                     listaDNoInsertados=row['data'];
-                    datosnoinsertados=row['data'].length;
+                    datosnoinsertados=row['data'];
                   }
                   if (row['exito'] === 2) {
                     datosactualizados=row['data'];
@@ -10619,7 +10619,7 @@ guardarMasiva()
                       listaMantienen.push(row);
                     }
                     if (row['exito'] === 3) {
-                      datosnoinsertados=row['data'].length;
+                      datosnoinsertados=row['data'];
                       listaDNoInsertados=row['data'];
                     }
                     if (row['exito'] === 2) {
@@ -12068,14 +12068,14 @@ guardarMasiva()
                       listaMantienen.push(row);
                     }
                     if (row['exito'] === 3) {
-                      datosnoinsertados=row['data'].length;
+                      datosnoinsertados=row['data'];
                       listaDNoInsertados=row['data'];
                     }
                     if (row['exito'] === 2) {
-                      datosactualizados=row['data'].length;
+                      datosactualizados=row['data'];
                     }
                     if (row['exito'] === 1) {
-                      datosinsertados=row['data'].length;
+                      datosinsertados=row['data'];
                     }
                     cont += 1;
                   }//fin del for
@@ -12332,11 +12332,11 @@ guardarMasiva()
                 if (exito == 1) {
                   for (const row of tracks['data']) {
                     if (row['exito'] === 4) {
-                      datosMantienen=row['data'].length;
+                      datosMantienen=row['data'];
                       listaMantienen=row['data'];
                     }
                     if (row['exito'] === 3) {
-                      datosnoinsertados=row['data'].length;
+                      datosnoinsertados=row['data'];
                       listaDNoInsertados=row['data'];
                     }
                     if (row['exito'] === 1) {
@@ -12428,11 +12428,11 @@ guardarMasiva()
                 if (exito == 1) {
                   for (const row of tracks['data']) {
                     if (row['exito'] === 4) {
-                      datosmantienen=row['data'].length;
+                      datosmantienen=row['data'];
                       listaMantienen=row['data'];
                     }
                     if (row['exito'] === 3) {
-                      datosnoinsertados=row['data'].length;
+                      datosnoinsertados=row['data'];
                       listaDNoInsertados=row['data'];
                     }
                     if (row['exito'] === 1) {
