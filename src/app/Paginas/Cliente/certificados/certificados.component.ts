@@ -58,6 +58,20 @@ export class CertificadosComponent implements OnInit {
 
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCredito: any[] = [];
+  FraccionDatos: number = 0;
+  ContadorDatosGeneral: number = 0;
+
+  ListarElementos(num: number) {
+    if (num === 1) {
+      this.ListaCredito = [];
+      this.FraccionDatos = 0;
+    }
+
+    this.ListaCredito = [];
+    this.loading = true;
+
+
+  }
 
     /*********************  FILTRO MODO GENERAL *********************** */
     DatosTemporalesBusqueda: any[] = [];

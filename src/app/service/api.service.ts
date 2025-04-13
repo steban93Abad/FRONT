@@ -77,7 +77,7 @@ export class ApiService {
   objeto = new Encriptacion();
 
   // url: string = 'http://192.168.0.86:8094/api/';
-  
+
   // url: string = 'https://cobranzaapi.cobrosystem.com/api/';
   // url: string = 'https://192.168.0.83:9090/api/';
   url: string = 'https://localhost/api/';
@@ -1062,6 +1062,24 @@ export class ApiService {
     };
     let direccion = this.url + 'CxcOperacion';
     return this.http.put<any>(direccion, Encryptado).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
+
+        throw error;
+      })
+    );
+  }
+  GetCreditoFracionado(codigo: number, rango: number): Observable<ResponseI> {
+    let direccion = this.url + 'Gestion/Todos' + codigo + ',' + rango;
+    return this.http.get<any>(direccion).pipe(
       map((data) => {
         return JSON.parse(this.objeto.decrypt(data['valor']));
       }),
@@ -4353,7 +4371,7 @@ export class ApiService {
       })
     );
   }
-  PostSinIncriptar(entidad: string, elemento: any): Observable<any> {   
+  PostSinIncriptar(entidad: string, elemento: any): Observable<any> {
     let direccion = this.url + entidad;
     return this.http.post<any>(direccion, elemento).pipe(
       map((data) => {
