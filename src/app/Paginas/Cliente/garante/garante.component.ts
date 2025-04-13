@@ -300,7 +300,7 @@ export class GaranteComponent implements OnInit {
       this.GarantesForms.get('gar_fecha_in')?.enable();
       this.GarantesForms.get('gar_fecha_up')?.enable();
       this.GarantesForms.get('gar_esactivo')?.enable();
-      
+
     }
     if (num === 2) {
       //edicion

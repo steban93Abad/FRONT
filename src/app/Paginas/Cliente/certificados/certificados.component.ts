@@ -59,5 +59,12 @@ export class CertificadosComponent implements OnInit {
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCredito: any[] = [];
 
+    /*********************  FILTRO MODO GENERAL *********************** */
+    DatosTemporalesBusqueda: any[] = [];
+    FirltroPor: string = '';
+    TextoFiltro = new FormControl({ value: '', disabled: true }, [
+      Validators.required,
+    ]);
+
 
 }
