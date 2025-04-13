@@ -51,6 +51,8 @@ import { AsignacionComponent } from './Paginas/Administracion/asignacion/asignac
 import { CuentaCarteraComponent } from './Paginas/Administracion/cuenta-cartera/cuenta-cartera.component';
 import { TgConecContaComponent } from './Paginas/Administracion/tg-conec-conta/tg-conec-conta.component';
 import { NosotrosComponent } from './Vistas/nosotros/nosotros.component';
+import { CertificadosComponent } from './Paginas/Cliente/certificados/certificados.component';
+import { DescargarCertificadoComponent } from './Paginas/Cliente/descargar-certificado/descargar-certificado.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'nosotros', pathMatch: 'full' },
@@ -69,6 +71,8 @@ const routes: Routes = [
   { path: 'tipocartera', component: TipoCarteraComponent, canActivate: [TokenGuard]},
   { path: 'roles', component: RolesComponent, canActivate: [TokenGuard]},
   { path: 'gestores', component: GestoresComponent, canActivate: [TokenGuard]},
+  { path: 'certificados', component: CertificadosComponent, canActivate: [TokenGuard]},
+  { path: 'descargarcertificado', component: DescargarCertificadoComponent, canActivate: [TokenGuard]},
   { path: 'gestion', component: GestionComponent, canActivate: [TokenGuard]},
   { path: 'tipocorreo', component: TipoCorreoComponent, canActivate: [TokenGuard]},
   { path: 'tipodireccion', component: TipoDireccionComponent, canActivate: [TokenGuard]},
@@ -123,6 +127,8 @@ export const routingComponent = [
   MenusComponent,
   AdministracionComponent,
   DetalleTelefonoComponent,
+  CertificadosComponent,
+  DescargarCertificadoComponent,
   UsuariosComponent,
   CarteraComponent,
   TipoCarteraComponent,

@@ -1,0 +1,63 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { catchError, map } from 'rxjs';
+import { Alertas } from 'src/app/Control/Alerts';
+import { Fechas } from 'src/app/Control/Fechas';
+import { GeneradorReporte } from 'src/app/Control/GeneradoReporte';
+import {
+  ResultadoCarteraI,
+  ResultadoGestorI,
+  ResultadoMenuI,
+  ResultadoPermisosI,
+} from 'src/app/Modelos/login.interface';
+import {
+  ContactabilidadI,
+  FiltroGestion,
+  CxcOperacionI,
+  generarPDF,
+  GestorI,
+} from 'src/app/Modelos/response.interface';
+import { ApiService } from 'src/app/service/api.service';
+
+@Component({
+  selector: 'app-certificados',
+  templateUrl: './certificados.component.html',
+  styleUrls: ['./certificados.component.css']
+})
+
+export class CertificadosComponent implements OnInit {
+  constructor(
+    private api: ApiService,
+    private alerta: Alertas,
+    public fechas: Fechas,
+    private cookeService: CookieService,
+    private router: Router,public reporte:GeneradorReporte
+  ) {}
+
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+
+  permisos: ResultadoPermisosI = JSON.parse(localStorage.getItem('usuario')!);
+  Usuario: ResultadoGestorI = this.permisos.gestor;
+  Menu: ResultadoMenuI[] = this.permisos.menu;
+  PaginaActual: ResultadoMenuI = this.Menu.find((elemento) => {
+    return elemento.men_url === 'certificados';
+  }) as ResultadoMenuI;
+  ConstanteFraccion: number = Number(this.Usuario.usr_fraccion_datos);
+  RangoDatos: number = Number(this.Usuario.usr_rango_datos);
+  LecturaEscritura: number = Number(this.PaginaActual.men_lectura);
+  PaginaNombre: string = this.PaginaActual.men_descripcion;
+  loading: boolean = false;
+
+  CarteraGestor: any[] = [];
+  TodasCarteras: number[] = [];
+  Cartera: ResultadoCarteraI[] = this.permisos.cartera;
+
+  // ****************************************** LISTAR ELEMENTOS *****************************************************************
+  ListaCredito: any[] = [];
+
+
+}

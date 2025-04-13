@@ -1,0 +1,32 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+    <h4 class="NombrePage">{{PaginaNombre}}</h4>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card card-default">
+          <!-- BARRA DE INICIO Y PARA FILTROS DE BUSQUEDA -->
+
+          <!-- FORMULARIO PARA LISTAR ELEMENTOS -->
+          <section class="expand-bottom">
+            <div class="card-body" style="background-color: var(--color-formulario-secundario);"
+                            *ngIf="!loading ;else loadingOrError">
+              <p>
+                Body
+              </p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+<ng-template #loadingOrError>
+  <section>
+      <div class="ContenidoCentrado">
+          <div class="loader"></div>
+      </div>
+  </section>
+</ng-template>

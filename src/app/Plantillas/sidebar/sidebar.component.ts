@@ -93,6 +93,8 @@ export class SidebarComponent implements OnInit {
         elemento.men_url === 'descargas' ||
         elemento.men_url === 'gestionar' ||
         elemento.men_url === 'gestion' ||
+        elemento.men_url === 'certificados' ||
+        elemento.men_url === 'descargarcertificado'||
         elemento.men_url === 'pagos' ||
         elemento.men_url === 'cargar' ||
         elemento.men_url === 'configuracion' ||
