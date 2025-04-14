@@ -1078,7 +1078,7 @@ export class ApiService {
     );
   }
   GetCreditoFracionado(codigo: number, rango: number): Observable<ResponseI> {
-    let direccion = this.url + 'Gestion/Todos' + codigo + ',' + rango;
+    let direccion = this.url + 'CxcOperacion/Creditos' + codigo + ',' + rango;
     return this.http.get<any>(direccion).pipe(
       map((data) => {
         return JSON.parse(this.objeto.decrypt(data['valor']));
@@ -1090,7 +1090,7 @@ export class ApiService {
             'Error al desencriptar los datos'
           );
         }
-
+        console.log(error);
         throw error;
       })
     );
