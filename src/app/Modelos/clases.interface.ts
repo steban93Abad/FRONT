@@ -7,6 +7,7 @@ import {
   ClienteCarteraI,
   ClienteGestorCarteraI,
   ClienteI,
+  CertificadosI,
   ConectividadI,
   ConectividadIC,
   ContactabilidadI,
@@ -421,6 +422,7 @@ export class clsCartera implements CarteraI {
   cart_fecha_in: Date;
   cart_fecha_up: Date;
   cart_esactivo: string;
+  cart_fecha_compra: Date;
 
   constructor() {
     this.id_cartera = 0;
@@ -432,6 +434,47 @@ export class clsCartera implements CarteraI {
     this.cart_fecha_in = new Date();
     this.cart_fecha_up = new Date();
     this.cart_esactivo = '';
+  }
+}
+export class clsCertificados implements CertificadosI {
+  id_certificado: number;
+  id_gestor: number;
+  ope_cod_credito: string;
+  cert_comentario: string;
+  cert_gestor_in: string;
+  cert_gestor_up: string;
+  cert_gestor_rem: string;
+  cert_gestor_act: string;
+  cert_gestor_desact: string;
+  cert_fecha_act: Date;
+  cert_fecha_desact: Date;
+  cert_fecha_in: Date;
+  cert_fecha_up: Date;
+  cert_esactivo: string;
+  cert_esdescargado: string;
+  cert_baseactual: string;
+  cert_origendatos: string;
+  cert_url_certificado: string;
+
+  constructor() {
+    this.id_certificado = 0;
+    this.id_gestor = 0;
+    this.ope_cod_credito = '';
+    this.cert_comentario = '';
+    this.cert_gestor_in = '';
+    this.cert_gestor_up = '';
+    this.cert_gestor_rem = '';
+    this.cert_gestor_act = '';
+    this.cert_gestor_desact = '';
+    this.cert_fecha_act = new Date();
+    this.cert_fecha_desact = new Date();
+    this.cert_fecha_in = new Date();
+    this.cert_fecha_up = new Date();
+    this.cert_esactivo = '';
+    this.cert_esdescargado = '';
+    this.cert_baseactual = '';
+    this.cert_origendatos = '';
+    this.cert_url_certificado = '';
   }
 }
 export class clsCliente implements ClienteI {

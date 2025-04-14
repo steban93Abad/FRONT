@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { catchError, map } from 'rxjs';
 import { Alertas } from 'src/app/Control/Alerts';
 import { Fechas } from 'src/app/Control/Fechas';
+import { TipoDeTexto } from 'src/app/Control/TipoDeTexto';
 import { GeneradorReporte } from 'src/app/Control/GeneradoReporte';
 import {
   ResultadoCarteraI,
@@ -17,6 +18,7 @@ import {
   FiltroGestion,
   CxcOperacionI,
   generarPDF,
+  ClienteI,
   GestorI,
 } from 'src/app/Modelos/response.interface';
 import { ApiService } from 'src/app/service/api.service';
@@ -33,7 +35,8 @@ export class CertificadosComponent implements OnInit {
     private alerta: Alertas,
     public fechas: Fechas,
     private cookeService: CookieService,
-    private router: Router,public reporte:GeneradorReporte
+    private router: Router,public reporte:GeneradorReporte,
+    public validar: TipoDeTexto
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +55,6 @@ export class CertificadosComponent implements OnInit {
   PaginaNombre: string = this.PaginaActual.men_descripcion;
   loading: boolean = false;
   gCredito!:generarPDF;
-  TituloFormulario = '';
   CarteraGestor: any[] = [];
   TodasCarteras: number[] = [];
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
@@ -95,7 +97,6 @@ export class CertificadosComponent implements OnInit {
   ListaCreditos: any[] = [];
 
   ListarElementos(num: number) {
-
     this.GetBusquedaPor('');
     if (num === 1) {
       this.ListaCreditos = [];
@@ -103,6 +104,7 @@ export class CertificadosComponent implements OnInit {
     }
 
     this.ListaCreditos = [];
+    let listadoObjeto:any[] = [];
     this.loading = true;
     this.api
       .GetCreditoFracionado(this.FraccionDatos, this.RangoDatos)
@@ -110,6 +112,7 @@ export class CertificadosComponent implements OnInit {
         map((tracks) => {
           this.ListaCreditos = tracks['data'];
           this.DatosTemporalesBusqueda = tracks['data'];
+          
           if (this.ListaCreditos.length === 0) {
             this.loading = false;
             this.alerta.NoExistenDatos();
@@ -127,7 +130,6 @@ export class CertificadosComponent implements OnInit {
       )
       .subscribe();
   }
-
 
   FiltrarElemento() {
     const valor: any = this.txtBusqueda.value?.toString();
@@ -200,9 +202,295 @@ export class CertificadosComponent implements OnInit {
 
   }
 
+  /************************************** VER ELEMENTO  ******************************************************** */
+  TituloFormulario = '';
+  ClienteInfo = new FormControl({ value: '', disabled: true }, Validators.required);
+
+  CreditosForms = new FormGroup({
+    id_cxc_operacion: new FormControl(0),
+    ope_cod_credito: new FormControl(''),    
+    cli_identificacion: new FormControl(''),
+    cart_descripcion: new FormControl(''),
+    ope_estado_contacta: new FormControl(''),
+    ope_descrip_unidad_gestion: new FormControl(''),
+    cart_fecha_compra: new FormControl(''),
+    ges_nombres: new FormControl(''),
+  });
+
+  ResetCreditosForms() {
+    this.CreditosForms.reset({
+      id_cxc_operacion: 0,
+      ope_cod_credito: '',
+      cli_identificacion: '',
+      cart_descripcion: '',
+      ope_estado_contacta: '',
+      ope_descrip_unidad_gestion: '',
+      cart_fecha_compra: '',
+      ges_nombres: '',
+    });
+  }
+
+  CertificadoForms = new FormGroup({
+    id_certificado: new FormControl(0, Validators.required),
+    id_gestor: new FormControl(0, Validators.required),
+    ope_cod_credito: new FormControl(''),
+    cert_comentario: new FormControl(''),
+    cert_fecha_in: new FormControl(this.fechas.fecha()),
+    cert_fecha_up: new FormControl(this.fechas.fecha()),
+    cert_esactivo: new FormControl(true),
+    cert_esdescargado: new FormControl(true),
+    cert_baseactual: new FormControl(true),
+    cert_origendatos: new FormControl('Sistema_CobroSys'),
+    cert_url_certificado: new FormControl('')
+  });
+
+
+  ActDesControles(num: number) {
+    if (num === 0) {
+      //inactivos
+      this.CreditosForms.get('id_cxc_operacion')?.disable();
+      this.CreditosForms.get('ope_cod_credito')?.disable();
+      this.CreditosForms.get('cli_identificacion')?.disable();
+      this.CreditosForms.get('cart_descripcion')?.disable();
+      this.CreditosForms.get('ope_estado_contacta')?.disable();
+      this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
+      this.CreditosForms.get('cart_fecha_compra')?.disable();
+      this.CreditosForms.get('ges_nombres')?.disable();
+    }
+  }
+
+  AgregarEditarElemento(num: number) {
+    if (num === 3) {
+      this.TituloFormulario = 'Visualizar';
+      this.ActDesControles(0);
+    }
+  }
+
+  CerrarAgregarEditarElemento() {
+    this.EncerarComponentes();
+  }
+
+  CargarElemento(datos: any, num: number) {
+    this.CreditosForms.patchValue({
+      id_cxc_operacion: datos.id_cxc_operacion,
+      ope_cod_credito: datos.ope_cod_credito,    
+      cli_identificacion: datos.cli_identificacion,
+      cart_descripcion: datos.cart_descripcion,
+      ope_estado_contacta: datos.ope_estado_contacta,
+      ope_descrip_unidad_gestion: datos.ope_descrip_unidad_gestion,
+      cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.fechaCortaAbt(datos.cart_fecha_compra),
+      ges_nombres: datos.ges_nombres
+    });
+    if (num != 1) {
+      this.ListarCarteras();
+      this.BuscarCliente(datos.cli_identificacion);
+    }
+    this.AgregarEditarElemento(num);
+  }
+
+// ****************************************** OTROS ELEMENTOS *****************************************************************
+  CarterasList: any[] = [];
+
+  ListarCarteras() {
+    this.api
+      .GetCarteraFracionado(0, 0)
+      .pipe(
+        map((tracks) => {
+          console.log(tracks['data'])
+          this.CarterasList = tracks['data'];
+        })
+      )
+      .subscribe();
+  }
+
+  ClienteSeleccionado!: ClienteI | null;
+
+  BuscarCliente(identificacion: string) {
+    this.ClienteInfo.patchValue('');
+    if (identificacion == '') {
+      this.alerta.ErrorEnLaPeticion(
+        'No ingreso ningun identificador para su busqueda'
+      );
+    } else {
+      this.api
+        .GetClienteFracionadoFiltro(identificacion, 10)
+        .pipe(
+          map((tracks) => {
+            const datos = tracks['data'];
+            if (!datos) {
+              this.alerta.NoExistenDatos();
+            } else {
+              this.ClienteSeleccionado = datos;
+              this.ClienteInfo.patchValue(datos.cli_nombres);
+            }
+          }),
+          catchError((error) => {
+            this.alerta.ErrorAlRecuperarElementos();
+            throw new Error(error);
+          })
+        )
+        .subscribe();
+    }
+  }
+  ////////////////////////////////////////  CLIENTE   ////////////////////////////////////////////////
+  TipoIdentificacion: any[] = [
+    { id: 1, name: 'Cedula', value: '1' },
+    { id: 2, name: 'Ruc', value: '2' },
+    { id: 3, name: 'Pasaporte', value: '3' },
+  ];
+  Genero: any[] = [
+    { id: 1, name: 'Hombre', value: 'M' },
+    { id: 2, name: 'Mujer', value: 'F' },
+    { id: 3, name: 'No responder', value: '0' },
+  ];
+  EstadoCivil: any[] = [
+    { id: 1, name: 'Soltero/a', value: '1' },
+    { id: 2, name: 'Casado/a', value: '2' },
+    { id: 3, name: 'Divorciado/a', value: '3' },
+    { id: 4, name: 'Viudo/a', value: '4' },
+    { id: 5, name: 'Union-Libre', value: '5' },
+    { id: 6, name: 'No especificado', value: '6' },
+  ];
+
+  ModoVistaCliente: boolean = false;
+  ClienteForms = new FormGroup({
+    id_cliente: new FormControl(0),
+    cli_identificacion: new FormControl(''),
+    cli_nombres: new FormControl(''),
+    cli_tipo_identificacion: new FormControl(''),
+    cli_genero: new FormControl('0'),
+    cli_estado_civil: new FormControl(''),
+    cli_ocupacion: new FormControl(''),
+    cli_fecha_nacimiento: new FormControl(''),
+    cli_score: new FormControl(''),
+    cli_fallecido: new FormControl(false),
+    cli_fecha_fallecido: new FormControl(''),
+    cli_observacion: new FormControl(''),
+    cli_provincia: new FormControl(''),
+    cli_canton: new FormControl(''),
+    cli_parroquia: new FormControl(''),
+    cli_esactivo: new FormControl(true),
+  }
+  ,
+  {
+    validators: [
+      this.validar.ValidatorTipo_Identificacion(
+        'cli_identificacion',
+        'cli_tipo_identificacion'
+      ),
+    ],
+  }
+);
+  ResetClienteForms() {
+    this.ClienteForms.reset({
+      id_cliente: 0,
+      cli_identificacion: '',
+      cli_nombres: '',
+      cli_tipo_identificacion: '',
+      cli_genero: '0',
+      cli_estado_civil: '',
+      cli_ocupacion: '',
+      cli_fecha_nacimiento: '',
+      cli_score: '',
+      cli_fallecido: false,
+      cli_fecha_fallecido: '',
+      cli_observacion: '',
+      cli_provincia: '',
+      cli_canton: '',
+      cli_parroquia: '',
+      cli_esactivo: true,
+    });
+  }
+  VerCliente() {
+    this.ClienteForms.get('cli_identificacion')?.disable();
+    this.ClienteForms.get('cli_nombres')?.disable();
+    this.ClienteForms.get('cli_tipo_identificacion')?.disable();
+    this.ClienteForms.get('cli_genero')?.disable();
+    this.ClienteForms.get('cli_estado_civil')?.disable();
+    this.ClienteForms.get('cli_ocupacion')?.disable();
+    this.ClienteForms.get('cli_fecha_nacimiento')?.disable();
+    this.ClienteForms.get('cli_score')?.disable();
+    this.ClienteForms.get('cli_fallecido')?.disable();
+    this.ClienteForms.get('cli_fecha_fallecido')?.disable();
+    this.ClienteForms.get('cli_observacion')?.disable();
+    this.ClienteForms.get('cli_provincia')?.disable();
+    this.ClienteForms.get('cli_canton')?.disable();
+    this.ClienteForms.get('cli_parroquia')?.disable();
+    this.ClienteForms.get('cli_esactivo')?.disable();
+    this.ModoVistaCliente = true;
+    (<HTMLElement>document.getElementById('ModalCliente')).classList.add(
+      'modal--show'
+    );
+    this.ClienteForms.patchValue({
+      id_cliente: this.ClienteSeleccionado!.id_cliente,
+      cli_identificacion: this.ClienteSeleccionado!.cli_identificacion,
+      cli_nombres: this.ClienteSeleccionado!.cli_nombres,
+      cli_tipo_identificacion:
+        this.ClienteSeleccionado!.cli_tipo_identificacion.toString(),
+      cli_genero: this.ClienteSeleccionado!.cli_genero,
+      cli_estado_civil: this.ClienteSeleccionado!.cli_estado_civil,
+      cli_ocupacion: this.ClienteSeleccionado!.cli_ocupacion,
+      cli_fecha_nacimiento: this.fechas.fechaCortaFormato(
+        this.ClienteSeleccionado!.cli_fecha_nacimiento
+      ),
+      cli_score: this.ClienteSeleccionado!.cli_score,
+      cli_fallecido:
+        this.ClienteSeleccionado!.cli_fallecido === '1' ? true : false,
+      cli_fecha_fallecido: this.fechas.fechaCortaFormato(
+        this.ClienteSeleccionado!.cli_fecha_fallecido
+      ),
+      cli_observacion: this.ClienteSeleccionado!.cli_observacion,
+      cli_provincia: this.ClienteSeleccionado!.cli_provincia,
+      cli_canton: this.ClienteSeleccionado!.cli_canton,
+      cli_parroquia: this.ClienteSeleccionado!.cli_parroquia,
+      cli_esactivo:
+        this.ClienteSeleccionado!.cli_esactivo === '1' ? true : false,
+    });
+  }
+
+  AbrirModalCliente() {
+    this.CreditosForms.patchValue({ cli_identificacion: '' });
+    this.ClienteInfo.patchValue('');
+    (<HTMLElement>document.getElementById('ModalCliente')).classList.add(
+      'modal--show'
+    );
+  }
+
+  CerrarModalCliente() {
+    this.ClienteForms.get('cli_identificacion')?.enable();
+    this.ClienteForms.get('cli_nombres')?.enable();
+    this.ClienteForms.get('cli_tipo_identificacion')?.enable();
+    this.ClienteForms.get('cli_genero')?.enable();
+    this.ClienteForms.get('cli_estado_civil')?.enable();
+    this.ClienteForms.get('cli_ocupacion')?.enable();
+    this.ClienteForms.get('cli_fecha_nacimiento')?.enable();
+    this.ClienteForms.get('cli_score')?.enable();
+    this.ClienteForms.get('cli_fallecido')?.enable();
+    this.ClienteForms.get('cli_fecha_fallecido')?.enable();
+    this.ClienteForms.get('cli_observacion')?.enable();
+    this.ClienteForms.get('cli_provincia')?.enable();
+    this.ClienteForms.get('cli_canton')?.enable();
+    this.ClienteForms.get('cli_parroquia')?.enable();
+    this.ClienteForms.get('cli_esactivo')?.enable();
+    this.ModoVistaCliente = false;
+    (<HTMLElement>document.getElementById('ModalCliente')).classList.remove(
+      'modal--show'
+    );
+    this.ResetClienteForms();
+  }
+
+
   // ****************************************** ENCERAR COMPONENTES *****************************************************************
   EncerarComponentes() {
+    this.CarterasList = [];
+    this.ClienteInfo.patchValue('');
+    this.ClienteSeleccionado = null;
+    this.ResetCreditosForms();
     this.loading = false;
+    this.itemBusqueda.patchValue('');
+    this.txtBusqueda.patchValue('');
+    this.TituloFormulario = '';
+    this.ActDesControles(0);
   }
 
    // ****************************************** PAGINACION *****************************************************************

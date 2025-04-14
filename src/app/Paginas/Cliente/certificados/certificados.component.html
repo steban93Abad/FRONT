@@ -68,14 +68,143 @@
                     </div>
                   </div>
                 </section>
+                <!-- FORMULARIO PARA VER ELEMENTOS -->
+                <section class="vertical-center" *ngIf="TituloFormulario != ''">
+                  <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                    <div class="card-header" style="background-color: var(--color-formulario-primario)">
+                      <button type="button" (click)="CerrarAgregarEditarElemento()"
+                        class="btn btn-close float-right"></button>
+                      <h2 class="Centrar">
+                        {{ TituloFormulario }} {{ PaginaNombre.toLocaleLowerCase() }}
+                      </h2>
+                    </div>
+                    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                      <form [formGroup]="CreditosForms">
+                        <div class="row">
+                          <div class="col-lg-4 col-12">
+                            <div class="row mb-3">
+                              <div class="col-lg-8 col-12">
+                                <div class="form-floating">
+                                  <input type="text" class="form-control" id="cli_identificacion" placeholder=""
+                                  formControlName="cli_identificacion" (keyup)="ClienteInfo.patchValue('')" />
+                                <label class="truncate-text"
+                                  for="cli_identificacion">Cedula/Ruc/Pasaporte</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
+                          <div class="col-lg-4 col-12">
+                            <div class="row mb-3">
+                              <div class="col-lg-10 col-9">
+                                <div class="form-floating">
+                                  <input type="text" class="form-control" id="clinombres" placeholder=""
+                                    [formControl]="ClienteInfo" />
+                                  <label class="truncate-text" for="clinombres">Nombres</label>
+                                </div>
+                              </div>
+                              <div class="col-lg-2 col-2">
+                                <small>
+                                  <button *ngIf="LecturaEscritura != 0" type="button" class="btnVer"
+                                  [disabled]="ClienteInfo.value == ''"  (click)="VerCliente()">
+                                    <i class="fa-solid fa-eye"></i>
+                                  </button>
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="cart_descripcion" placeholder=""
+                                formControlName="cart_descripcion"/>
+                              <label class="truncate-text" for="cart_descripcion">Cartera</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
+                                formControlName="ope_cod_credito"/>
+                              <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="ope_estado_contacta" placeholder=""
+                                formControlName="ope_estado_contacta" />
+                              <label class="truncate-text" for="ope_estado_contacta">Estado Contactabilidad</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="ope_descrip_unidad_gestion" placeholder=""
+                                formControlName="ope_descrip_unidad_gestion" />
+                              <label class="truncate-text" for="ope_descrip_unidad_gestion">Descripcion unidad gestion</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="cart_fecha_compra" placeholder=""
+                                formControlName="cart_fecha_compra" />
+                              <label class="truncate-text" for="cart_fecha_compra">Fecha de Compra de Cartera</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="ges_nombres" placeholder=""
+                                formControlName="ges_nombres" />
+                              <label class="truncate-text" for="ges_nombres">Gestor</label>
+                            </div>
+                          </div>
+
+                          <!-- <div class="col-lg-4 col-12">
+                            <div class="Centrar">
+                              <div class="btn-group">
+                                <div class="form-group">
+                                  <label class="truncate-text" for="ope_esactivo">Vista Previa</label>&nbsp;
+                                </div>
+                              </div>
+                            </div>
+                          </div> -->
+
+                        </div>
+                      </form>
+                    </div>
+
+                 <!--    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                      <form [formGroup]="CertificadoForms">
+                        
+                      </form>
+                    </div> -->
+
+                    <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
+                      <div class="row Centrar">
+                        <small>
+                          <button class="btnImprimir ml-3">
+                            Imprimir
+                          </button>
+                          <button class="btnCancelar ml-3" (click)="CerrarAgregarEditarElemento()">
+                            Cancelar
+                          </button>
+                        </small>
+                      </div>
+                    </div>
+
+                  </div>
+                </section>
 
                 <!-- FORMULARIO PARA LISTAR ELEMENTOS -->
-                <section class="expand-bottom">
-                    <div class="card-body" style="background-color: var(--color-formulario-secundario);"
-                      *ngIf="!loading ;else loadingOrError">
-                        <div class="card-footer" style="background-color: var(--color-formulario-terciario);" *ngIf="ListaCreditos.length != 0">
-                          <div class="float-right clearfix">
+                <section class="expand-bottom" *ngIf="TituloFormulario == ''">
+                  <div class="card-body" style="background-color: var(--color-formulario-secundario)"
+                    *ngIf="!loading; else loadingOrError">
+                    <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
+                      *ngIf="ListaCreditos.length != 0">
+                      <div class="float-right clearfix">
                             <div class="input-group">
                               <div class="input-group-prepend">
                                 <button type="button" class="btn btnOk btn-sm dropdown-toggle" data-toggle="dropdown"
@@ -129,15 +258,13 @@
                                   <th>{{ datos.cli_nombres }}</th>
                                   <th>{{ datos.ope_estado_contacta }}</th>
                                   <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
-                                  <th>{{ datos.cart_descripcion }}</th>
+                                  <th>{{ datos.ope_descrip_unidad_gestion }}</th>
                                   <th>{{datos.gest_fecha_gestion==null?null:fechas.fechaCortaAbt(datos.gest_fecha_gestion)}}</th>
                                   <th>
                                     <div class="btn-group" role="group">
-                                        <button class="btnVer">
-                                          <i class="fa-regular fa-eye"></i></button>
-                                        <!-- <button *ngIf="LecturaEscritura != 0" class="ml-2 btnEditar"
-                                            >
-                                            <i class="fa-solid fa-sack-dollar"></i></button> -->
+                                        <button class="btnVer" (click)="CargarElemento(datos, 3)">
+                                          <i class="fa-regular fa-eye"></i>
+                                        </button>
                                     </div>
                                   </th>
                                 </tr>
@@ -212,6 +339,173 @@
 </div>
 <app-footer></app-footer>
 
+<section class="modal" id="ModalCliente">
+  <div class="modal__container">
+    <div class="col-sm alert" style="background-color: var(--color-formulario-primario)">
+      <button type="button" (click)="CerrarModalCliente()" class="btn btn-close float-right"></button>
+      <h2 class="modal__title Centrar">
+        Ver Cliente
+      </h2>
+
+      <section class="vertical-center" *ngIf="TituloFormulario != ''">
+        <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+          <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+            <form [formGroup]="ClienteForms">
+              <div class="row">
+                <div class="col-md-2 col-12">
+                  <div class="form-group">
+                    <span><small>*</small>identificacion por</span>
+                    <select style="height: 35px;" class="form-select" formControlName="cli_tipo_identificacion">
+                      <option *ngFor="let s of TipoIdentificacion" [value]="s.value">
+                        {{s.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_identificacion" placeholder=""
+                      formControlName="cli_identificacion">
+                    <label for="cli_identificacion"><small>*</small>Identificacion</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_nombres" placeholder=""
+                      formControlName="cli_nombres">
+                    <label for="cli_nombres"><small>*</small>Nombres</label>
+                  </div>
+                </div>
+                <div class="col-md-2 col-12">
+                  <div class="form-group">
+                    <span>Genero</span>
+                    <select style="height: 35px;" class="form-select" formControlName="cli_genero">
+                      <option *ngFor="let s of Genero" [value]="s.value">
+                        {{s.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2 col-12">
+                  <div class="form-group">
+                    <span><small>*</small>Estado Civil</span>
+                    <select style="height: 35px;" class="form-select" formControlName="cli_estado_civil">
+                      <option *ngFor="let s of EstadoCivil" [value]="s.value">
+                        {{s.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_ocupacion" placeholder=""
+                      formControlName="cli_ocupacion">
+                    <label for="cli_ocupacion">Ocupacion</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="cli_fecha_nacimiento" placeholder=""
+                      formControlName="cli_fecha_nacimiento">
+                    <label for="cli_fecha_nacimiento"><small>*</small>Fecha de Nacimiento</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_score" placeholder="" formControlName="cli_score" />
+                    <label class="truncate-text" for="cli_score">Calificación</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="Centrar">
+                    <div class="btn-group">
+                      <div class="form-group">
+                        <label class="truncate-text" for="cli_fallecido">Fallecido</label>&nbsp;
+                        <div class="custom-control custom-switch Centrar" title="Fallecido">
+                          <input type="checkbox" class="custom-control-input" formControlName="cli_fallecido"
+                            name="fallecido" id="cli_fallecido" />
+                          <label class="custom-control-label" for="cli_fallecido">{{
+                            ClienteForms.get("cli_fallecido")!.value == false
+                            ? "NO"
+                            : "SI"
+                            }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="cli_fecha_fallecido" placeholder=""
+                      formControlName="cli_fecha_fallecido" />
+                    <label class="truncate-text" for="cli_fecha_fallecido">Fecha de defuncion</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_observacion" placeholder=""
+                      formControlName="cli_observacion" />
+                    <label class="truncate-text" for="cli_observacion">Observación</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_provincia" placeholder=""
+                      formControlName="cli_provincia" />
+                    <label class="truncate-text" for="cli_provincia">Provincia</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_canton" placeholder=""
+                      formControlName="cli_canton" />
+                    <label class="truncate-text" for="cli_canton">Canton</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="cli_parroquia" placeholder=""
+                      formControlName="cli_parroquia" />
+                    <label class="truncate-text" for="cli_parroquia">Parroquia</label>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-12">
+                  <div class="Centrar">
+                    <div class="btn-group">
+                      <div class="form-group">
+                        <label class="truncate-text" for="cli_esactivo">Estado</label>&nbsp;
+                        <div class="custom-control custom-switch Centrar" title="Estado">
+                          <input type="checkbox" class="custom-control-input" formControlName="cli_esactivo"
+                            name="estado" id="cli_esactivo" />
+                          <label class="custom-control-label" for="cli_esactivo">{{
+                            ClienteForms.get("cli_esactivo")!.value == false
+                            ? "Inactivo"
+                            : "Activo"
+                            }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
+            <div class="row Centrar">
+              <small>
+                <button class="btnCancelar ml-3" (click)="CerrarModalCliente()">
+                  Cancelar
+                </button>
+              </small>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
 <ng-template #loadingOrError>
   <section>
     <div class="ContenidoCentrado">
@@ -219,4 +513,20 @@
     </div>
   </section>
 </ng-template>
+
+<ng-template #loadingOrError1>
+  <section>
+    <div class="ContenidoCentrado">
+      <div class="loader1"></div>
+    </div>
+  </section>
+</ng-template>
+
+<section class="modal" id="Cargando">
+  <section>
+    <div class="CentroSobrepuesto">
+      <div class="loaderLogin"></div>
+    </div>
+  </section>
+</section>
 
