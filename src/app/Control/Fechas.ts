@@ -230,6 +230,23 @@ export class Fechas {
     // return `${dia}-${mesAbreviado}-${anio}`;
   }
 
+  getFechaEnLetras(dato: string) {
+    if(dato!){      
+      const fechaActual = new Date(dato);
+      const meses = [
+        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+      ];
+      const dia = fechaActual.getDate();
+      const mes = meses[fechaActual.getMonth()];
+      const anio = fechaActual.getFullYear();
+
+      return `${dia} de ${mes} de ${anio}`;
+    }else{
+      return null;
+    }
+  }
+
   // obtener el mes de una fecha
   // ExtraerMes(dato: Date) {
   //   console.log(dato)
