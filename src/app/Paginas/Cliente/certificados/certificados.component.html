@@ -193,9 +193,11 @@
                     <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
                       <div class="row Centrar">
                         <small>
-                          <button class="btnImprimir ml-3">
+                          <button class="btnImprimir ml-3"
+                          (click)="ImprimirObjeto(CreditosForms.value)">
                             Imprimir
-                          </button>
+                          </button> 
+                          
                           <button class="btnCancelar ml-3" (click)="CerrarAgregarEditarElemento()">
                             Cancelar
                           </button>

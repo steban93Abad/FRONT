@@ -7,6 +7,7 @@ import { Alertas } from 'src/app/Control/Alerts';
 import { Fechas } from 'src/app/Control/Fechas';
 import { TipoDeTexto } from 'src/app/Control/TipoDeTexto';
 import { GeneradorReporte } from 'src/app/Control/GeneradoReporte';
+import { GeneradorCertificado } from 'src/app/Control/GeneradoCertificado';
 import {
   ResultadoCarteraI,
   ResultadoGestorI,
@@ -20,6 +21,7 @@ import {
   generarPDF,
   ClienteI,
   GestorI,
+  generarCertificadoPDF,
 } from 'src/app/Modelos/response.interface';
 import { ApiService } from 'src/app/service/api.service';
 
@@ -36,6 +38,7 @@ export class CertificadosComponent implements OnInit {
     public fechas: Fechas,
     private cookeService: CookieService,
     private router: Router,public reporte:GeneradorReporte,
+    public certificado:GeneradorCertificado,
     public validar: TipoDeTexto
   ) {}
 
@@ -54,7 +57,7 @@ export class CertificadosComponent implements OnInit {
   LecturaEscritura: number = Number(this.PaginaActual.men_lectura);
   PaginaNombre: string = this.PaginaActual.men_descripcion;
   loading: boolean = false;
-  gCredito!:generarPDF;
+  gCredito!:generarCertificadoPDF;
   CarteraGestor: any[] = [];
   TodasCarteras: number[] = [];
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
@@ -104,7 +107,6 @@ export class CertificadosComponent implements OnInit {
     }
 
     this.ListaCreditos = [];
-    let listadoObjeto:any[] = [];
     this.loading = true;
     this.api
       .GetCreditoFracionado(this.FraccionDatos, this.RangoDatos)
@@ -260,8 +262,16 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
     }
-    if (num === 2) {
+    if (num === 1) {
       // imprimir
+      this.CreditosForms.get('cart_descripcion')?.enable();
+      this.CreditosForms.get('cart_fecha_compra')?.enable();
+      this.CreditosForms.get('ope_cod_credito')?.enable();
+      this.CreditosForms.get('cli_nombres')?.enable();
+      this.CreditosForms.get('cli_identificacion')?.enable();
+    }
+    if (num === 2) {
+      //edicion
       this.CreditosForms.get('cart_descripcion')?.enable();
       this.CreditosForms.get('cart_fecha_compra')?.enable();
       this.CreditosForms.get('ope_cod_credito')?.enable();
@@ -271,7 +281,11 @@ export class CertificadosComponent implements OnInit {
   }
 
   AgregarEditarElemento(num: number) {
-
+    if (num === 2) {
+      this.ActDesControles(0);
+      this.TituloFormulario = 'Imprimir';
+      this.ActDesControles(2);
+    }
     if (num === 3) {
       this.TituloFormulario = 'Visualizar';
       this.ActDesControles(0);
@@ -302,9 +316,22 @@ export class CertificadosComponent implements OnInit {
   }
 
   ImprimirObjeto(datos: any) {
-    if (this.TituloFormulario === 'Editar') {
-      datos.id_cxc_operacion = Number(datos.id_cxc_operacion);
-    }
+    let listadoObjeto:any[] = [];
+      let ocD: any = {
+        CarteraNom: datos.cart_descripcion,
+        FechaCompra: datos.cart_fecha_compra,
+        Identificacion:datos.cli_identificacion,
+        Nombres: datos.cli_nombres,
+        CodCredito: datos.ope_cod_credito,
+      }
+      listadoObjeto.push(ocD);
+      let om: generarCertificadoPDF = {
+        entidad: 'Credito', listado: listadoObjeto
+      };
+      this.gCredito=om;
+      console.log(listadoObjeto)
+      this.certificado.generarCertificadoPDF(this.gCredito);
+      console.log(this.certificado.generarCertificadoPDF(this.gCredito))
   }
 
 // ****************************************** OTROS ELEMENTOS *****************************************************************

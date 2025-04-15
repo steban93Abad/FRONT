@@ -1174,3 +1174,8 @@ export interface generarPDF {
   entidad: string;
   listado:any[];
 }
+
+export interface generarCertificadoPDF {
+  entidad: string;
+  listado:any[];
+}
