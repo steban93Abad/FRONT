@@ -112,7 +112,7 @@ export class CertificadosComponent implements OnInit {
         map((tracks) => {
           this.ListaCreditos = tracks['data'];
           this.DatosTemporalesBusqueda = tracks['data'];
-          
+
           if (this.ListaCreditos.length === 0) {
             this.loading = false;
             this.alerta.NoExistenDatos();
@@ -208,8 +208,9 @@ export class CertificadosComponent implements OnInit {
 
   CreditosForms = new FormGroup({
     id_cxc_operacion: new FormControl(0),
-    ope_cod_credito: new FormControl(''),    
+    ope_cod_credito: new FormControl(''),
     cli_identificacion: new FormControl(''),
+    cli_nombres: new FormControl(''),
     cart_descripcion: new FormControl(''),
     ope_estado_contacta: new FormControl(''),
     ope_descrip_unidad_gestion: new FormControl(''),
@@ -222,6 +223,7 @@ export class CertificadosComponent implements OnInit {
       id_cxc_operacion: 0,
       ope_cod_credito: '',
       cli_identificacion: '',
+      cli_nombres: '',
       cart_descripcion: '',
       ope_estado_contacta: '',
       ope_descrip_unidad_gestion: '',
@@ -251,16 +253,26 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('id_cxc_operacion')?.disable();
       this.CreditosForms.get('ope_cod_credito')?.disable();
       this.CreditosForms.get('cli_identificacion')?.disable();
+      this.CreditosForms.get('cli_nombres')?.disable();
       this.CreditosForms.get('cart_descripcion')?.disable();
       this.CreditosForms.get('ope_estado_contacta')?.disable();
       this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
     }
+    if (num === 2) {
+      // imprimir
+      this.CreditosForms.get('cart_descripcion')?.enable();
+      this.CreditosForms.get('cart_fecha_compra')?.enable();
+      this.CreditosForms.get('ope_cod_credito')?.enable();
+      this.CreditosForms.get('cli_nombres')?.enable();
+      this.CreditosForms.get('cli_identificacion')?.enable();
+    }
   }
 
   AgregarEditarElemento(num: number) {
-    if (num === 1) {
+
+    if (num === 3) {
       this.TituloFormulario = 'Visualizar';
       this.ActDesControles(0);
     }
@@ -273,8 +285,9 @@ export class CertificadosComponent implements OnInit {
   CargarElemento(datos: any, num: number) {
     this.CreditosForms.patchValue({
       id_cxc_operacion: datos.id_cxc_operacion,
-      ope_cod_credito: datos.ope_cod_credito,    
+      ope_cod_credito: datos.ope_cod_credito,
       cli_identificacion: datos.cli_identificacion,
+      cli_nombres: datos.cli_nombres,
       cart_descripcion: datos.cart_descripcion,
       ope_estado_contacta: datos.ope_estado_contacta,
       ope_descrip_unidad_gestion: datos.ope_descrip_unidad_gestion,
@@ -290,6 +303,7 @@ export class CertificadosComponent implements OnInit {
 
   ImprimirObjeto(datos: any) {
     if (this.TituloFormulario === 'Editar') {
+      datos.id_cxc_operacion = Number(datos.id_cxc_operacion);
     }
   }
 

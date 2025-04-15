@@ -114,6 +114,14 @@
                             </div>
                           </div>
 
+                          <div class="col-lg-4 col-12" hidden>
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="cli_nombres" placeholder=""
+                                formControlName="cli_nombres"/>
+                              <label class="truncate-text" for="cli_nombres">Nombres</label>
+                            </div>
+                          </div>
+
                           <div class="col-lg-4 col-12">
                             <div class="form-floating mb-3">
                               <input type="text" class="form-control" id="cart_descripcion" placeholder=""
@@ -178,7 +186,7 @@
 
                  <!--    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
                       <form [formGroup]="CertificadoForms">
-                        
+
                       </form>
                     </div> -->
 
@@ -258,11 +266,11 @@
                                   <th>{{ datos.cli_nombres }}</th>
                                   <th>{{ datos.ope_estado_contacta }}</th>
                                   <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
-                                  <th>{{ datos.ope_descrip_unidad_gestion }}</th>
+                                  <th>{{ datos.cart_descripcion }}</th>
                                   <th>{{datos.gest_fecha_gestion==null?null:fechas.fechaCortaAbt(datos.gest_fecha_gestion)}}</th>
                                   <th>
                                     <div class="btn-group" role="group">
-                                        <button class="btnVer" (click)="CargarElemento(datos, 1)">
+                                        <button class="btnVer" (click)="CargarElemento(datos, 3)">
                                           <i class="fa-regular fa-eye"></i>
                                         </button>
                                     </div>
