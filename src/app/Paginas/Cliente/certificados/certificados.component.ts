@@ -260,7 +260,7 @@ export class CertificadosComponent implements OnInit {
   }
 
   AgregarEditarElemento(num: number) {
-    if (num === 3) {
+    if (num === 1) {
       this.TituloFormulario = 'Visualizar';
       this.ActDesControles(0);
     }
@@ -286,6 +286,11 @@ export class CertificadosComponent implements OnInit {
       this.BuscarCliente(datos.cli_identificacion);
     }
     this.AgregarEditarElemento(num);
+  }
+
+  ImprimirObjeto(datos: any) {
+    if (this.TituloFormulario === 'Editar') {
+    }
   }
 
 // ****************************************** OTROS ELEMENTOS *****************************************************************
