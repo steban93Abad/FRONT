@@ -34,7 +34,7 @@ export interface CarteraI {
   cart_fecha_compra: Date;
 }
 
-export interface CertificadosI {
+export interface CertificadoI {
   id_certificado: number;
   id_gestor: number;
   ope_cod_credito: string;
@@ -53,6 +53,25 @@ export interface CertificadosI {
   cert_baseactual: string;
   cert_origendatos: string;
   cert_url_certificado: string;
+}
+
+export interface Certificado_HistorialI {
+  id_certificado_hist: number;
+  id_gestor: number;
+  ope_cod_credito: string;
+  cert_hist_gestor_in: string;
+  cert_hist_gestor_up: string;
+  cert_hist_gestor_rem: string;
+  cert_hist_gestor_act: string;
+  cert_hist_gestor_desact: string;
+  cert_hist_fecha_act: Date;
+  cert_hist_fecha_desact: Date;
+  cert_hist_fecha_in: Date;
+  cert_hist_fecha_up: Date;
+  cert_hist_esactivo: string;
+  cert_hist_mes_descarga: string;
+  cert_hist_baseactual: string;
+  cert_hist_origendatos: string;
 }
 
 export interface ClienteI {

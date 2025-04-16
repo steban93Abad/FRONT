@@ -18,6 +18,7 @@ import {
   ContactabilidadI,
   FiltroGestion,
   CxcOperacionI,
+  CertificadoI,
   generarPDF,
   ClienteI,
   GestorI,

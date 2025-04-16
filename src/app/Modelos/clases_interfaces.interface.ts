@@ -5,7 +5,8 @@ import {
   CarteraI,
   CarteraIC,
   ClienteCarteraI,
-  CertificadosI,
+  CertificadoI,
+  Certificado_HistorialI,
   ClienteGestorCarteraI,
   ClienteI,
   ConectividadI,
@@ -437,7 +438,7 @@ export class clsCartera implements CarteraI {
   }
 }
 
-export class clsCertificados implements CertificadosI {
+export class clsCertificado implements CertificadoI {
   id_certificado: number;
   id_gestor: number;
   ope_cod_credito: string;
@@ -478,7 +479,43 @@ export class clsCertificados implements CertificadosI {
     this.cert_url_certificado = '';
   }
 }
+export class clsCertificado_Historial implements Certificado_HistorialI {
+  id_certificado_hist: number;
+  id_gestor: number;
+  ope_cod_credito: string;
+  cert_hist_gestor_in: string;
+  cert_hist_gestor_up: string;
+  cert_hist_gestor_rem: string;
+  cert_hist_gestor_act: string;
+  cert_hist_gestor_desact: string;
+  cert_hist_fecha_act: Date;
+  cert_hist_fecha_desact: Date;
+  cert_hist_fecha_in: Date;
+  cert_hist_fecha_up: Date;
+  cert_hist_esactivo: string;
+  cert_hist_mes_descarga: string;
+  cert_hist_baseactual: string;
+  cert_hist_origendatos: string;
 
+  constructor() {
+    this.id_certificado_hist = 0;
+    this.id_gestor = 0;
+    this.ope_cod_credito = '';
+    this.cert_hist_gestor_in = '';
+    this.cert_hist_gestor_up = '';
+    this.cert_hist_gestor_rem = '';
+    this.cert_hist_gestor_act = '';
+    this.cert_hist_gestor_desact = '';
+    this.cert_hist_fecha_act = new Date();
+    this.cert_hist_fecha_desact = new Date();
+    this.cert_hist_fecha_in = new Date();
+    this.cert_hist_fecha_up = new Date();
+    this.cert_hist_esactivo = '';
+    this.cert_hist_mes_descarga = '';
+    this.cert_hist_baseactual = '';
+    this.cert_hist_origendatos = '';
+  }
+}
 export class clsCliente implements ClienteI {
   id_cliente: number;
   cli_identificacion: string;

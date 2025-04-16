@@ -16,6 +16,7 @@ import {
   AsignacionFiltroI,
   CXC_OperacionI,
   CarteraI,
+  CertificadoI,
   ClienteGestorCarteraI,
   ClienteI,
   ConectividadI,
@@ -293,6 +294,30 @@ export class ApiService {
       })
     );
   }
+
+  //********************* CERTIFICADOS *********************** */
+  PostCertificado(elemento: CertificadoI): Observable<any> {
+    let Encryptado: EntidadEncriptado = {
+      valor: this.objeto.encriptarAES(elemento),
+    };
+    let direccion = this.url + 'Certificado';
+    return this.http.post<any>(direccion, Encryptado).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
+
+        throw error;
+      })
+    );
+  }
+
   //********************* CLIENTES *********************** */
   GetClienteFracionado(codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'Cliente/Todos' + codigo + ',' + rango;

@@ -170,6 +170,14 @@
                             </div>
                           </div>
 
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="cert_comentario"
+                                    placeholder="" formControlName="cert_comentario">
+                                <label class="truncate-text" for="cert_comentario"> Comentario</label>
+                            </div>
+                          </div>
+
                           <!-- <div class="col-lg-4 col-12">
                             <div class="Centrar">
                               <div class="btn-group">
@@ -269,7 +277,7 @@
                                   <th>{{ datos.ope_estado_contacta }}</th>
                                   <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                                   <th>{{ datos.cart_descripcion }}</th>
-                                  <th>{{datos.gest_fecha_gestion==null?null:fechas.fechaCortaAbt(datos.gest_fecha_gestion)}}</th>
+                                  <th>{{datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion)}}</th>
                                   <th>
                                     <div class="btn-group" role="group">
                                         <button class="btnVer" (click)="CargarElemento(datos, 3)">
