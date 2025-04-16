@@ -68,9 +68,10 @@ export class GeneradorCertificado {
             
                 const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por la Operación N° ${datos.CodCredito}.`;
                 doc.text(doc.splitTextToSize(texto2, 400), 75, 415, {maxWidth: 445, align: "justify"});
-            
+                            
                 const texto3 = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para POLCOMP CIA. LTDA., ni para ninguno de sus funcionarios.`;
                 doc.text(doc.splitTextToSize(texto3, 450), 75, 475, {maxWidth: 445, align: "justify"});
+            
 
                 // Firma
                 doc.addImage(firma, 'PNG', 235, 540, 120, 60); // Ajustar tamaño según resolución real
