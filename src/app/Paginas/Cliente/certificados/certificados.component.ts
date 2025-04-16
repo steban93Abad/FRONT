@@ -307,7 +307,7 @@ export class CertificadosComponent implements OnInit {
       ope_estado_contacta: datos.ope_estado_contacta,
       ope_descrip_unidad_gestion: datos.ope_descrip_unidad_gestion,
       cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
-      ges_nombres: datos.ges_nombres
+      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos
     });
     if (num != 1) {
       this.ListarCarteras();
