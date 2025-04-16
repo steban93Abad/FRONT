@@ -224,6 +224,7 @@ export class CertificadosComponent implements OnInit {
     cert_esactivo: new FormControl(true),
     cert_esdescargado: new FormControl(true),
     cert_baseactual: new FormControl(true),
+    cert_url_certificado: new FormControl(''),
   });
 
   ResetCreditosForms() {
@@ -242,6 +243,7 @@ export class CertificadosComponent implements OnInit {
       cert_esactivo: true,
       cert_esdescargado: true,
       cert_baseactual: true,
+      cert_url_certificado: '',
     });
   }
 
@@ -274,6 +276,7 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
       this.CreditosForms.get('id_gestor')?.disable();
+      this.CreditosForms.get('cert_url_certificado')?.disable();
     }
     if (num === 1) {
       // imprimir
@@ -287,6 +290,7 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('cert_esactivo')?.enable();
       this.CreditosForms.get('cert_esdescargado')?.enable();
       this.CreditosForms.get('cert_baseactual')?.enable();
+      this.CreditosForms.get('cert_url_certificado')?.disable();
     }
     if (num === 2) {
       //edicion
