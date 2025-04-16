@@ -69,8 +69,9 @@
                   </div>
                 </section>
                 <!-- FORMULARIO PARA VER ELEMENTOS -->
-                <section class="vertical-center" *ngIf="TituloFormulario != ''">
+                <section class="vertical-center" *ngIf="TituloFormulario != ''">\
                   <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                    <!-- Ver Informacion Credito  -->
                     <div class="card-header" style="background-color: var(--color-formulario-primario)">
                       <button type="button" (click)="CerrarAgregarEditarElemento()"
                         class="btn btn-close float-right"></button>
@@ -170,14 +171,6 @@
                             </div>
                           </div>
 
-                          <div class="col-lg-4 col-12">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="cert_comentario"
-                                    placeholder="" formControlName="cert_comentario">
-                                <label class="truncate-text" for="cert_comentario">Comentario</label>
-                            </div>
-                          </div>
-
                           <!-- <div class="col-lg-4 col-12">
                             <div class="Centrar">
                               <div class="btn-group">
@@ -188,11 +181,63 @@
                             </div>
                           </div> -->
 
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="id_gestor" placeholder=""
+                                    formControlName="id_gestor">
+                                <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
+                                <Section>
+                                  <div class="error-message" *ngIf="CreditosForms.get('id_gestor')?.hasError('required') 
+                                  && CreditosForms.get('id_gestor')?.touched">
+                                      <span style="color: brown;">*Campo obligatorio.</span>
+                                  </div>
+                              </Section>
+                            </div>
+                          </div>
+                        </div>
+
+                         <!-- AGREGAR CERTIFICADO FORMULARIO -->
+                        <div class="card-header" style="background-color: var(--color-formulario-primario);">
+                          <h2 class="Centrar">Elaborar Certificado</h2>
+                        </div>
+
+                        <div class="table-responsive-md alert">
+                          <div class="row">
+    
+                            <div class="col-lg-4 col-12">
+                              <div class="form-floating mb-3">
+                                  <input type="text" class="form-control" id="cert_comentario"
+                                      placeholder="" formControlName="cert_comentario">
+                                  <label class="truncate-text" for="cert_comentario">Comentario</label>
+                              </div>
+                            </div>
+    
+                            <div class="col-lg-4 col-12">
+                                <div class="Centrar">
+                                    <div class="btn-group">
+                                        <div class="form-group">
+                                            <label class="truncate-text" for="cert_esactivo">Estado</label>&nbsp;
+                                            <div class="custom-control custom-switch Centrar"
+                                                title="Estado">
+                                                <input type="checkbox" class="custom-control-input"
+                                                    formControlName="cert_esactivo" name="estado"
+                                                    id="cert_esactivo">
+                                                <label class="custom-control-label"
+                                                  for="cert_esactivo">{{CreditosForms.get('cert_esactivo')!.value
+                                                  == false ?
+                                                  'Inactivo' : 'Activo'}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                          </div>
                         </div>
                       </form>
                     </div>
 
-                 <!--    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                    <!--    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
                       <form [formGroup]="CertificadoForms">
 
                       </form>

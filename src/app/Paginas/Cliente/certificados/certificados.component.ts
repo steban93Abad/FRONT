@@ -219,6 +219,11 @@ export class CertificadosComponent implements OnInit {
     ope_descrip_unidad_gestion: new FormControl(''),
     cart_fecha_compra: new FormControl(''),
     ges_nombres: new FormControl(''),
+    id_gestor: new FormControl(0, Validators.required),
+    cert_comentario: new FormControl(''),
+    cert_esactivo: new FormControl(true),
+    cert_esdescargado: new FormControl(true),
+    cert_baseactual: new FormControl(true),
   });
 
   ResetCreditosForms() {
@@ -232,9 +237,15 @@ export class CertificadosComponent implements OnInit {
       ope_descrip_unidad_gestion: '',
       cart_fecha_compra: '',
       ges_nombres: '',
+      id_gestor: 0,
+      cert_comentario: '',
+      cert_esactivo: true,
+      cert_esdescargado: true,
+      cert_baseactual: true,
     });
   }
 
+  /*
   CertificadoForms = new FormGroup({
     id_certificado: new FormControl(0, Validators.required),
     id_gestor: new FormControl(0, Validators.required),
@@ -248,7 +259,7 @@ export class CertificadosComponent implements OnInit {
     cert_origendatos: new FormControl('Sistema_CobroSys'),
     cert_url_certificado: new FormControl('')
   });
-
+  */
 
   ActDesControles(num: number) {
     if (num === 0) {
@@ -262,6 +273,7 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
+      this.CreditosForms.get('id_gestor')?.disable();
     }
     if (num === 1) {
       // imprimir
@@ -270,6 +282,11 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('ope_cod_credito')?.enable();
       this.CreditosForms.get('cli_nombres')?.enable();
       this.CreditosForms.get('cli_identificacion')?.enable();
+      this.CreditosForms.get('id_gestor')?.enable();
+      this.CreditosForms.get('cert_comentario')?.enable();
+      this.CreditosForms.get('cert_esactivo')?.enable();
+      this.CreditosForms.get('cert_esdescargado')?.enable();
+      this.CreditosForms.get('cert_baseactual')?.enable();
     }
     if (num === 2) {
       //edicion
@@ -278,6 +295,11 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('ope_cod_credito')?.enable();
       this.CreditosForms.get('cli_nombres')?.enable();
       this.CreditosForms.get('cli_identificacion')?.enable();
+      this.CreditosForms.get('id_gestor')?.enable();
+      this.CreditosForms.get('cert_comentario')?.enable();
+      this.CreditosForms.get('cert_esactivo')?.enable();
+      this.CreditosForms.get('cert_esdescargado')?.enable();
+      this.CreditosForms.get('cert_baseactual')?.enable();
     }
   }
 
@@ -307,7 +329,8 @@ export class CertificadosComponent implements OnInit {
       ope_estado_contacta: datos.ope_estado_contacta,
       ope_descrip_unidad_gestion: datos.ope_descrip_unidad_gestion,
       cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
-      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos
+      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
+      id_gestor: datos.id_gestor
     });
     if (num != 1) {
       this.ListarCarteras();
@@ -317,6 +340,11 @@ export class CertificadosComponent implements OnInit {
   }
 
   ImprimirObjeto(datos: any) {
+    datos.id_gestor = Number(datos.id_gestor);
+    datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+    datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
+    datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+
     let listadoObjeto:any[] = [];
       let ocD: any = {
         CarteraNom: datos.cart_descripcion,
@@ -330,9 +358,7 @@ export class CertificadosComponent implements OnInit {
         entidad: 'Credito', listado: listadoObjeto
       };
       this.gCredito=om;
-      console.log(listadoObjeto)
       this.certificado.generarCertificadoPDF(this.gCredito);
-      console.log(this.certificado.generarCertificadoPDF(this.gCredito))
   }
 
 // ****************************************** OTROS ELEMENTOS *****************************************************************
