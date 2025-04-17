@@ -273,10 +273,6 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
-      /*
-      this.CreditosForms.get('id_gestor')?.disable();
-      this.CreditosForms.get('cert_url_certificado')?.disable();
-      */
     }
     if (num === 1) {
       // imprimir
@@ -352,59 +348,23 @@ export class CertificadosComponent implements OnInit {
   }
 
   ImprimirObjeto(datos: any) {
-
-    /*
-    datos.id_gestor = Number(datos.id_gestor);
-    datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
-    datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
-    datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
-    */
-      let listadoObjeto:any[] = [];
-      let ocD: any = {
-        CarteraNom: datos.cart_descripcion,
-        FechaCompra: datos.cart_fecha_compra,
-        Identificacion:datos.cli_identificacion,
-        Nombres: datos.cli_nombres,
-        CodCredito: datos.ope_cod_credito,
-      }
-      listadoObjeto.push(ocD);
-      let om: generarCertificadoPDF = {
-        entidad: 'Credito', listado: listadoObjeto
-      };
-      this.gCredito=om;
-      this.certificado.generarCertificadoPDF(this.gCredito);
-      /*
-      this.api
-      .PostCertificado(datos)
-      .pipe(
-        map((tracks) => {
-          const exito = tracks['exito'];
-          if (exito == 1) {
-            this.ListarElementos(1);
-            this.CerrarAgregarEditarElemento();
-            this.EncerarComponentes();
-            // this.TextoFiltro.patchValue('');
-            this.alerta.RegistroAgregado();
-          } else {
-            this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
-            this.ActDesControles(0);
-            this.ActDesControles(2);
-          }
-        }),
-        catchError((error) => {
-          this.alerta.ErrorEnLaOperacion();
-          this.ActDesControles(0);
-          this.ActDesControles(2);
-          console.log(error);
-          throw new Error(error);
-        })
-      )
-      .subscribe();
-      */
+    let listadoObjeto:any[] = [];
+    let ocD: any = {
+      CarteraNom: datos.cart_descripcion,
+      FechaCompra: datos.cart_fecha_compra,
+      Identificacion:datos.cli_identificacion,
+      Nombres: datos.cli_nombres,
+      CodCredito: datos.ope_cod_credito,
+    }
+    listadoObjeto.push(ocD);
+    let om: generarCertificadoPDF = {
+      entidad: 'Credito', listado: listadoObjeto
+    };
+    this.gCredito=om;
+    this.certificado.generarCertificadoPDF(this.gCredito);
   }
 
   GuardarObjeto(datos: any) {
-      //datos.id_gestor = Number(datos.id_gestor);
       datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
       datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
       datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
