@@ -180,74 +180,89 @@
                               </div>
                             </div>
                           </div> -->
+                        </div>
+                      </form>
+                    </div>
 
+                     <!-- AGREGAR CERTIFICADO FORMULARIO -->
+                    <div class="card-header" style="background-color: var(--color-formulario-primario);">
+                      <h2 class="Centrar">Elaborar Certificado</h2>
+                    </div> 
+
+                    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                      <form [formGroup]="CertificadoForms">
+                        <div class="row">
+    
                           <div class="col-lg-4 col-12">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="id_gestor" placeholder=""
                                     formControlName="id_gestor">
                                 <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
                                 <Section>
-                                  <div class="error-message" *ngIf="CreditosForms.get('id_gestor')?.hasError('required') 
-                                  && CreditosForms.get('id_gestor')?.touched">
+                                  <div class="error-message" *ngIf="CertificadoForms.get('id_gestor')?.hasError('required') 
+                                  && CertificadoForms.get('id_gestor')?.touched">
                                       <span style="color: brown;">*Campo obligatorio.</span>
                                   </div>
+                                </Section>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
+                                formControlName="ope_cod_credito"/>
+                              <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
+                              <Section>
+                                <div class="error-message" *ngIf="CertificadoForms.get('ope_cod_credito')?.hasError('required') 
+                                && CertificadoForms.get('ope_cod_credito')?.touched">
+                                  <span style="color: brown;">*Campo obligatorio.</span>
+                                </div>
+                                <div class="error-message"
+                                  *ngIf="CertificadoForms.get('ope_cod_credito')?.value != ''
+                                                  ? validar.V_AlfaNumerico(CertificadoForms.get('ope_cod_credito')?.value!)  === false:null ">
+                                  <span style="color: brown;">*Caracteres no permitidos</span>
+                                </div>
                               </Section>
                             </div>
                           </div>
-                        </div>
 
-                         <!-- AGREGAR CERTIFICADO FORMULARIO -->
-                        <div class="card-header" style="background-color: var(--color-formulario-primario);">
-                          <h2 class="Centrar">Elaborar Certificado</h2>
-                        </div>
-
-                        <div class="table-responsive-md alert">
-                          <div class="row">
-    
-                            <div class="col-lg-4 col-12">
-                              <div class="form-floating mb-3">
-                                  <input type="text" class="form-control" id="cert_comentario"
-                                      placeholder="" formControlName="cert_comentario">
-                                  <label class="truncate-text" for="cert_comentario">Comentario</label>
-                              </div>
+                          <div class="col-lg-4 col-12">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="cert_comentario"
+                                    placeholder="" formControlName="cert_comentario">
+                                <label class="truncate-text" for="cert_comentario">Comentario</label>
                             </div>
-    
-                            <div class="col-lg-4 col-12">
-                                <div class="Centrar">
-                                    <div class="btn-group">
-                                        <div class="form-group">
-                                            <label class="truncate-text" for="cert_esactivo">Estado</label>&nbsp;
-                                            <div class="custom-control custom-switch Centrar"
-                                                title="Estado">
-                                                <input type="checkbox" class="custom-control-input"
-                                                    formControlName="cert_esactivo" name="estado"
-                                                    id="cert_esactivo">
-                                                <label class="custom-control-label"
-                                                  for="cert_esactivo">{{CreditosForms.get('cert_esactivo')!.value
-                                                  == false ?
-                                                  'Inactivo' : 'Activo'}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                           </div>
+  
+                          <div class="col-lg-4 col-12">
+                              <div class="Centrar">
+                                  <div class="btn-group">
+                                      <div class="form-group">
+                                          <label class="truncate-text" for="cert_esactivo">Estado</label>&nbsp;
+                                          <div class="custom-control custom-switch Centrar"
+                                              title="Estado">
+                                              <input type="checkbox" class="custom-control-input"
+                                                  formControlName="cert_esactivo" name="estado"
+                                                  id="cert_esactivo">
+                                              <label class="custom-control-label"
+                                                for="cert_esactivo">{{CertificadoForms.get('cert_esactivo')!.value
+                                                == false ?
+                                                'Inactivo' : 'Activo'}}</label>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
                         </div>
                       </form>
-                    </div>
-
-                    <!--    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
-                      <form [formGroup]="CertificadoForms">
-
-                      </form>
-                    </div> -->
+                    </div> 
 
                     <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
                       <div class="row Centrar">
                         <small>
                           <button class="btnImprimir ml-3"
-                          (click)="ImprimirObjeto(CreditosForms.value)">
+                          (click)="ImprimirObjeto(CreditosForms.value);GuardarObjeto(CertificadoForms.value)">
                             Imprimir
                           </button> 
                           
@@ -325,7 +340,7 @@
                                   <th>{{datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion)}}</th>
                                   <th>
                                     <div class="btn-group" role="group">
-                                        <button class="btnVer" (click)="CargarElemento(datos, 3)">
+                                        <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoGestor(datos, 3)">
                                           <i class="fa-regular fa-eye"></i>
                                         </button>
                                     </div>

@@ -219,12 +219,6 @@ export class CertificadosComponent implements OnInit {
     ope_descrip_unidad_gestion: new FormControl(''),
     cart_fecha_compra: new FormControl(''),
     ges_nombres: new FormControl(''),
-    id_gestor: new FormControl(0, Validators.required),
-    cert_comentario: new FormControl(''),
-    cert_esactivo: new FormControl(true),
-    cert_esdescargado: new FormControl(true),
-    cert_baseactual: new FormControl(true),
-    cert_url_certificado: new FormControl(''),
   });
 
   ResetCreditosForms() {
@@ -238,30 +232,34 @@ export class CertificadosComponent implements OnInit {
       ope_descrip_unidad_gestion: '',
       cart_fecha_compra: '',
       ges_nombres: '',
-      id_gestor: 0,
-      cert_comentario: '',
-      cert_esactivo: true,
-      cert_esdescargado: true,
-      cert_baseactual: true,
-      cert_url_certificado: '',
     });
   }
 
-  /*
   CertificadoForms = new FormGroup({
     id_certificado: new FormControl(0, Validators.required),
     id_gestor: new FormControl(0, Validators.required),
-    ope_cod_credito: new FormControl(''),
+    ope_cod_credito: new FormControl('',[Validators.required,this.validar.VFN_AlfaNumerico()]),
     cert_comentario: new FormControl(''),
-    cert_fecha_in: new FormControl(this.fechas.fecha()),
-    cert_fecha_up: new FormControl(this.fechas.fecha()),
     cert_esactivo: new FormControl(true),
     cert_esdescargado: new FormControl(true),
     cert_baseactual: new FormControl(true),
     cert_origendatos: new FormControl('Sistema_CobroSys'),
     cert_url_certificado: new FormControl('')
   });
-  */
+
+  ResetCertificadoForms() {
+    this.CertificadoForms.reset({
+      id_certificado: 0,
+      id_gestor: 0,
+      ope_cod_credito: '',
+      cert_comentario: '',
+      cert_esactivo: true,
+      cert_esdescargado: true,
+      cert_baseactual: true,
+      cert_origendatos: 'Sistema_CobroSys',
+      cert_url_certificado: '',
+    });
+  }
 
   ActDesControles(num: number) {
     if (num === 0) {
@@ -275,8 +273,10 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
+      /*
       this.CreditosForms.get('id_gestor')?.disable();
       this.CreditosForms.get('cert_url_certificado')?.disable();
+      */
     }
     if (num === 1) {
       // imprimir
@@ -333,8 +333,7 @@ export class CertificadosComponent implements OnInit {
       ope_estado_contacta: datos.ope_estado_contacta,
       ope_descrip_unidad_gestion: datos.ope_descrip_unidad_gestion,
       cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
-      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
-      id_gestor: datos.id_gestor
+      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos
     });
     if (num != 1) {
       this.ListarCarteras();
@@ -343,13 +342,24 @@ export class CertificadosComponent implements OnInit {
     this.AgregarEditarElemento(num);
   }
 
+  CargarElementoGestor(datos: any, num: number) {
+    this.CertificadoForms.patchValue({
+      id_gestor: datos.id_gestor,
+      ope_cod_credito: datos.ope_cod_credito
+    });
+
+    this.AgregarEditarElemento(num);
+  }
+
   ImprimirObjeto(datos: any) {
+
+    /*
     datos.id_gestor = Number(datos.id_gestor);
     datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
     datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
     datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
-
-    let listadoObjeto:any[] = [];
+    */
+      let listadoObjeto:any[] = [];
       let ocD: any = {
         CarteraNom: datos.cart_descripcion,
         FechaCompra: datos.cart_fecha_compra,
@@ -363,6 +373,65 @@ export class CertificadosComponent implements OnInit {
       };
       this.gCredito=om;
       this.certificado.generarCertificadoPDF(this.gCredito);
+      /*
+      this.api
+      .PostCertificado(datos)
+      .pipe(
+        map((tracks) => {
+          const exito = tracks['exito'];
+          if (exito == 1) {
+            this.ListarElementos(1);
+            this.CerrarAgregarEditarElemento();
+            this.EncerarComponentes();
+            // this.TextoFiltro.patchValue('');
+            this.alerta.RegistroAgregado();
+          } else {
+            this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+            this.ActDesControles(0);
+            this.ActDesControles(2);
+          }
+        }),
+        catchError((error) => {
+          this.alerta.ErrorEnLaOperacion();
+          this.ActDesControles(0);
+          this.ActDesControles(2);
+          console.log(error);
+          throw new Error(error);
+        })
+      )
+      .subscribe();
+      */
+  }
+
+  GuardarObjeto(datos: any) {
+      //datos.id_gestor = Number(datos.id_gestor);
+      datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+      datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
+      datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+      this.api
+      .PostCertificado(datos)
+      .pipe(
+        map((tracks) => {
+          const exito = tracks['exito'];
+          if (exito == 1) {
+            this.ListarElementos(1);
+            this.CerrarAgregarEditarElemento();
+            this.EncerarComponentes();
+            // this.TextoFiltro.patchValue('');
+            this.alerta.RegistroAgregado();
+          } else {
+            this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+            this.ActDesControles(0);
+          }
+        }),
+        catchError((error) => {
+          this.alerta.ErrorEnLaOperacion();
+          this.ActDesControles(0);
+          console.log(error);
+          throw new Error(error);
+        })
+      )
+      .subscribe();
   }
 
 // ****************************************** OTROS ELEMENTOS *****************************************************************
@@ -562,7 +631,8 @@ export class CertificadosComponent implements OnInit {
     this.CarterasList = [];
     this.ClienteInfo.patchValue('');
     this.ClienteSeleccionado = null;
-    this.ResetCreditosForms();
+    this.ResetCertificadoForms();
+    //this.ResetCreditosForms();
     this.loading = false;
     this.itemBusqueda.patchValue('');
     this.txtBusqueda.patchValue('');
