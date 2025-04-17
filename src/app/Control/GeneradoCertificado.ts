@@ -95,6 +95,7 @@ export class GeneradorCertificado {
                 a.href = url;
                 a.download = `${fecha}_certificado_no_adeudar.pdf`;
                 a.click();
+                console.log(a.href);
             });
         }
     }
