@@ -348,20 +348,23 @@ export class CertificadosComponent implements OnInit {
   }
 
   ImprimirObjeto(datos: any) {
-    let listadoObjeto:any[] = [];
-    let ocD: any = {
-      CarteraNom: datos.cart_descripcion,
-      FechaCompra: datos.cart_fecha_compra,
-      Identificacion:datos.cli_identificacion,
-      Nombres: datos.cli_nombres,
-      CodCredito: datos.ope_cod_credito,
-    }
-    listadoObjeto.push(ocD);
-    let om: generarCertificadoPDF = {
-      entidad: 'Credito', listado: listadoObjeto
-    };
-    this.gCredito=om;
-    this.certificado.generarCertificadoPDF(this.gCredito);
+
+    //if (this.TituloFormulario === 'Editar') {
+      let listadoObjeto:any[] = [];
+      let ocD: any = {
+        CarteraNom: datos.cart_descripcion,
+        FechaCompra: datos.cart_fecha_compra,
+        Identificacion:datos.cli_identificacion,
+        Nombres: datos.cli_nombres,
+        CodCredito: datos.ope_cod_credito,
+      }
+      listadoObjeto.push(ocD);
+      let om: generarCertificadoPDF = {
+        entidad: 'Credito', listado: listadoObjeto
+      };
+      this.gCredito=om;
+      this.certificado.generarCertificadoPDF(this.gCredito);
+    //}
   }
 
   GuardarObjeto(datos: any) {
