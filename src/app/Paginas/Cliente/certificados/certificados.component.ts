@@ -55,9 +55,9 @@ export class CertificadosComponent implements OnInit {
   }) as ResultadoMenuI;
   ConstanteFraccion: number = Number(this.Usuario.usr_fraccion_datos);
   RangoDatos: number = Number(this.Usuario.usr_rango_datos);
-  LecturaEscritura: number = Number(this.PaginaActual.men_lectura);
   PaginaNombre: string = this.PaginaActual.men_descripcion;
   loading: boolean = false;
+  LecturaEscritura: number = Number(this.PaginaActual.men_lectura);
   gCredito!:generarCertificadoPDF;
   CarteraGestor: any[] = [];
   TodasCarteras: number[] = [];
@@ -207,7 +207,7 @@ export class CertificadosComponent implements OnInit {
 
   /************************************** VER ELEMENTO  ******************************************************** */
   TituloFormulario = '';
-  ClienteInfo = new FormControl({ value: '', disabled: true }, Validators.required);
+  ClienteInfo = new FormControl({ value: '', disabled: true });
 
   CreditosForms = new FormGroup({
     id_cxc_operacion: new FormControl(0),
@@ -273,20 +273,6 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
-    }
-    if (num === 1) {
-      // imprimir
-      this.CreditosForms.get('cart_descripcion')?.enable();
-      this.CreditosForms.get('cart_fecha_compra')?.enable();
-      this.CreditosForms.get('ope_cod_credito')?.enable();
-      this.CreditosForms.get('cli_nombres')?.enable();
-      this.CreditosForms.get('cli_identificacion')?.enable();
-      this.CreditosForms.get('id_gestor')?.enable();
-      this.CreditosForms.get('cert_comentario')?.enable();
-      this.CreditosForms.get('cert_esactivo')?.enable();
-      this.CreditosForms.get('cert_esdescargado')?.enable();
-      this.CreditosForms.get('cert_baseactual')?.enable();
-      this.CreditosForms.get('cert_url_certificado')?.disable();
     }
     if (num === 2) {
       //edicion
@@ -414,7 +400,7 @@ export class CertificadosComponent implements OnInit {
 
   ClienteSeleccionado!: ClienteI | null;
 
-  BuscarCliente(identificacion: string) {
+  BuscarCliente(identificacion: any) {
     this.ClienteInfo.patchValue('');
     if (identificacion == '') {
       this.alerta.ErrorEnLaPeticion(
@@ -432,6 +418,7 @@ export class CertificadosComponent implements OnInit {
               this.ClienteSeleccionado = datos;
               this.ClienteInfo.patchValue(datos.cli_nombres);
             }
+            console.log(datos);
           }),
           catchError((error) => {
             this.alerta.ErrorAlRecuperarElementos();
@@ -461,7 +448,6 @@ export class CertificadosComponent implements OnInit {
     { id: 6, name: 'No especificado', value: '6' },
   ];
 
-  ModoVistaCliente: boolean = false;
   ClienteForms = new FormGroup({
     id_cliente: new FormControl(0),
     cli_identificacion: new FormControl(''),
@@ -478,18 +464,9 @@ export class CertificadosComponent implements OnInit {
     cli_provincia: new FormControl(''),
     cli_canton: new FormControl(''),
     cli_parroquia: new FormControl(''),
-    cli_esactivo: new FormControl(true),
-  }
-  ,
-  {
-    validators: [
-      this.validar.ValidatorTipo_Identificacion(
-        'cli_identificacion',
-        'cli_tipo_identificacion'
-      ),
-    ],
-  }
-);
+    cli_esactivo: new FormControl(true)
+  });
+
   ResetClienteForms() {
     this.ClienteForms.reset({
       id_cliente: 0,
@@ -507,13 +484,14 @@ export class CertificadosComponent implements OnInit {
       cli_provincia: '',
       cli_canton: '',
       cli_parroquia: '',
-      cli_esactivo: true,
+      cli_esactivo: true
     });
   }
+
   VerCliente() {
-    this.ClienteForms.get('cli_identificacion')?.disable();
-    this.ClienteForms.get('cli_nombres')?.disable();
-    this.ClienteForms.get('cli_tipo_identificacion')?.disable();
+    this.ClienteForms.get('cli_identificacion')?.enable();
+    this.ClienteForms.get('cli_nombres')?.enable();
+    this.ClienteForms.get('cli_tipo_identificacion')?.enable();
     this.ClienteForms.get('cli_genero')?.disable();
     this.ClienteForms.get('cli_estado_civil')?.disable();
     this.ClienteForms.get('cli_ocupacion')?.disable();
@@ -526,10 +504,10 @@ export class CertificadosComponent implements OnInit {
     this.ClienteForms.get('cli_canton')?.disable();
     this.ClienteForms.get('cli_parroquia')?.disable();
     this.ClienteForms.get('cli_esactivo')?.disable();
-    this.ModoVistaCliente = true;
     (<HTMLElement>document.getElementById('ModalCliente')).classList.add(
       'modal--show'
     );
+    console.log('modal--show');
     this.ClienteForms.patchValue({
       id_cliente: this.ClienteSeleccionado!.id_cliente,
       cli_identificacion: this.ClienteSeleccionado!.cli_identificacion,
@@ -557,14 +535,6 @@ export class CertificadosComponent implements OnInit {
     });
   }
 
-  AbrirModalCliente() {
-    this.CreditosForms.patchValue({ cli_identificacion: '' });
-    this.ClienteInfo.patchValue('');
-    (<HTMLElement>document.getElementById('ModalCliente')).classList.add(
-      'modal--show'
-    );
-  }
-
   CerrarModalCliente() {
     this.ClienteForms.get('cli_identificacion')?.enable();
     this.ClienteForms.get('cli_nombres')?.enable();
@@ -581,13 +551,11 @@ export class CertificadosComponent implements OnInit {
     this.ClienteForms.get('cli_canton')?.enable();
     this.ClienteForms.get('cli_parroquia')?.enable();
     this.ClienteForms.get('cli_esactivo')?.enable();
-    this.ModoVistaCliente = false;
     (<HTMLElement>document.getElementById('ModalCliente')).classList.remove(
       'modal--show'
     );
     this.ResetClienteForms();
   }
-
 
   // ****************************************** ENCERAR COMPONENTES *****************************************************************
   EncerarComponentes() {

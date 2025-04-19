@@ -87,7 +87,7 @@
                               <div class="col-lg-8 col-12">
                                 <div class="form-floating">
                                   <input type="text" class="form-control" id="cli_identificacion" placeholder=""
-                                  formControlName="cli_identificacion" (keyup)="ClienteInfo.patchValue('')" />
+                                  formControlName="cli_identificacion" (keyup)="ClienteInfo.patchValue('')"/>
                                 <label class="truncate-text"
                                   for="cli_identificacion">Cedula/Ruc/Pasaporte</label>
                                 </div>
@@ -99,15 +99,14 @@
                             <div class="row mb-3">
                               <div class="col-lg-10 col-9">
                                 <div class="form-floating">
-                                  <input type="text" class="form-control" id="clinombres" placeholder=""
-                                    [formControl]="ClienteInfo" />
+                                  <input type="text" class="form-control" id="clinombres" placeholder="" [formControl]="ClienteInfo"/>
                                   <label class="truncate-text" for="clinombres">Nombres</label>
                                 </div>
                               </div>
                               <div class="col-lg-2 col-2">
                                 <small>
-                                  <button *ngIf="LecturaEscritura != 0" type="button" class="btnVer"
-                                  [disabled]="ClienteInfo.value == ''"  (click)="VerCliente()">
+                                  <button type="button" class="btnVer" *ngIf="LecturaEscritura != 0" [disabled]="ClienteInfo.value == ''"
+                                  (click)="VerCliente()">
                                     <i class="fa-solid fa-eye"></i>
                                   </button>
                                 </small>
@@ -187,19 +186,19 @@
                      <!-- AGREGAR CERTIFICADO FORMULARIO -->
                     <div class="card-header" style="background-color: var(--color-formulario-primario);">
                       <h2 class="Centrar">Elaborar Certificado</h2>
-                    </div> 
+                    </div>
 
                     <div class="card-body" style="background-color: var(--color-formulario-secundario)">
                       <form [formGroup]="CertificadoForms">
                         <div class="row">
-    
-                          <div class="col-lg-4 col-12">
+
+                          <div class="col-lg-4 col-12" hidden>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="id_gestor" placeholder=""
                                     formControlName="id_gestor">
                                 <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
                                 <Section>
-                                  <div class="error-message" *ngIf="CertificadoForms.get('id_gestor')?.hasError('required') 
+                                  <div class="error-message" *ngIf="CertificadoForms.get('id_gestor')?.hasError('required')
                                   && CertificadoForms.get('id_gestor')?.touched">
                                       <span style="color: brown;">*Campo obligatorio.</span>
                                   </div>
@@ -207,13 +206,13 @@
                             </div>
                           </div>
 
-                          <div class="col-lg-4 col-12">
+                          <div class="col-lg-4 col-12" hidden>
                             <div class="form-floating mb-3">
                               <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
                                 formControlName="ope_cod_credito"/>
                               <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
                               <Section>
-                                <div class="error-message" *ngIf="CertificadoForms.get('ope_cod_credito')?.hasError('required') 
+                                <div class="error-message" *ngIf="CertificadoForms.get('ope_cod_credito')?.hasError('required')
                                 && CertificadoForms.get('ope_cod_credito')?.touched">
                                   <span style="color: brown;">*Campo obligatorio.</span>
                                 </div>
@@ -233,7 +232,7 @@
                                 <label class="truncate-text" for="cert_comentario">Comentario</label>
                             </div>
                           </div>
-  
+
                           <div class="col-lg-4 col-12">
                               <div class="Centrar">
                                   <div class="btn-group">
@@ -255,7 +254,7 @@
                           </div>
                         </div>
                       </form>
-                    </div> 
+                    </div>
 
                     <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
                       <div class="row Centrar">
@@ -263,8 +262,8 @@
                           <button class="btnImprimir ml-3"
                           (click)="ImprimirObjeto(CreditosForms.value);GuardarObjeto(CertificadoForms.value)">
                             Imprimir
-                          </button> 
-                          
+                          </button>
+
                           <button class="btnCancelar ml-3" (click)="CerrarAgregarEditarElemento()">
                             Cancelar
                           </button>

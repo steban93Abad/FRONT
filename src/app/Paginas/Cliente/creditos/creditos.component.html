@@ -62,7 +62,7 @@
                   <div class="dropdown-menu" role="menu1">
                       <a class="dropdown-item col-md-4" (click)="GetDescargaPor(d)"
                           *ngFor="let d of ParametrosDeDescarga">{{d}}</a>
-                  </div> 
+                  </div>
               </section>
               </div>
             </div>
@@ -113,7 +113,7 @@
                             <label class="truncate-text"
                               for="cli_identificacion"><small>*</small>Cedula/Ruc/Pasaporte</label>
                             <Section>
-                              <div class="error-message" *ngIf="CreditosForms.get('cli_identificacion')?.hasError('required') 
+                              <div class="error-message" *ngIf="CreditosForms.get('cli_identificacion')?.hasError('required')
                               && CreditosForms.get('cli_identificacion')?.touched">
                                 <span style="color: brown;">*Campo obligatorio.</span>
                               </div>
@@ -174,7 +174,7 @@
                           </option>
                         </select>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('id_cartera')?.touched 
+                          <div class="error-message" *ngIf="CreditosForms.get('id_cartera')?.touched
                               && CreditosForms.get('id_cartera')?.value == 0">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -189,7 +189,7 @@
                           formControlName="ope_cod_credito"/>
                         <label class="truncate-text" for="ope_cod_credito"><small>*</small>Codigo de credito</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_cod_credito')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_cod_credito')?.hasError('required')
                           && CreditosForms.get('ope_cod_credito')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -208,7 +208,7 @@
                           formControlName="ope_descripcion" />
                         <label class="truncate-text" for="ope_descripcion"><small>*</small>Descripcion</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_descripcion')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_descripcion')?.hasError('required')
                           && CreditosForms.get('ope_descripcion')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -221,7 +221,7 @@
                           formControlName="ope_linea" />
                         <label class="truncate-text" for="ope_linea"><small>*</small>Linea</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_linea')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_linea')?.hasError('required')
                           && CreditosForms.get('ope_linea')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -234,7 +234,7 @@
                           formControlName="ope_producto" />
                         <label class="truncate-text" for="ope_producto"><small>*</small>Producto</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_producto')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_producto')?.hasError('required')
                           && CreditosForms.get('ope_producto')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -247,7 +247,7 @@
                           formControlName="ope_dias_mora" />
                         <label class="truncate-text" for="ope_dias_mora"><small>*</small>Dias de mora</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_dias_mora')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_dias_mora')?.hasError('required')
                           && CreditosForms.get('ope_dias_mora')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -266,7 +266,7 @@
                           formControlName="ope_interes_mora" />
                         <label class="truncate-text" for="ope_interes_mora"><small>*</small>Interes de mora</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_interes_mora')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_interes_mora')?.hasError('required')
                           && CreditosForms.get('ope_interes_mora')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -285,7 +285,7 @@
                         <label class="truncate-text" for="ope_gastos_cobranzas"><small>*</small>Gastos de
                           cobranzas</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_gastos_cobranzas')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_gastos_cobranzas')?.hasError('required')
                           && CreditosForms.get('ope_gastos_cobranzas')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -303,7 +303,7 @@
                           formControlName="ope_saldo_cxc_actual" />
                         <label class="truncate-text" for="ope_saldo_cxc_actual"><small>*</small>Saldo cxc actual</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_saldo_cxc_actual')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_saldo_cxc_actual')?.hasError('required')
                           && CreditosForms.get('ope_saldo_cxc_actual')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -321,7 +321,7 @@
                           formControlName="ope_liquidar" />
                         <label class="truncate-text" for="ope_liquidar"><small>*</small>Liquidar</label>
                         <Section>
-                          <div class="error-message" *ngIf="CreditosForms.get('ope_liquidar')?.hasError('required') 
+                          <div class="error-message" *ngIf="CreditosForms.get('ope_liquidar')?.hasError('required')
                           && CreditosForms.get('ope_liquidar')?.touched">
                             <span style="color: brown;">*Campo obligatorio.</span>
                           </div>
@@ -896,7 +896,7 @@
                       </option>
                     </select>
                     <Section>
-                      <div class="error-message" *ngIf="ClienteForms.get('cli_tipo_identificacion')?.hasError('required') 
+                      <div class="error-message" *ngIf="ClienteForms.get('cli_tipo_identificacion')?.hasError('required')
                           && ClienteForms.get('cli_tipo_identificacion')?.touched">
                         <span style="color: brown;">*Campo obligatorio.</span>
                       </div>
@@ -910,7 +910,7 @@
                       formControlName="cli_identificacion">
                     <label for="cli_identificacion"><small>*</small>Identificacion</label>
                     <Section>
-                      <div class="error-message" *ngIf="ClienteForms.get('cli_identificacion')?.hasError('required') 
+                      <div class="error-message" *ngIf="ClienteForms.get('cli_identificacion')?.hasError('required')
                           && ClienteForms.get('cli_identificacion')?.touched">
                         <span style="color: brown;">*Campo obligatorio.</span>
                       </div>
@@ -928,7 +928,7 @@
                       formControlName="cli_nombres">
                     <label for="cli_nombres"><small>*</small>Nombres</label>
                     <Section>
-                      <div class="error-message" *ngIf="ClienteForms.get('cli_nombres')?.hasError('required') 
+                      <div class="error-message" *ngIf="ClienteForms.get('cli_nombres')?.hasError('required')
                           && ClienteForms.get('cli_nombres')?.touched">
                         <span style="color: brown;">*Campo obligatorio.</span>
                       </div>
@@ -944,7 +944,7 @@
                       </option>
                     </select>
                     <Section>
-                      <div class="error-message" *ngIf="ClienteForms.get('cli_genero')?.hasError('required') 
+                      <div class="error-message" *ngIf="ClienteForms.get('cli_genero')?.hasError('required')
                           && ClienteForms.get('cli_genero')?.touched">
                         <span style="color: brown;">*Campo obligatorio.</span>
                       </div>
@@ -961,7 +961,7 @@
                       </option>
                     </select>
                     <Section>
-                      <div class="error-message" *ngIf="ClienteForms.get('cli_estado_civil')?.hasError('required') 
+                      <div class="error-message" *ngIf="ClienteForms.get('cli_estado_civil')?.hasError('required')
                           && ClienteForms.get('cli_estado_civil')?.touched">
                         <span style="color: brown;">*Campo obligatorio.</span>
                       </div>
@@ -982,7 +982,7 @@
                       formControlName="cli_fecha_nacimiento">
                     <label for="cli_fecha_nacimiento"><small>*</small>Fecha de Nacimiento</label>
                     <Section>
-                      <div class="error-message" *ngIf="ClienteForms.get('cli_fecha_nacimiento')?.hasError('required') 
+                      <div class="error-message" *ngIf="ClienteForms.get('cli_fecha_nacimiento')?.hasError('required')
                           && ClienteForms.get('cli_fecha_nacimiento')?.touched">
                         <span style="color: brown;">*Campo obligatorio.</span>
                       </div>
