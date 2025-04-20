@@ -317,6 +317,28 @@ export class ApiService {
       })
     );
   }
+  GetCertificadoFracionadoFiltro(
+    variable: string,
+    tipo: number
+  ): Observable<ResponseI> {
+    const cod = encodeURIComponent(variable);
+    let direccion = this.url + 'Certificado/Filtro' + cod + ',' + tipo;
+    return this.http.get<any>(direccion).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
+
+        throw error;
+      })
+    );
+  }
 
   //********************* CLIENTES *********************** */
   GetClienteFracionado(codigo: number, rango: number): Observable<ResponseI> {

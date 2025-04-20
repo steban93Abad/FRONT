@@ -208,6 +208,7 @@ export class CertificadosComponent implements OnInit {
   /************************************** VER ELEMENTO  ******************************************************** */
   TituloFormulario = '';
   ClienteInfo = new FormControl({ value: '', disabled: true });
+  CertificadoInfo = new FormControl({ value: '', disabled: true });
 
   CreditosForms = new FormGroup({
     id_cxc_operacion: new FormControl(0),
@@ -320,6 +321,7 @@ export class CertificadosComponent implements OnInit {
     if (num != 1) {
       this.ListarCarteras();
       this.BuscarCliente(datos.cli_identificacion);
+      this.BuscarCertificado(datos.ope_cod_credito);
     }
     this.AgregarEditarElemento(num);
   }
@@ -398,6 +400,7 @@ export class CertificadosComponent implements OnInit {
       .subscribe();
   }
 
+  /* Area para mostrar al cliente */
   ClienteSeleccionado!: ClienteI | null;
 
   BuscarCliente(identificacion: any) {
@@ -428,6 +431,39 @@ export class CertificadosComponent implements OnInit {
         .subscribe();
     }
   }
+
+  /* Area para mostrar el certificado */
+  CertificadoSeleccionado!: CertificadoI | null;
+
+  BuscarCertificado(credito: any) {
+    this.CertificadoInfo.patchValue('');
+    if (credito == '') {
+      this.alerta.ErrorEnLaPeticion(
+        'No ingreso ningun identificador para su busqueda'
+      );
+    } else {
+      this.api
+        .GetCertificadoFracionadoFiltro(credito, 10)
+        .pipe(
+          map((tracks) => {
+            const datos = tracks['data'];
+            if (!datos) {
+              //this.alerta.NoExistenDatos();
+            } else {
+              this.CertificadoSeleccionado = datos;
+              this.CertificadoInfo.patchValue(datos.cert_esdescargado);
+            }
+            console.log(datos);
+          }),
+          catchError((error) => {
+            this.alerta.ErrorAlRecuperarElementos();
+            throw new Error(error);
+          })
+        )
+        .subscribe();
+    }
+  }
+
   ////////////////////////////////////////  CLIENTE   ////////////////////////////////////////////////
   TipoIdentificacion: any[] = [
     { id: 1, name: 'Cedula', value: '1' },
@@ -489,9 +525,9 @@ export class CertificadosComponent implements OnInit {
   }
 
   VerCliente() {
-    this.ClienteForms.get('cli_identificacion')?.enable();
-    this.ClienteForms.get('cli_nombres')?.enable();
-    this.ClienteForms.get('cli_tipo_identificacion')?.enable();
+    this.ClienteForms.get('cli_identificacion')?.disable();
+    this.ClienteForms.get('cli_nombres')?.disable();
+    this.ClienteForms.get('cli_tipo_identificacion')?.disable();
     this.ClienteForms.get('cli_genero')?.disable();
     this.ClienteForms.get('cli_estado_civil')?.disable();
     this.ClienteForms.get('cli_ocupacion')?.disable();
@@ -562,6 +598,7 @@ export class CertificadosComponent implements OnInit {
     this.CarterasList = [];
     this.ClienteInfo.patchValue('');
     this.ClienteSeleccionado = null;
+    this.CertificadoInfo.patchValue('');
     this.ResetCertificadoForms();
     //this.ResetCreditosForms();
     this.loading = false;
