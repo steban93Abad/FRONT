@@ -61,18 +61,92 @@ export class GeneradorCertificado {
                 doc.setFontSize(12);
                 doc.text('ANTECEDENTES:', 75, 275);        
 
+                /* Parrafo 1 */
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(12);
                 const texto1 = `POLCOMP CIA. LTDA., mediante contrato celebrado con el ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en el que se adquirió la cartera con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que consta como deudor/a el/la Señor/a ${datos.Nombres} con el Número de Operación de Tarjeta de Crédito N° ${datos.CodCredito}.`;
                 doc.text(doc.splitTextToSize(texto1, 400), 75, 315, {maxWidth: 445, align: "justify"});
             
+                /* Parrafo 2 */
                 const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por la Operación N° ${datos.CodCredito}.`;
                 doc.text(doc.splitTextToSize(texto2, 400), 75, 415, {maxWidth: 445, align: "justify"});
-                                             
-                const texto3 = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para POLCOMP CIA. LTDA., ni para ninguno de sus funcionarios.`;
-                doc.text(doc.splitTextToSize(texto3, 450), 75, 475, {maxWidth: 445, align: "justify"});
-                
+                            
+                /* Parrafo 3 */
+                const textoCompleto = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para POLCOMP CIA. LTDA., ni para ninguno de sus funcionarios.`;
+                const palabraNegrita = "POLCOMP CIA. LTDA.";
+                const maxWidth = 450;
+                const xInicial = 75;
+                let y = 475;
 
+                // Dividir el texto completo en partes
+                const partes = textoCompleto.split(palabraNegrita);
+
+                const secciones: { texto: string, negrita: boolean }[] = [];
+                if (partes[0]) secciones.push({ texto: partes[0], negrita: false });
+                secciones.push({ texto: palabraNegrita, negrita: true });
+                if (partes[1]) secciones.push({ texto: partes[1], negrita: false });
+
+                // Crear una lista de palabras con su atributo de negrita
+                const palabras: { texto: string, negrita: boolean }[] = [];
+                secciones.forEach(seccion => {
+                    seccion.texto.split(' ').forEach((word, idx, arr) => {
+                        let palabra = word;
+                        if (idx !== arr.length - 1) {
+                        palabra += ' '; // agregar espacio solo si no es la última palabra
+                        }
+                        palabras.push({ texto: palabra, negrita: seccion.negrita });
+                    });
+                });
+
+                let linea: { texto: string, negrita: boolean }[] = [];
+
+                palabras.forEach((palabra, index) => {
+                // Calcular ancho de la línea actual
+                const anchoLineaActual = linea.reduce((acc, p) => {
+                    doc.setFont('helvetica', p.negrita ? 'bold' : 'normal');
+                    return acc + doc.getTextWidth(p.texto);
+                }, 0);
+
+                // Calcular ancho de la palabra nueva
+                doc.setFont('helvetica', palabra.negrita ? 'bold' : 'normal');
+                const anchoPalabra = doc.getTextWidth(palabra.texto);
+
+                if (anchoLineaActual + anchoPalabra > maxWidth && linea.length > 0) {
+                    // Escribir línea justificada
+                    const totalEspacioExtra = maxWidth - anchoLineaActual;
+                    const espacios = linea.length - 1;
+                    const espacioExtraPorPalabra = espacios > 0 ? totalEspacioExtra / espacios : 0;
+
+                    let x = xInicial;
+
+                    linea.forEach((p, idx) => {
+                    doc.setFont('helvetica', p.negrita ? 'bold' : 'normal');
+                    doc.text(p.texto.trim(), x, y);
+                    const anchoTexto = doc.getTextWidth(p.texto);
+                    if (idx !== linea.length - 1) {
+                        x += anchoTexto + espacioExtraPorPalabra;
+                    }
+                    });
+
+                    // Nueva línea
+                    y += 15;
+                    linea = [];
+                }
+
+                    // Agregar palabra a la línea
+                    linea.push(palabra);
+                });
+
+                // Escribir la última línea (sin justificado, alineado normal)
+                if (linea.length > 0) {
+                    let x = xInicial;
+                    linea.forEach(p => {
+                        doc.setFont('helvetica', p.negrita ? 'bold' : 'normal');
+                        doc.text(p.texto.trim(), x, y);
+                        x += doc.getTextWidth(p.texto);
+                    });
+                }
+                
                 // Firma
                 doc.addImage(firma, 'PNG', 235, 540, 120, 60); // Ajustar tamaño según resolución real
                 doc.setFontSize(12);
