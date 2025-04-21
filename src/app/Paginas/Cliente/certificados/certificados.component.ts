@@ -62,6 +62,7 @@ export class CertificadosComponent implements OnInit {
   CarteraGestor: any[] = [];
   TodasCarteras: number[] = [];
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
+  mostrarBtnImprimir: boolean = true;
 
   // ****************************************** CONTROLES DE BUSQUEDA *****************************************************************
   ParametrosDeBusqueda: Array<string> = [
@@ -240,6 +241,10 @@ export class CertificadosComponent implements OnInit {
     id_certificado: new FormControl(0, Validators.required),
     id_gestor: new FormControl(0, Validators.required),
     ope_cod_credito: new FormControl('',[Validators.required,this.validar.VFN_AlfaNumerico()]),
+    cart_descripcion: new FormControl(''),
+    cli_identificacion: new FormControl(''),
+    cli_nombres: new FormControl(''),
+    cart_fecha_compra: new FormControl(''),
     cert_comentario: new FormControl(''),
     cert_esactivo: new FormControl(true),
     cert_esdescargado: new FormControl(true),
@@ -253,6 +258,10 @@ export class CertificadosComponent implements OnInit {
       id_certificado: 0,
       id_gestor: 0,
       ope_cod_credito: '',
+      cli_identificacion: '',
+      cli_nombres: '',
+      cart_descripcion: '',
+      cart_fecha_compra: '',
       cert_comentario: '',
       cert_esactivo: true,
       cert_esdescargado: true,
@@ -321,7 +330,6 @@ export class CertificadosComponent implements OnInit {
     if (num != 1) {
       this.ListarCarteras();
       this.BuscarCliente(datos.cli_identificacion);
-      this.BuscarCertificado(datos.ope_cod_credito);
     }
     this.AgregarEditarElemento(num);
   }
@@ -329,15 +337,25 @@ export class CertificadosComponent implements OnInit {
   CargarElementoGestor(datos: any, num: number) {
     this.CertificadoForms.patchValue({
       id_gestor: datos.id_gestor,
-      ope_cod_credito: datos.ope_cod_credito
+      ope_cod_credito: datos.ope_cod_credito,
+      cart_descripcion: datos.cart_descripcion,
+      cli_identificacion: datos.cli_identificacion,
+      cli_nombres: datos.cli_nombres,
+      cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra)
     });
-
+    if (num != 1) {
+      this.BuscarCertificado(datos.ope_cod_credito);
+    }
     this.AgregarEditarElemento(num);
   }
 
-  ImprimirObjeto(datos: any) {
+  GuardarObjeto(datos: any) {
 
-    //if (this.TituloFormulario === 'Editar') {
+      datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+      datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
+      datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+
+      // Generar Certificado
       let listadoObjeto:any[] = [];
       let ocD: any = {
         CarteraNom: datos.cart_descripcion,
@@ -352,13 +370,8 @@ export class CertificadosComponent implements OnInit {
       };
       this.gCredito=om;
       this.certificado.generarCertificadoPDF(this.gCredito);
-    //}
-  }
-
-  GuardarObjeto(datos: any) {
-      datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
-      datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
-      datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+      
+      // Guardar Certificado
       this.api
       .PostCertificado(datos)
       .pipe(
@@ -437,6 +450,7 @@ export class CertificadosComponent implements OnInit {
 
   BuscarCertificado(credito: any) {
     this.CertificadoInfo.patchValue('');
+    
     if (credito == '') {
       this.alerta.ErrorEnLaPeticion(
         'No ingreso ningun identificador para su busqueda'
@@ -448,10 +462,12 @@ export class CertificadosComponent implements OnInit {
           map((tracks) => {
             const datos = tracks['data'];
             if (!datos) {
-              //this.alerta.NoExistenDatos();
+              this.mostrarBtnImprimir = true; // Si no hay datos, oculta el botón
             } else {
               this.CertificadoSeleccionado = datos;
               this.CertificadoInfo.patchValue(datos.cert_esdescargado);
+              this.mostrarBtnImprimir = (datos.cert_esdescargado == 0);
+              this.alerta.MensajePersonalizado("Certificado Descargado","No se puede descargar este certificado otra vez. Vaya al menu y descargue en Descargar Certificado.", 0);
             }
             console.log(datos);
           }),

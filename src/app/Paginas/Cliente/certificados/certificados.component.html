@@ -114,14 +114,6 @@
                             </div>
                           </div>
 
-                          <div class="col-lg-4 col-12" hidden>
-                            <div class="form-floating mb-3">
-                              <input type="text" class="form-control" id="cli_nombres" placeholder=""
-                                formControlName="cli_nombres"/>
-                              <label class="truncate-text" for="cli_nombres">Nombres</label>
-                            </div>
-                          </div>
-
                           <div class="col-lg-4 col-12">
                             <div class="form-floating mb-3">
                               <input type="text" class="form-control" id="cart_descripcion" placeholder=""
@@ -169,17 +161,6 @@
                               <label class="truncate-text" for="ges_nombres">Gestor</label>
                             </div>
                           </div>
-
-                          <div class="col-lg-4 col-12">
-                            <div class="row mb-3">
-                              <div class="col-lg-10 col-9">
-                                <div class="form-floating">
-                                  <input type="text" class="form-control" id="certesdescargado" placeholder="" [formControl]="CertificadoInfo"/>
-                                  <label class="truncate-text" for="certdescargado">Est. Certificado</label>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                           <!-- <div class="col-lg-4 col-12">
                             <div class="Centrar">
                               <div class="btn-group">
@@ -194,11 +175,11 @@
                     </div>
 
                      <!-- AGREGAR CERTIFICADO FORMULARIO -->
-                    <div class="card-header" style="background-color: var(--color-formulario-primario);">
+                    <div class="card-header" style="background-color: var(--color-formulario-primario);" *ngIf="mostrarBtnImprimir">
                       <h2 class="Centrar">Elaborar Certificado</h2>
                     </div>
 
-                    <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                    <div class="card-body" style="background-color: var(--color-formulario-secundario)" *ngIf="mostrarBtnImprimir">
                       <form [formGroup]="CertificadoForms">
                         <div class="row">
 
@@ -232,6 +213,43 @@
                                   <span style="color: brown;">*Caracteres no permitidos</span>
                                 </div>
                               </Section>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12" hidden>
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="cli_nombres" placeholder=""
+                                formControlName="cli_nombres"/>
+                              <label class="truncate-text" for="cli_nombres">Nombres</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12" hidden>
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="cart_descripcion" placeholder=""
+                                formControlName="cart_descripcion"/>
+                              <label class="truncate-text" for="cart_descripcion">Cartera</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12" hidden>
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="cart_fecha_compra" placeholder=""
+                                formControlName="cart_fecha_compra" />
+                              <label class="truncate-text" for="cart_fecha_compra">Fecha de Compra de Cartera</label>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-4 col-12" hidden>
+                            <div class="row mb-3">
+                              <div class="col-lg-8 col-12">
+                                <div class="form-floating">
+                                  <input type="text" class="form-control" id="cli_identificacion" placeholder=""
+                                  formControlName="cli_identificacion"/>
+                                <label class="truncate-text"
+                                  for="cli_identificacion">Cedula/Ruc/Pasaporte</label>
+                                </div>
+                              </div>
                             </div>
                           </div>
 
@@ -269,8 +287,8 @@
                     <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
                       <div class="row Centrar">
                         <small>
-                          <button class="btnImprimir ml-3"
-                          (click)="ImprimirObjeto(CreditosForms.value);GuardarObjeto(CertificadoForms.value)">
+                          <button class="btnImprimir ml-3" id="btnImpresion" name="btnImpresion" *ngIf="mostrarBtnImprimir"
+                          (click)="GuardarObjeto(CertificadoForms.value)">
                             Imprimir
                           </button>
 
