@@ -139,25 +139,37 @@ TituloFormulario = '';
 
 CertificadosForms = new FormGroup({
   id_certificado: new FormControl(0),
-  ope_cod_credito: new FormControl(''),
+  id_gestor: new FormControl(0, Validators.required),
+  ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
   cli_identificacion: new FormControl(''),
   cli_nombres: new FormControl(''),
   cart_descripcion: new FormControl(''),
   ope_estado_contacta: new FormControl(''),
   cart_fecha_compra: new FormControl(''),
+  cert_comentario: new FormControl(''),
   ges_nombres: new FormControl(''),
+  gest_fecha_gestion: new FormControl(''),
+  cert_hist_esactivo: new FormControl(true),
+  cert_hist_baseactual: new FormControl(true),
+  cert_hist_origendatos: new FormControl('Sistema_CobroSys')
 });
 
 ResetCertificadosForms() {
   this.CertificadosForms.reset({
     id_certificado: 0,
+    id_gestor: 0,
     ope_cod_credito: '',
     cli_identificacion: '',
     cli_nombres: '',
     cart_descripcion: '',
     ope_estado_contacta: '',
     cart_fecha_compra: '',
+    cert_comentario: '',
     ges_nombres: '',
+    gest_fecha_gestion: '',
+    cert_hist_esactivo: true,
+    cert_hist_baseactual: true,
+    cert_hist_origendatos: 'Sistema_CobroSys'
   });
 }
 
@@ -165,20 +177,115 @@ CerrarAgregarEditarElemento() {
   this.EncerarComponentes();
 }
 
+ActDesControles(num: number) {
+  if (num === 0) {
+    //inactivos
+    this.CertificadosForms.get('id_certificado')?.disable();
+    this.CertificadosForms.get('cli_identificacion')?.disable();
+    this.CertificadosForms.get('cli_nombres')?.disable();
+    this.CertificadosForms.get('cart_descripcion')?.disable();
+    this.CertificadosForms.get('ope_estado_contacta')?.disable();
+    this.CertificadosForms.get('cart_fecha_compra')?.disable();
+    this.CertificadosForms.get('cert_comentario')?.disable();
+    this.CertificadosForms.get('ges_nombres')?.disable();
+    this.CertificadosForms.get('gest_fecha_gestion')?.disable();
+  }
+  if (num === 2) {
+    //edicion
+    this.CertificadosForms.get('ope_cod_credito')?.enable();
+    this.CertificadosForms.get('id_gestor')?.enable();
+    this.CertificadosForms.get('cert_hist_esactivo')?.enable();
+    this.CertificadosForms.get('cert_hist_baseactual')?.enable();
+    this.CertificadosForms.get('cert_hist_origendatos').enable();
+  }
+}
+
+AgregarEditarElemento(num: number) {
+  if (num === 2) {
+    this.ActDesControles(0);
+    this.TituloFormulario = 'Imprimir';
+    this.ActDesControles(2);
+  }
+  if (num === 3) {
+    this.TituloFormulario = 'Visualizar';
+    this.ActDesControles(0);
+  }
+}
+
+CargarElemento(datos: any, num: number) {
+  this.CertificadosForms.patchValue({
+    id_certificado: datos.id_certificado,
+    id_gestor: datos.id_gestor,
+    ope_cod_credito: datos.ope_cod_credito,
+    cli_identificacion: datos.cli_identificacion,
+    cli_nombres: datos.cli_nombres,
+    cart_descripcion: datos.cart_descripcion,
+    ope_estado_contacta: datos.ope_estado_contacta,
+    cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
+    cert_comentario: datos.cert_comentario,
+    ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
+    gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion)
+  });
+
+  this.AgregarEditarElemento(num);
+}
+
+GuardarObjeto(datos: any) {
+  datos.cert_hist_esactivo = datos.cert_hist_esactivo.toString() === 'true' ? '1' : '0';
+  datos.cert_hist_baseactual = datos.cert_hist_baseactual.toString() === 'true' ? '1' : '0';
+
+  // Generar Certificado
+  let listadoObjeto:any[] = [];
+  let ocD: any = {
+    CarteraNom: datos.cart_descripcion,
+    FechaCompra: datos.cart_fecha_compra,
+    Identificacion:datos.cli_identificacion,
+    Nombres: datos.cli_nombres,
+    CodCredito: datos.ope_cod_credito,
+  }
+  listadoObjeto.push(ocD);
+  let om: generarCertificadoPDF = {
+    entidad: 'Credito', listado: listadoObjeto
+  };
+  this.gCredito=om;
+  this.certificado.generarCertificadoPDF(this.gCredito);
+  
+  // Guardar Registro
+  this.api
+  .PostCertificadoHistorial(datos)
+  .pipe(
+    map((tracks) => {
+      const exito = tracks['exito'];
+      if (exito == 1) {
+        this.ListarElementos(1);
+        this.CerrarAgregarEditarElemento();
+        this.EncerarComponentes();
+        // this.TextoFiltro.patchValue('');
+        this.alerta.RegistroAgregado();
+      } else {
+        this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+        this.ActDesControles(0);
+      }
+    }),
+    catchError((error) => {
+      this.alerta.ErrorEnLaOperacion();
+      this.ActDesControles(0);
+      console.log(error);
+      throw new Error(error);
+    })
+  )
+  .subscribe();
+}
 
 // ****************************************** ENCERAR COMPONENTES *****************************************************************
 EncerarComponentes() {
   //this.CarterasList = [];
-  //this.ClienteInfo.patchValue('');
-  //this.ClienteSeleccionado = null;
-  //this.CertificadoInfo.patchValue('');
-  //this.ResetCertificadoForms();
-  //this.ResetCreditosForms();
+  this.ResetCertificadosForms();
   this.loading = false;
   this.itemBusqueda.patchValue('');
   this.txtBusqueda.patchValue('');
   this.TituloFormulario = '';
-  //this.ActDesControles(0);
+  this.ActDesControles(0);
 }
 
 // ****************************************** PAGINACION *****************************************************************

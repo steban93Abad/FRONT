@@ -17,6 +17,7 @@ import {
   CXC_OperacionI,
   CarteraI,
   CertificadoI,
+  Certificado_HistorialI,
   ClienteGestorCarteraI,
   ClienteI,
   ConectividadI,
@@ -358,6 +359,28 @@ export class ApiService {
     );
   }
 
+  //********************* CERTIFICADO HISTORIAL *********************** */
+  PostCertificadoHistorial(elemento: Certificado_HistorialI): Observable<any> {
+    let Encryptado: EntidadEncriptado = {
+      valor: this.objeto.encriptarAES(elemento),
+    };
+    let direccion = this.url + 'CertificadoHistorial';
+    return this.http.post<any>(direccion, Encryptado).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
+
+        throw error;
+      })
+    );
+  }
 
   //********************* CLIENTES *********************** */
   GetClienteFracionado(codigo: number, rango: number): Observable<ResponseI> {

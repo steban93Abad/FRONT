@@ -36,14 +36,130 @@
             <div class="card-body" style="background-color: var(--color-formulario-secundario)">
               <!-- Ver Informacion Certificado  -->
               <div class="card-header" style="background-color: var(--color-formulario-primario)">
+                <button type="button" (click)="CerrarAgregarEditarElemento()" class="btn btn-close float-right"></button>
+                <h2 class="Centrar">
+                  Información
+                </h2>
               </div>
               <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                <form [formGroup]="CertificadosForms">
+                  <div class="row">
+                    <div class="col-lg-4 col-12" hidden>
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="id_gestor" placeholder=""
+                              formControlName="id_gestor">
+                          <label class="truncate-text" for="id_gestor">Id Gestor</label>
+                          <Section>
+                            <div class="error-message" *ngIf="CertificadosForms.get('id_gestor')?.hasError('required')
+                            && CertificadosForms.get('id_gestor')?.touched">
+                                <span style="color: brown;">*Campo obligatorio.</span>
+                            </div>
+                          </Section>
+                      </div>
+                    </div>
 
+                    <div class="col-lg-4 col-12" hidden>
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
+                          formControlName="ope_cod_credito"/>
+                        <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
+                        <Section>
+                          <div class="error-message" *ngIf="CertificadosForms.get('ope_cod_credito')?.hasError('required')
+                          && CertificadosForms.get('ope_cod_credito')?.touched">
+                            <span style="color: brown;">*Campo obligatorio.</span>
+                          </div>
+                          <div class="error-message"
+                            *ngIf="CertificadosForms.get('ope_cod_credito')?.value != ''
+                                            ? validar.V_AlfaNumerico(CertificadosForms.get('ope_cod_credito')?.value!)  === false:null ">
+                            <span style="color: brown;">*Caracteres no permitidos</span>
+                          </div>
+                        </Section>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="row mb-3">
+                        <div class="col-lg-8 col-12">
+                          <div class="form-floating">
+                            <input type="text" class="form-control" id="cli_identificacion" placeholder=""
+                            formControlName="cli_identificacion"/>
+                          <label class="truncate-text"
+                            for="cli_identificacion">Cedula/Ruc/Pasaporte</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cli_nombres" placeholder=""
+                          formControlName="cli_nombres"/>
+                        <label class="truncate-text" for="cli_nombres">Nombres</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cart_descripcion" placeholder=""
+                          formControlName="cart_descripcion"/>
+                        <label class="truncate-text" for="cart_descripcion">Cartera</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ope_estado_contacta" placeholder=""
+                          formControlName="ope_estado_contacta" />
+                        <label class="truncate-text" for="ope_estado_contacta">Estado Contactabilidad</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cart_fecha_compra" placeholder=""
+                          formControlName="cart_fecha_compra" />
+                        <label class="truncate-text" for="cart_fecha_compra">Fecha de Compra de Cartera</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cert_comentario" placeholder=""
+                          formControlName="cert_comentario" />
+                        <label class="truncate-text" for="cert_comentario">Comentario</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ges_nombres" placeholder=""
+                          formControlName="ges_nombres" />
+                        <label class="truncate-text" for="ges_nombres">Gestor</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="gest_fecha_gestion" placeholder=""
+                          formControlName="gest_fecha_gestion" />
+                        <label class="truncate-text" for="gest_fecha_gestion">Fecha de Gestion</label>
+                      </div>
+                    </div>                    
+
+                  </div>
+                </form>
               </div>
               <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
                 <div class="row Centrar">
                   <small>
+                    <button class="btnImprimir ml-3"
+                      (click)="GuardarObjeto(CertificadosForms.value)">
+                      Imprimir
+                    </button>
 
+                    <button class="btnCancelar ml-3" (click)="CerrarAgregarEditarElemento()">
+                      Cancelar
+                    </button>
                   </small>
                 </div>
               </div>
@@ -95,7 +211,6 @@
                     <th id="ThCodCredito0">Cod. Credito</th>
                     <th id="ThIdentificacion0">Identificacion</th>
                     <th id="ThDescripcion0">Cliente</th>
-                    <th>Contactabilidad</th>
                     <th>Gestor</th>
                     <th>Cartera</th>
                     <th>Fec. Gestion</th>
@@ -108,13 +223,12 @@
                     <th>{{ datos.ope_cod_credito }}</th>
                     <th>{{ datos.cli_identificacion }}</th>
                     <th>{{ datos.cli_nombres }}</th>
-                    <th>{{ datos.ope_estado_contacta }}</th>
                     <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                     <th>{{ datos.cart_descripcion }}</th>
-                    <th>{{datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion)}}</th>
+                    <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>
                     <th>
                       <div class="btn-group" role="group">
-                        <button class="btnVer">
+                        <button class="btnVer" (click)="CargarElemento(datos, 3)">
                           <i class="fa-regular fa-eye"></i>
                         </button>
                       </div>
