@@ -296,6 +296,24 @@ export class ApiService {
   }
 
   //********************* CERTIFICADOS *********************** */
+  GetCertificadoFracionado(codigo: number, rango: number): Observable<ResponseI> {
+    let direccion = this.url + 'Certificado/Todos' + codigo + ',' + rango;
+    return this.http.get<any>(direccion).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
+
+        throw error;
+      })
+    );
+  }
   PostCertificado(elemento: CertificadoI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -339,6 +357,7 @@ export class ApiService {
       })
     );
   }
+
 
   //********************* CLIENTES *********************** */
   GetClienteFracionado(codigo: number, rango: number): Observable<ResponseI> {
