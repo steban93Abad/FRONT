@@ -220,6 +220,7 @@ export class CertificadosComponent implements OnInit {
     ope_estado_contacta: new FormControl(''),
     ope_descrip_unidad_gestion: new FormControl(''),
     cart_fecha_compra: new FormControl(''),
+    gest_fecha_gestion: new FormControl(''),
     ges_nombres: new FormControl(''),
   });
 
@@ -233,6 +234,7 @@ export class CertificadosComponent implements OnInit {
       ope_estado_contacta: '',
       ope_descrip_unidad_gestion: '',
       cart_fecha_compra: '',
+      gest_fecha_gestion: '', 
       ges_nombres: '',
     });
   }
@@ -283,6 +285,7 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
+      this.CreditosForms.get('gest_fecha_gestion')?.disable();
     }
     if (num === 2) {
       //edicion
@@ -325,7 +328,8 @@ export class CertificadosComponent implements OnInit {
       ope_estado_contacta: datos.ope_estado_contacta,
       ope_descrip_unidad_gestion: datos.ope_descrip_unidad_gestion,
       cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
-      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos
+      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
+      gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion),
     });
     if (num != 1) {
       this.ListarCarteras();
