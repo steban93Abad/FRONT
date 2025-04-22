@@ -68,8 +68,9 @@
                     </div>
                   </div>
                 </section>
+
                 <!-- FORMULARIO PARA VER ELEMENTOS -->
-                <section class="vertical-center" *ngIf="TituloFormulario != ''">\
+                <section class="vertical-center" *ngIf="TituloFormulario != ''">
                   <div class="card-body" style="background-color: var(--color-formulario-secundario)">
                     <!-- Ver Informacion Credito  -->
                     <div class="card-header" style="background-color: var(--color-formulario-primario)">
@@ -161,15 +162,6 @@
                               <label class="truncate-text" for="ges_nombres">Gestor</label>
                             </div>
                           </div>
-                          <!-- <div class="col-lg-4 col-12">
-                            <div class="Centrar">
-                              <div class="btn-group">
-                                <div class="form-group">
-                                  <label class="truncate-text" for="ope_esactivo">Vista Previa</label>&nbsp;
-                                </div>
-                              </div>
-                            </div>
-                          </div> -->
                         </div>
                       </form>
                     </div>
@@ -379,30 +371,30 @@
 
                     <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
                     *ngIf="ListaCreditos.length != 0">
-                    <div class="row">
-                      <div class="col-lg-2 col-6">
-                        <p>
-                          Total<strong>&nbsp;{{ ContadorDatosGeneral }}</strong>
-                        </p>
-                      </div>
-                      <div class="col-lg-2 col-6">
-                        <div *ngIf="ContadorDatosGeneral != ContadorDatos">
+                      <div class="row">
+                        <div class="col-lg-2 col-6">
                           <p>
-                            Resultado Filtro<strong>&nbsp;{{ ContadorDatos }}</strong>
+                            Total<strong>&nbsp;{{ ContadorDatosGeneral }}</strong>
                           </p>
                         </div>
-                      </div>
-                      <div class="col-lg-2 col-6">
-                        <div>
-                          <p>
-                            Elementos<strong>&nbsp;{{ InicioPaginacion + 1 }}</strong>-<strong>&nbsp;{{ InicioPaginacion +
-                              RangoPaginacion }}</strong>
-                          </p>
+                        <div class="col-lg-2 col-6">
+                          <div *ngIf="ContadorDatosGeneral != ContadorDatos">
+                            <p>
+                              Resultado Filtro<strong>&nbsp;{{ ContadorDatos }}</strong>
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div class="col-lg-2 col-6">
-                        <!-- <p>Grupo<strong>&nbsp;1</strong>-<strong>&nbsp;10</strong></p> -->
-                      </div>
+                        <div class="col-lg-2 col-6">
+                          <div>
+                            <p>
+                              Elementos<strong>&nbsp;{{ InicioPaginacion + 1 }}</strong>-<strong>&nbsp;{{ InicioPaginacion +
+                                RangoPaginacion }}</strong>
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-6">
+                          <!-- <p>Grupo<strong>&nbsp;1</strong>-<strong>&nbsp;10</strong></p> -->
+                        </div>
                       <div class="col-lg-4 col-12">
                         <div class="form-group">
                           <div class="float-right">
@@ -633,4 +625,3 @@
     </div>
   </section>
 </section>
-

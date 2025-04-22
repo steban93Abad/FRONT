@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs';
 import { Alertas } from 'src/app/Control/Alerts';
 import { Fechas } from 'src/app/Control/Fechas';
 import { TipoDeTexto } from 'src/app/Control/TipoDeTexto';
+import { GeneradorReporte } from 'src/app/Control/GeneradoReporte';
 import { GeneradorCertificado } from 'src/app/Control/GeneradoCertificado';
 import {
   ResultadoCarteraI,
@@ -37,7 +38,7 @@ export class CertificadosComponent implements OnInit {
     private alerta: Alertas,
     public fechas: Fechas,
     private cookeService: CookieService,
-    private router: Router,
+    private router: Router,public reporte:GeneradorReporte,
     public certificado:GeneradorCertificado,
     public validar: TipoDeTexto
   ) {}
@@ -110,28 +111,28 @@ export class CertificadosComponent implements OnInit {
     this.ListaCreditos = [];
     this.loading = true;
     this.api
-      .GetCreditoFracionado(this.FraccionDatos, this.RangoDatos)
-      .pipe(
-        map((tracks) => {
-          this.ListaCreditos = tracks['data'];
-          this.DatosTemporalesBusqueda = tracks['data'];
+    .GetCreditoFracionado(this.FraccionDatos, this.RangoDatos)
+    .pipe(
+      map((tracks) => {
+        this.ListaCreditos = tracks['data'];
+        this.DatosTemporalesBusqueda = tracks['data'];
 
-          if (this.ListaCreditos.length === 0) {
-            this.loading = false;
-            this.alerta.NoExistenDatos();
-          } else {
-            this.loading = false;
-            this.ContadorDatosGeneral = this.ListaCreditos.length;
-            this.FraccionarValores(0, this.ListaCreditos, this.ConstanteFraccion);
-          }
-        }),
-        catchError((error) => {
+        if (this.ListaCreditos.length === 0) {
           this.loading = false;
-          this.alerta.ErrorAlRecuperarElementos();
-          throw new Error(error);
-        })
-      )
-      .subscribe();
+          this.alerta.NoExistenDatos();
+        } else {
+          this.loading = false;
+          this.ContadorDatosGeneral = this.ListaCreditos.length;
+          this.FraccionarValores(0, this.ListaCreditos, this.ConstanteFraccion);
+        }
+      }),
+      catchError((error) => {
+        this.loading = false;
+        this.alerta.ErrorAlRecuperarElementos();
+        throw new Error(error);
+      })
+    )
+    .subscribe();
   }
 
   FiltrarElemento() {
@@ -354,14 +355,6 @@ export class CertificadosComponent implements OnInit {
       datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
       datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
 
-      // Verificar si el estado de contactabilidad es Liquidado
-      const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
-
-      if (estadoContactabilidad !== 'LIQUIDADO') {
-        this.alerta.ErrorEnLaPeticion('No se puede generar el certificado. El estado de contactabilidad debe ser "LIQUIDADO".');
-        return; // Detener el proceso si no está Liquidado
-      }
-
       // Generar Certificado
       let listadoObjeto:any[] = [];
       let ocD: any = {
@@ -377,7 +370,7 @@ export class CertificadosComponent implements OnInit {
       };
       this.gCredito=om;
       this.certificado.generarCertificadoPDF(this.gCredito);
-
+      
       // Guardar Certificado
       this.api
       .PostCertificado(datos)
@@ -427,7 +420,7 @@ export class CertificadosComponent implements OnInit {
     this.ClienteInfo.patchValue('');
     if (identificacion == '') {
       this.alerta.ErrorEnLaPeticion(
-        'No se encontro a este cliente porque sus datos no fueron registrados.'
+        'No ingreso ningun identificador para su busqueda'
       );
     } else {
       this.api
@@ -457,10 +450,10 @@ export class CertificadosComponent implements OnInit {
 
   BuscarCertificado(credito: any) {
     this.CertificadoInfo.patchValue('');
-
+    
     if (credito == '') {
       this.alerta.ErrorEnLaPeticion(
-        'No se encontro a este credito porque no fue registrado.'
+        'No ingreso ningun identificador para su busqueda'
       );
     } else {
       this.api
@@ -631,7 +624,7 @@ export class CertificadosComponent implements OnInit {
     this.ActDesControles(0);
   }
 
-   // ****************************************** PAGINACION *****************************************************************
+  // ****************************************** PAGINACION *****************************************************************
   DatosCargaMasiva!: any[];
   DatosTemporales: any[] = [];
   ContadorDatos: number = 0;
@@ -640,7 +633,6 @@ export class CertificadosComponent implements OnInit {
   FinalPaginacion: number = 0;
   FraccionDatos: number = 0;
   ContadorDatosGeneral: number = 0;
-
 
   FraccionarValores(tipo: number, datos?: any, rango?: number) {
     if (rango != null && datos != null) {
@@ -702,134 +694,134 @@ export class CertificadosComponent implements OnInit {
     }
   }
 
-    /*********************  FILTRO MODO GENERAL *********************** */
-    DatosTemporalesBusqueda: any[] = [];
-    FirltroPor: string = '';
+  /*********************  FILTRO MODO GENERAL *********************** */
+  DatosTemporalesBusqueda: any[] = [];
+  FirltroPor: string = '';
 
-    FiltrarPor(filtro: string, etiqueta: number) {
-      const TxtFiltro = document.getElementById(
-        'TxtFiltro' + etiqueta
-      ) as HTMLInputElement;
-      const ThDescripcion = document.getElementById(
-        'ThDescripcion' + etiqueta
-      ) as HTMLInputElement;
-      const ThIdentificacion = document.getElementById(
-        'ThIdentificacion' + etiqueta
-      ) as HTMLInputElement;
-      const ThCodCredito = document.getElementById(
-        'ThCodCredito' + etiqueta
-      ) as HTMLInputElement;
+  FiltrarPor(filtro: string, etiqueta: number) {
+    const TxtFiltro = document.getElementById(
+      'TxtFiltro' + etiqueta
+    ) as HTMLInputElement;
+    const ThDescripcion = document.getElementById(
+      'ThDescripcion' + etiqueta
+    ) as HTMLInputElement;
+    const ThIdentificacion = document.getElementById(
+      'ThIdentificacion' + etiqueta
+    ) as HTMLInputElement;
+    const ThCodCredito = document.getElementById(
+      'ThCodCredito' + etiqueta
+    ) as HTMLInputElement;
 
-      const lblFiltro = document.getElementById(
-        'lblFiltro' + etiqueta
-      ) as HTMLInputElement;
-      lblFiltro.textContent = filtro;
-      ThDescripcion.style.color = '';
-      ThIdentificacion.style.color = '';
-      ThCodCredito.style.color = '';
-      TxtFiltro.value = '';
-      TxtFiltro.disabled = false;
-      TxtFiltro.focus();
+    const lblFiltro = document.getElementById(
+      'lblFiltro' + etiqueta
+    ) as HTMLInputElement;
+    lblFiltro.textContent = filtro;
+    ThDescripcion.style.color = '';
+    ThIdentificacion.style.color = '';
+    ThCodCredito.style.color = '';
+    TxtFiltro.value = '';
+    TxtFiltro.disabled = false;
+    TxtFiltro.focus();
+  }
+
+  VaciarFiltro(etiqueta: number) {
+    const TxtFiltro = document.getElementById(
+      'TxtFiltro' + etiqueta
+    ) as HTMLInputElement;
+    const ThIdentificacion = document.getElementById(
+      'ThIdentificacion' + etiqueta
+    ) as HTMLInputElement;
+    const ThDescripcion = document.getElementById(
+      'ThDescripcion' + etiqueta
+    ) as HTMLInputElement;
+    const ThCodCredito = document.getElementById(
+      'ThCodCredito' + etiqueta
+    ) as HTMLInputElement;
+    const lblFiltro = document.getElementById(
+      'lblFiltro' + etiqueta
+    ) as HTMLInputElement;
+    lblFiltro.textContent = '';
+    ThDescripcion.style.color = '';
+    ThIdentificacion.style.color = '';
+    ThCodCredito.style.color = '';
+    TxtFiltro.disabled = true;
+    TxtFiltro.value = '';
+    this.FirltroPor = '';
+    if (etiqueta === 0) {
+      this.FraccionarValores(
+        0,
+        this.DatosTemporalesBusqueda,
+        this.ConstanteFraccion
+      );
     }
+  }
 
-    VaciarFiltro(etiqueta: number) {
-      const TxtFiltro = document.getElementById(
-        'TxtFiltro' + etiqueta
-      ) as HTMLInputElement;
-      const ThIdentificacion = document.getElementById(
-        'ThIdentificacion' + etiqueta
-      ) as HTMLInputElement;
-      const ThDescripcion = document.getElementById(
-        'ThDescripcion' + etiqueta
-      ) as HTMLInputElement;
-      const ThCodCredito = document.getElementById(
-        'ThCodCredito' + etiqueta
-      ) as HTMLInputElement;
-      const lblFiltro = document.getElementById(
-        'lblFiltro' + etiqueta
-      ) as HTMLInputElement;
-      lblFiltro.textContent = '';
-      ThDescripcion.style.color = '';
-      ThIdentificacion.style.color = '';
-      ThCodCredito.style.color = '';
-      TxtFiltro.disabled = true;
-      TxtFiltro.value = '';
-      this.FirltroPor = '';
-      if (etiqueta === 0) {
-        this.FraccionarValores(
-          0,
-          this.DatosTemporalesBusqueda,
-          this.ConstanteFraccion
-        );
+  FiltrarLista(num: number, etiqueta: number) {
+    const TxtFiltro = document.getElementById(
+      'TxtFiltro' + etiqueta
+    ) as HTMLInputElement;
+    const lblFiltro = document.getElementById(
+      'lblFiltro' + etiqueta
+    ) as HTMLInputElement;
+    const contador = TxtFiltro.value!.length;
+    this.EncerarVariablesPaginacion(0);
+    lblFiltro.textContent != 'ThCodCredito'
+      ? (TxtFiltro.value = TxtFiltro.value!.toUpperCase())
+      : (TxtFiltro.value = TxtFiltro.value!);
+    const ThDescripcion = document.getElementById(
+      'ThDescripcion' + etiqueta
+    ) as HTMLInputElement;
+    const ThIdentificacion = document.getElementById(
+      'ThIdentificacion' + etiqueta
+    ) as HTMLInputElement;
+    const ThCodCredito = document.getElementById(
+      'ThCodCredito' + etiqueta
+    ) as HTMLInputElement;
+
+    if (lblFiltro.textContent === 'Nombres') {
+      let nombre = TxtFiltro.value!;
+      if (num === 0) {
+        const resultado = this.ListaCreditos.filter((elemento) => {
+          return elemento.cli_nombres.includes(nombre.toUpperCase());
+        });
+        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
       }
-    }
 
-    FiltrarLista(num: number, etiqueta: number) {
-      const TxtFiltro = document.getElementById(
-        'TxtFiltro' + etiqueta
-      ) as HTMLInputElement;
-      const lblFiltro = document.getElementById(
-        'lblFiltro' + etiqueta
-      ) as HTMLInputElement;
-      const contador = TxtFiltro.value!.length;
-      this.EncerarVariablesPaginacion(0);
-      lblFiltro.textContent != 'ThCodCredito'
-        ? (TxtFiltro.value = TxtFiltro.value!.toUpperCase())
-        : (TxtFiltro.value = TxtFiltro.value!);
-      const ThDescripcion = document.getElementById(
-        'ThDescripcion' + etiqueta
-      ) as HTMLInputElement;
-      const ThIdentificacion = document.getElementById(
-        'ThIdentificacion' + etiqueta
-      ) as HTMLInputElement;
-      const ThCodCredito = document.getElementById(
-        'ThCodCredito' + etiqueta
-      ) as HTMLInputElement;
-
-      if (lblFiltro.textContent === 'Nombres') {
-        let nombre = TxtFiltro.value!;
-        if (num === 0) {
-          const resultado = this.ListaCreditos.filter((elemento) => {
-            return elemento.cli_nombres.includes(nombre.toUpperCase());
-          });
-          this.FraccionarValores(0, resultado, this.ConstanteFraccion);
-        }
-
-        if (contador != 0) {
-          ThDescripcion.style.color = 'red';
-        } else {
-          ThDescripcion.style.color = '';
-        }
-      }
-      if (lblFiltro.textContent === 'Identificacion') {
-        let nombre = TxtFiltro.value!;
-        if (num === 0) {
-          const resultado = this.ListaCreditos.filter((elemento) => {
-            return elemento.cli_identificacion.includes(nombre.toUpperCase());
-          });
-          this.FraccionarValores(0, resultado, this.ConstanteFraccion);
-        }
-
-        if (contador != 0) {
-          ThIdentificacion.style.color = 'red';
-        } else {
-          ThIdentificacion.style.color = '';
-        }
-      }
-      if (lblFiltro.textContent === 'CodCredito') {
-        let nombre = TxtFiltro.value!;
-        if (num === 0) {
-          const resultado = this.ListaCreditos.filter((elemento) => {
-            return elemento.ope_cod_credito.includes(nombre);
-          });
-          this.FraccionarValores(0, resultado, this.ConstanteFraccion);
-        }
-
-        if (contador != 0) {
-          ThCodCredito.style.color = 'red';
-        } else {
-          ThCodCredito.style.color = '';
-        }
+      if (contador != 0) {
+        ThDescripcion.style.color = 'red';
+      } else {
+        ThDescripcion.style.color = '';
       }
     }
+    if (lblFiltro.textContent === 'Identificacion') {
+      let nombre = TxtFiltro.value!;
+      if (num === 0) {
+        const resultado = this.ListaCreditos.filter((elemento) => {
+          return elemento.cli_identificacion.includes(nombre.toUpperCase());
+        });
+        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+      }
+
+      if (contador != 0) {
+        ThIdentificacion.style.color = 'red';
+      } else {
+        ThIdentificacion.style.color = '';
+      }
+    }
+    if (lblFiltro.textContent === 'CodCredito') {
+      let nombre = TxtFiltro.value!;
+      if (num === 0) {
+        const resultado = this.ListaCreditos.filter((elemento) => {
+          return elemento.ope_cod_credito.includes(nombre);
+        });
+        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+      }
+
+      if (contador != 0) {
+        ThCodCredito.style.color = 'red';
+      } else {
+        ThCodCredito.style.color = '';
+      }
+    }
+  }
 }
