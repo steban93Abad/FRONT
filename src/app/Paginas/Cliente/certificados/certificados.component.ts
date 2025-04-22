@@ -355,6 +355,14 @@ export class CertificadosComponent implements OnInit {
       datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
       datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
 
+      // Verificar si el estado de contactabilidad es Liquidado
+      const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
+
+      if (estadoContactabilidad !== 'LIQUIDADO') {
+        this.alerta.ErrorEnLaPeticion('No se puede generar el certificado. El estado de contactabilidad debe ser "LIQUIDADO".');
+        return; // Detener el proceso si no está Liquidado
+      }
+
       // Generar Certificado
       let listadoObjeto:any[] = [];
       let ocD: any = {
@@ -370,7 +378,7 @@ export class CertificadosComponent implements OnInit {
       };
       this.gCredito=om;
       this.certificado.generarCertificadoPDF(this.gCredito);
-      
+
       // Guardar Certificado
       this.api
       .PostCertificado(datos)
@@ -420,7 +428,7 @@ export class CertificadosComponent implements OnInit {
     this.ClienteInfo.patchValue('');
     if (identificacion == '') {
       this.alerta.ErrorEnLaPeticion(
-        'No ingreso ningun identificador para su busqueda'
+        'No se encontro a este cliente porque sus datos no fueron registrados.'
       );
     } else {
       this.api
@@ -450,10 +458,10 @@ export class CertificadosComponent implements OnInit {
 
   BuscarCertificado(credito: any) {
     this.CertificadoInfo.patchValue('');
-    
+
     if (credito == '') {
       this.alerta.ErrorEnLaPeticion(
-        'No ingreso ningun identificador para su busqueda'
+        'No se encontro a este credito porque no fue registrado.'
       );
     } else {
       this.api
