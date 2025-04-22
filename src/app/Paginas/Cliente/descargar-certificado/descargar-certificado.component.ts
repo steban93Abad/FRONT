@@ -5,7 +5,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { catchError, map } from 'rxjs';
 import { Alertas } from 'src/app/Control/Alerts';
 import { Fechas } from 'src/app/Control/Fechas';
-import { GeneradorReporte } from 'src/app/Control/GeneradoReporte';
+import { TipoDeTexto } from 'src/app/Control/TipoDeTexto';
+import { GeneradorCertificado } from 'src/app/Control/GeneradoCertificado';
 import {
   ResultadoCarteraI,
   ResultadoGestorI,
@@ -16,8 +17,11 @@ import {
   ContactabilidadI,
   FiltroGestion,
   CxcOperacionI,
+  CertificadoI,
   generarPDF,
+  ClienteI,
   GestorI,
+  generarCertificadoPDF,
 } from 'src/app/Modelos/response.interface';
 import { ApiService } from 'src/app/service/api.service';
 
@@ -33,7 +37,9 @@ export class DescargarCertificadoComponent implements OnInit {
     private alerta: Alertas,
     public fechas: Fechas,
     private cookeService: CookieService,
-    private router: Router,public reporte:GeneradorReporte
+    private router: Router,
+    public certificado:GeneradorCertificado,
+    public validar: TipoDeTexto
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +61,7 @@ export class DescargarCertificadoComponent implements OnInit {
   CarteraGestor: any[] = [];
   TodasCarteras: number[] = [];
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
+  gCredito!:generarCertificadoPDF;
 
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCertificado: any[] = [];

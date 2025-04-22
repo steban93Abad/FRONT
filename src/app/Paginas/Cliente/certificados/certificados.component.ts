@@ -6,7 +6,6 @@ import { catchError, map } from 'rxjs';
 import { Alertas } from 'src/app/Control/Alerts';
 import { Fechas } from 'src/app/Control/Fechas';
 import { TipoDeTexto } from 'src/app/Control/TipoDeTexto';
-import { GeneradorReporte } from 'src/app/Control/GeneradoReporte';
 import { GeneradorCertificado } from 'src/app/Control/GeneradoCertificado';
 import {
   ResultadoCarteraI,
@@ -38,7 +37,7 @@ export class CertificadosComponent implements OnInit {
     private alerta: Alertas,
     public fechas: Fechas,
     private cookeService: CookieService,
-    private router: Router,public reporte:GeneradorReporte,
+    private router: Router,
     public certificado:GeneradorCertificado,
     public validar: TipoDeTexto
   ) {}
