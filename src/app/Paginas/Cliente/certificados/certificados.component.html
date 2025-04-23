@@ -269,79 +269,80 @@
                 <section class="expand-bottom" *ngIf="TituloFormulario == ''">
                   <div class="card-body" style="background-color: var(--color-formulario-secundario)"
                     *ngIf="!loading; else loadingOrError">
-                    <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
-                      *ngIf="ListaCreditos.length != 0">
-                      <div class="float-right clearfix">
-                            <div class="input-group">
-                              <div class="input-group-prepend">
-                                <button type="button" class="btn btnOk btn-sm dropdown-toggle" data-toggle="dropdown"
-                                  aria-expanded="false">
-                                  <label id="lblFiltro0"></label>
-                                </button>
-                                <ul class="dropdown-menu" x-placement="top-start">
-                                  <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Identificacion', 0)">
-                                    <a>Identificación</a>
-                                  </li>
-                                  <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Nombres', 0)">
-                                    <a>Nombres</a>
-                                  </li>
-                                  <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cod. Credito', 0)">
-                                    <a>Cod. Credito</a>
-                                  </li>
-                                  <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Contactabilidad', 0)">
-                                    <a>Contactabilidad</a>
-                                  </li>
-                                  <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cartera', 0)">
-                                    <a>Cartera</a>
-                                  </li>
-                                </ul>
-                              </div>
+                      <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
+                        *ngIf="ListaCreditos.length != 0">
+                        <div class="float-right clearfix">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button type="button" class="btn btnOk btn-sm dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+                                <label id="lblFiltro0"></label>
+                              </button>
+                              <ul class="dropdown-menu" x-placement="top-start">
+                                <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Identificacion', 0)">
+                                  <a>Identificación</a>
+                                </li>
+                                <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Nombres', 0)">
+                                  <a>Nombres</a>
+                                </li>
+                                <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cod. Credito', 0)">
+                                  <a>Cod. Credito</a>
+                                </li>
+                                <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Contactabilidad', 0)">
+                                  <a>Contactabilidad</a>
+                                </li>
+                                <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cartera', 0)">
+                                  <a>Cartera</a>
+                                </li>
+                              </ul>
+                            </div>
 
-                              <input type="text" id="TxtFiltro0" (keyup)="FiltrarLista(0, 0)"
-                                class="form-control form-control-sm" />
+                            <input type="text" id="TxtFiltro0" (keyup)="FiltrarLista(0, 0)"
+                              class="form-control form-control-sm" />
 
-                              <div class="input-group-append">
-                                <button type="button" class="btn btnOk btn-sm" (click)="VaciarFiltro(0)">
-                                  <i class="bi bi-trash"></i>
-                                </button>
-                              </div>
+                            <div class="input-group-append">
+                              <button type="button" class="btn btnOk btn-sm" (click)="VaciarFiltro(0)">
+                                <i class="bi bi-trash"></i>
+                              </button>
                             </div>
                           </div>
                         </div>
-                        <table class="table table-bordered table-responsive-md"
-                            *ngIf="ListaCreditos.length != 0">
-                            <thead>
-                                <tr>
-                                  <th style="width: 10px">#</th>
-                                  <th id="ThCodCredito0">Cod. Credito</th>
-                                  <th id="ThIdentificacion0">Identificacion</th>
-                                  <th id="ThCliente0">Cliente</th>
-                                  <th id="ThContactabilidad0">Contactabilidad</th>
-                                  <th id="ThCartera0">Cartera</th>
-                                  <th>Fec. Gestion</th>
-                                  <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let datos of DatosCargaMasiva; let i = index">
-                                  <th>{{InicioPaginacion + i + 1}}</th>
-                                  <th>{{ datos.ope_cod_credito }}</th>
-                                  <th>{{ datos.cli_identificacion }}</th>
-                                  <th>{{ datos.cli_nombres }}</th>
-                                  <th>{{ datos.ope_estado_contacta }}</th>
-                                  <th>{{ datos.cart_descripcion }}</th>
-                                  <th>{{datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion)}}</th>
-                                  <th>
-                                    <div class="btn-group" role="group">
-                                        <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoGestor(datos, 3)">
-                                          <i class="fa-regular fa-eye"></i>
-                                        </button>
-                                    </div>
-                                  </th>
-                                </tr>
-                            </tbody>
-                        </table>
-
+                      </div>
+                      <table class="table table-bordered table-responsive   table-auto small"
+                          *ngIf="ListaCreditos.length != 0">
+                          <thead>
+                              <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Acciones</th>
+                                <th id="ThCodCredito0">Cod. Credito</th>
+                                <th id="ThIdentificacion0">Identificacion</th>
+                                <th id="ThCliente0">Cliente</th>
+                                <th id="ThContactabilidad0" class="OcultarMax450px">Contactabilidad</th>
+                                <th class="OcultarMax450px">Gestor</th>
+                                <th id="ThCartera0" class="OcultarMax450px">Cartera</th>
+                                <th class="OcultarMax450px">Fec. Gestion</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let datos of DatosCargaMasiva; let i = index">
+                                <th>{{InicioPaginacion + i + 1}}</th>
+                                <th>
+                                  <div class="btn-group" role="group">
+                                      <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoGestor(datos, 3)">
+                                        <i class="fa-regular fa-eye"></i>
+                                      </button>
+                                  </div>
+                                </th>
+                                <th>{{ datos.ope_cod_credito }}</th>
+                                <th>{{ datos.cli_identificacion }}</th>
+                                <th>{{ datos.cli_nombres }}</th>
+                                <th>{{ datos.ope_estado_contacta }}</th>
+                                <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
+                                <th>{{ datos.cart_descripcion }}</th>
+                                <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>
+                              </tr>
+                          </tbody>
+                      </table>
                     </div>
 
                     <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
