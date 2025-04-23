@@ -7,67 +7,144 @@
           <div class="container-fluid">
               <div class="card card-default">
 
-                  <!-- BARRA PRINCIPAL -->
+                  <!-- BARRA PRINCIPAL Y FILTROS DE BUSQUEDA -->
                 <section class="horizontal-center" *ngIf="TituloFormulario == ''">
                   <div class="card-header" style="background-color: var(--color-formulario-primario)">
-                    <div class="btn-group" role="group">
-                      <button class="btnHome" (click)="ListarElementos(1)">
-                        <i class="fa-solid fa-house"></i>
-                      </button>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                      <div class="form-floating">
+                          <input type="text" class="form-control" id="identificacion" placeholder=""
+                              formControlName="identificacion">
+                          <label class="truncate-text" for="identificacion">Cédula/Ruc/Pasaporte</label>
+                      </div>
                     </div>
-                    <div class="btn-group float-right" role="group">
-                      <label type="text-info" class="formControl CenterItemColorSecundario center ml-1" style="width: 50%"
-                        *ngIf="itemBusqueda.value !== ''">{{ itemBusqueda.value }}</label>
-
-                      <button type="button" class="btnFilter ml-1" data-toggle="dropdown">
-                        <i class="bi bi-funnel"></i>
-                      </button>
-
-                      <div class="OcultarMax450px" style="width: 50%">
-                        <input *ngIf="
-                            itemBusqueda.value !== ''
-                          " id="txtValorBusqueda" [formControl]="txtBusqueda" (keydown.enter)="FiltrarElemento()"
-                          (keyup)="ConvertirMayusculas()" class="form-control ml-2" type="text" placeholder="Buscar"
-                          autofocus />
-                      </div>
-
-                      <div>
-                        <button type="button" class="btnBuscar ml-2 OcultarMax450px" *ngIf="txtBusqueda.value !== ''"
-                          (click)="FiltrarElemento()">
-                          <i class="bi bi-search"></i>
-                        </button>
-                      </div>
-
-                      <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" (click)="GetBusquedaPor(item)" *ngFor="let item of ParametrosDeBusqueda">{{
-                          item }}</a>
+                    <div class="col-lg-3 col-md-5 col-sm-6 col-12 mt-2">
+                      <button type="button" class="btnBuscar  ml-2"><i
+                              class="fa-solid fa-magnifying-glass"></i>&nbsp;Buscar</button>
+                      <button type="button" class="btnLimpiar ml-2" (click)="ResetBuscarClienteForms()"><i
+                              class="fa-solid fa-trash-can"></i></button>
+                    </div>
+                    <div class="col">
+                      <div class="row  justify-content-end">
+                        <div class="col">
+                          <div class="btn-group float-right" role="group">
+                            <button class="btnFilter collapsed" type="button"
+                              data-bs-toggle="collapse"
+                              data-bs-target="#MasParametrosBusqueda" aria-expanded="false"
+                              aria-controls="MasParametrosBusqueda">
+                              <i class="bi bi-funnel"></i>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="card-header OcultarMin450px" style="background-color: var(--color-formulario-primario)">
-                    <div class="btn-group float-right" role="group">
-                      <input *ngIf="
-                          itemBusqueda.value !== '' &&
-                          (itemBusqueda.value === 'Descripción' ||
-                            itemBusqueda.value === 'Descripción Incompleta')
-                        " id="txtValorBusqueda" style="width: 80%" [formControl]="txtBusqueda"
-                        (keyup)="ConvertirMayusculas()" class="form-control ml-2"
-                        type="text" placeholder="Buscar" autofocus />
-
-                      <select class="form-select" *ngIf="
-                          itemBusqueda.value !== '' && itemBusqueda.value === 'Estado'
-                        " [formControl]="txtBusqueda" [spellcheck]="false" style="width: 150px">
-                        <option>
-
-                        </option>
-                      </select>
-
-                      <button type="button" class="btnBuscar ml-2">
-                        <i class="bi bi-search"></i>
-                      </button>
-                    </div>
-                  </div>
+                </div>
                 </section>
+                <section class="horizontal-center">
+                  <form [formGroup]="BuscarForms">
+                      <div class="row">
+                          <div class="accordion" id="AcordionParametrosBus">
+                              <div class="accordion-item">
+
+                                  <div id="MasParametrosBusqueda" class="accordion-collapse collapse"
+                                      data-bs-parent="#AcordionParametrosBus">
+                                      <div class="accordion-body">
+                                          <div class="row">
+                                              <div class="col-md-3 col-12">
+                                                  <div class="form-floating">
+                                                      <input type="text" class="form-control" id="nombres_cliente"
+                                                          placeholder="" formControlName="nombres_cliente">
+                                                      <label class="truncate-text"
+                                                          for="nombres_cliente">Nombres</label>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3 col-6">
+                                                  <div class="form-group">
+                                                      <span title="Cantidad de meses sin gestión">Cartera</span>
+
+                                                      <select style="height: 35px;" class="form-select"
+                                                          formControlName="cartera">
+                                                          <option *ngIf="CarteraGestor.length == 0" disabled>
+                                                              Cargando
+                                                              ...
+                                                          </option>
+                                                          <option [value]="0">Todas</option>
+                                                          <option *ngFor="let s of CarteraGestor"
+                                                              [value]="s.cart_id">
+                                                              {{s.cart_descripcion+' '+s.cart_tip_descripcion}}
+                                                          </option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3 col-6">
+                                                  <div class="form-group">
+                                                      <span title="Cantidad de meses sin gestión">Gestor</span>
+
+                                                      <select style="height: 35px;" class="form-select"
+                                                          (click)="ListaGestores.length == 0?ListarGestores():null"
+                                                          formControlName="gestor">
+                                                          <option *ngIf="ListaGestores.length == 0" disabled>
+                                                              Cargando...
+                                                          </option>
+                                                          <option [value]="0">Todos</option>
+                                                          <option *ngFor="let s of ListaGestores"
+                                                              [value]="s.id_gestor">
+                                                              {{s.ges_nombres+' '+s.ges_apellidos}}
+                                                          </option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3 col-6">
+                                                  <div class="form-group">
+                                                      <span
+                                                          title="Cantidad de meses sin gestión">Contactabilidad</span>
+
+                                                      <select style="height: 35px;" class="form-select"
+                                                          (click)="ListaContactabilidad.length == 0?ListarContactabilidad():null"
+                                                          formControlName="contactabilidad">
+                                                          <option *ngIf="ListaContactabilidad.length == 0"
+                                                              disabled>
+                                                              Cargando...
+                                                          </option>
+                                                          <option [value]="0">Todas</option>
+                                                          <option *ngFor="let s of ListaContactabilidad"
+                                                              [value]="s.id_contactabilidad">
+                                                              {{s.contac_descripcion}}
+                                                          </option>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3 col-6">
+                                                  <div class="form-floating mb-3">
+                                                      <input type="date" class="form-control small"
+                                                          id="fecha_inicial" placeholder=""
+                                                          formControlName="fecha_inicial">
+                                                      <label class="truncate-text" for="fecha_inicial">Fecha
+                                                          Inicial</label>
+                                                  </div>
+                                              </div>
+                                              <div class="col-md-3 col-6">
+                                                  <div class="form-floating mb-3">
+                                                      <input type="date" class="form-control small"
+                                                          id="fecha_final" placeholder=""
+                                                          formControlName="fecha_final">
+                                                      <label class="truncate-text" for="fecha_final">Fecha
+                                                          Final</label>
+                                                  </div>
+                                              </div>
+
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                          </div>
+
+
+                      </div>
+                  </form>
+              </section>
 
                 <!-- FORMULARIO PARA VER ELEMENTOS -->
                 <section class="vertical-center" *ngIf="TituloFormulario != ''">

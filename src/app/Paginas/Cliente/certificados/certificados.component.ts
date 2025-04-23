@@ -45,6 +45,19 @@ export class CertificadosComponent implements OnInit {
 
   ngOnInit(): void {
     this.ListarElementos(1);
+    this.CarterasGestor();
+  }
+
+  CarterasGestor() {
+    for (let datos of this.Cartera) {
+      let cartera: any = {
+        cart_id: Number(datos.cart_id),
+        cart_descripcion: datos.cart_descripcion,
+        cart_tip_descripcion: datos.cart_tip_descripcion,
+      };
+      this.CarteraGestor.push(cartera);
+      this.TodasCarteras.push(cartera.cart_id);
+    }
   }
 
   permisos: ResultadoPermisosI = JSON.parse(localStorage.getItem('usuario')!);
@@ -65,44 +78,75 @@ export class CertificadosComponent implements OnInit {
   mostrarBtnImprimir: boolean = true;
 
   // ****************************************** CONTROLES DE BUSQUEDA *****************************************************************
-  ParametrosDeBusqueda: Array<string> = [
-    '',
-    'Identificación',
-    'Nombre Completo',
-    'Nombre Incompleto',
-    'Codigo Credito'
-  ];
 
-  itemBusqueda = new FormControl('', [Validators.required]);
-  txtBusqueda = new FormControl('', [Validators.required]);
+  BuscarForms = new FormGroup({
+    identificacion: new FormControl('', Validators.required),
+    nombres_cliente: new FormControl('', Validators.required),
+    cartera: new FormControl('0', Validators.required),
+    gestor: new FormControl('0', Validators.required),
+    contactabilidad: new FormControl('0', Validators.required),
+    fecha_inicial: new FormControl('',
+      Validators.required
+    ),
+    fecha_final: new FormControl('',
+      Validators.required
+    )
+  });
 
-  GetBusquedaPor(item: string) {
-    this.itemBusqueda.patchValue(item);
-    this.txtBusqueda.patchValue('');
-    const inputElement = document.getElementById(
-      'txtValorBusqueda'
-    ) as HTMLInputElement;
-
-    if (item.length > 0 && inputElement != null) {
-      inputElement.focus();
-    }
+  ResetBuscarClienteForms() {
+    this.BuscarForms.reset({
+      identificacion: '',
+      nombres_cliente: '',
+      cartera: '0',
+      gestor: '0',
+      contactabilidad: '0',
+      fecha_inicial: '',
+      fecha_final: ''
+    });
   }
 
-  ConvertirMayusculas() {
-    if (
-      this.itemBusqueda.value != 'Nombre Completo' &&
-      this.itemBusqueda.value != 'Nombre Incompleto' &&
-      this.itemBusqueda.value != 'Codigo Credito'
-    ) {
-      this.txtBusqueda.patchValue(this.txtBusqueda.value!.toUpperCase());
-    }
+  ListaContactabilidad: ContactabilidadI[] = [];
+
+  ListarContactabilidad() {
+    this.ListaContactabilidad = [];
+    this.api
+      .GetContactabilidadFracionado(0, 0)
+      .pipe(
+        map((tracks) => {
+          this.ListaContactabilidad = tracks['data'];
+        }),
+        catchError((error) => {
+          this.loading = false;
+          this.alerta.ErrorAlRecuperarElementos();
+          throw new Error(error);
+        })
+      )
+      .subscribe();
+  }
+
+  ListaGestores: GestorI[] = [];
+
+  ListarGestores() {
+    this.ListaGestores = [];
+    this.api
+      .GetGestoresFracionadoFiltro('g', 20)
+      .pipe(
+        map((tracks) => {
+          this.ListaGestores = tracks['data'];
+        }),
+        catchError((error) => {
+          this.loading = false;
+          this.alerta.ErrorAlRecuperarElementos();
+          throw new Error(error);
+        })
+      )
+      .subscribe();
   }
 
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCreditos: any[] = [];
 
   ListarElementos(num: number) {
-    this.GetBusquedaPor('');
     if (num === 1) {
       this.ListaCreditos = [];
       this.FraccionDatos = 0;
@@ -133,27 +177,6 @@ export class CertificadosComponent implements OnInit {
       })
     )
     .subscribe();
-  }
-
-  FiltrarElemento() {
-    const valor: any = this.txtBusqueda.value?.toString();
-    let tipo: number;
-    if (this.itemBusqueda.value === 'Identificación') {
-      tipo = 0;
-      this.GetFiltrarElemento(valor, tipo);
-    }
-    if (this.itemBusqueda.value === 'Nombre Completo') {
-      tipo = 1;
-      this.GetFiltrarElemento(valor, tipo);
-    }
-    if (this.itemBusqueda.value === 'Nombre Incompleto') {
-      tipo = 2;
-      this.GetFiltrarElemento(valor, tipo);
-    }
-    if (this.itemBusqueda.value === 'Codigo Credito') {
-      tipo = 3;
-      this.GetFiltrarElemento(valor, tipo);
-    }
   }
 
   GetFiltrarElemento(valor: string, tipo: number) {
@@ -622,8 +645,6 @@ export class CertificadosComponent implements OnInit {
     this.ResetCertificadoForms();
     //this.ResetCreditosForms();
     this.loading = false;
-    this.itemBusqueda.patchValue('');
-    this.txtBusqueda.patchValue('');
     this.TituloFormulario = '';
     this.ActDesControles(0);
   }
