@@ -706,8 +706,8 @@ export class CertificadosComponent implements OnInit {
     const TxtFiltro = document.getElementById(
       'TxtFiltro' + etiqueta
     ) as HTMLInputElement;
-    const ThDescripcion = document.getElementById(
-      'ThDescripcion' + etiqueta
+    const ThCliente = document.getElementById(
+      'ThCliente' + etiqueta
     ) as HTMLInputElement;
     const ThIdentificacion = document.getElementById(
       'ThIdentificacion' + etiqueta
@@ -715,14 +715,22 @@ export class CertificadosComponent implements OnInit {
     const ThCodCredito = document.getElementById(
       'ThCodCredito' + etiqueta
     ) as HTMLInputElement;
+    const ThContactabilidad = document.getElementById(
+      'ThContactabilidad' + etiqueta
+    ) as HTMLInputElement;
+    const ThCartera = document.getElementById(
+      'ThCartera' + etiqueta
+    ) as HTMLInputElement;
 
     const lblFiltro = document.getElementById(
       'lblFiltro' + etiqueta
     ) as HTMLInputElement;
     lblFiltro.textContent = filtro;
-    ThDescripcion.style.color = '';
+    ThCliente.style.color = '';
     ThIdentificacion.style.color = '';
     ThCodCredito.style.color = '';
+    ThContactabilidad.style.color = '';
+    ThCartera.style.color = '';
     TxtFiltro.value = '';
     TxtFiltro.disabled = false;
     TxtFiltro.focus();
@@ -735,19 +743,27 @@ export class CertificadosComponent implements OnInit {
     const ThIdentificacion = document.getElementById(
       'ThIdentificacion' + etiqueta
     ) as HTMLInputElement;
-    const ThDescripcion = document.getElementById(
-      'ThDescripcion' + etiqueta
+    const ThCliente = document.getElementById(
+      'ThCliente' + etiqueta
     ) as HTMLInputElement;
     const ThCodCredito = document.getElementById(
       'ThCodCredito' + etiqueta
+    ) as HTMLInputElement;
+    const ThContactabilidad = document.getElementById(
+      'ThContactabilidad' + etiqueta
+    ) as HTMLInputElement;
+    const ThCartera = document.getElementById(
+      'ThCartera' + etiqueta
     ) as HTMLInputElement;
     const lblFiltro = document.getElementById(
       'lblFiltro' + etiqueta
     ) as HTMLInputElement;
     lblFiltro.textContent = '';
-    ThDescripcion.style.color = '';
+    ThCliente.style.color = '';
     ThIdentificacion.style.color = '';
     ThCodCredito.style.color = '';
+    ThContactabilidad.style.color = '';
+    ThCartera.style.color = '';
     TxtFiltro.disabled = true;
     TxtFiltro.value = '';
     this.FirltroPor = '';
@@ -772,14 +788,20 @@ export class CertificadosComponent implements OnInit {
     lblFiltro.textContent != 'ThCodCredito'
       ? (TxtFiltro.value = TxtFiltro.value!.toUpperCase())
       : (TxtFiltro.value = TxtFiltro.value!);
-    const ThDescripcion = document.getElementById(
-      'ThDescripcion' + etiqueta
+    const ThCliente = document.getElementById(
+      'ThCliente' + etiqueta
     ) as HTMLInputElement;
     const ThIdentificacion = document.getElementById(
       'ThIdentificacion' + etiqueta
     ) as HTMLInputElement;
     const ThCodCredito = document.getElementById(
       'ThCodCredito' + etiqueta
+    ) as HTMLInputElement;
+    const ThContactabilidad = document.getElementById(
+      'ThContactabilidad' + etiqueta
+    ) as HTMLInputElement;
+    const ThCartera = document.getElementById(
+      'ThCartera' + etiqueta
     ) as HTMLInputElement;
 
     if (lblFiltro.textContent === 'Nombres') {
@@ -792,9 +814,9 @@ export class CertificadosComponent implements OnInit {
       }
 
       if (contador != 0) {
-        ThDescripcion.style.color = 'red';
+        ThCliente.style.color = 'red';
       } else {
-        ThDescripcion.style.color = '';
+        ThCliente.style.color = '';
       }
     }
     if (lblFiltro.textContent === 'Identificacion') {
@@ -812,7 +834,7 @@ export class CertificadosComponent implements OnInit {
         ThIdentificacion.style.color = '';
       }
     }
-    if (lblFiltro.textContent === 'CodCredito') {
+    if (lblFiltro.textContent === 'Cod. Credito') {
       let nombre = TxtFiltro.value!;
       if (num === 0) {
         const resultado = this.ListaCreditos.filter((elemento) => {
@@ -825,6 +847,36 @@ export class CertificadosComponent implements OnInit {
         ThCodCredito.style.color = 'red';
       } else {
         ThCodCredito.style.color = '';
+      }
+    }
+    if (lblFiltro.textContent === 'Contactabilidad') {
+      let nombre = TxtFiltro.value!;
+      if (num === 0) {
+        const resultado = this.ListaCreditos.filter((elemento) => {
+          return elemento.ope_estado_contacta.includes(nombre);
+        });
+        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+      }
+
+      if (contador != 0) {
+        ThContactabilidad.style.color = 'red';
+      } else {
+        ThContactabilidad.style.color = '';
+      }
+    }
+    if (lblFiltro.textContent === 'Cartera') {
+      let nombre = TxtFiltro.value!;
+      if (num === 0) {
+        const resultado = this.ListaCreditos.filter((elemento) => {
+          return elemento.cart_descripcion.includes(nombre);
+        });
+        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+      }
+
+      if (contador != 0) {
+        ThCartera.style.color = 'red';
+      } else {
+        ThCartera.style.color = '';
       }
     }
   }
