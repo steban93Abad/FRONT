@@ -261,7 +261,7 @@ GuardarObjeto(datos: any) {
         this.CerrarAgregarEditarElemento();
         this.EncerarComponentes();
         // this.TextoFiltro.patchValue('');
-        this.alerta.RegistroAgregado();
+        this.alerta.CertificadoGenerado();
       } else {
         this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
         this.ActDesControles(0);
