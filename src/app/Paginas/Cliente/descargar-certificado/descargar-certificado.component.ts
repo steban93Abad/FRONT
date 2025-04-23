@@ -136,11 +136,10 @@ export class DescargarCertificadoComponent implements OnInit {
 
 /************************************** VER ELEMENTO  ******************************************************** */
 TituloFormulario = '';
+ClienteInfo = new FormControl({ value: '', disabled: true });
 
 CertificadosForms = new FormGroup({
-  id_certificado: new FormControl(0),
-  id_gestor: new FormControl(0, Validators.required),
-  ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
+  ope_cod_credito: new FormControl(''),
   cli_identificacion: new FormControl(''),
   cli_nombres: new FormControl(''),
   cart_descripcion: new FormControl(''),
@@ -148,16 +147,11 @@ CertificadosForms = new FormGroup({
   cart_fecha_compra: new FormControl(''),
   cert_comentario: new FormControl(''),
   ges_nombres: new FormControl(''),
-  gest_fecha_gestion: new FormControl(''),
-  cert_hist_esactivo: new FormControl(true),
-  cert_hist_baseactual: new FormControl(true),
-  cert_hist_origendatos: new FormControl('Sistema_CobroSys')
+  gest_fecha_gestion: new FormControl('')
 });
 
 ResetCertificadosForms() {
   this.CertificadosForms.reset({
-    id_certificado: 0,
-    id_gestor: 0,
     ope_cod_credito: '',
     cli_identificacion: '',
     cli_nombres: '',
@@ -166,6 +160,33 @@ ResetCertificadosForms() {
     cart_fecha_compra: '',
     cert_comentario: '',
     ges_nombres: '',
+    gest_fecha_gestion: ''
+  });
+}
+
+DatosForms = new FormGroup({
+  id_certificado: new FormControl(0),
+  id_gestor: new FormControl(0, Validators.required),
+  ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
+  cli_identificacion: new FormControl(''),
+  cli_nombres: new FormControl(''),
+  cart_descripcion: new FormControl(''),
+  cart_fecha_compra: new FormControl(''),
+  gest_fecha_gestion: new FormControl(''),
+  cert_hist_esactivo: new FormControl(true),
+  cert_hist_baseactual: new FormControl(true),
+  cert_hist_origendatos: new FormControl('Sistema_CobroSys')
+});
+
+ResetDatosForms() {
+  this.DatosForms.reset({
+    id_certificado: 0,
+    id_gestor: 0,
+    ope_cod_credito: '',
+    cli_identificacion: '',
+    cli_nombres: '',
+    cart_descripcion: '',
+    cart_fecha_compra: '',
     gest_fecha_gestion: '',
     cert_hist_esactivo: true,
     cert_hist_baseactual: true,
@@ -181,6 +202,7 @@ ActDesControles(num: number) {
   if (num === 0) {
     //inactivos
     this.CertificadosForms.get('id_certificado')?.disable();
+    this.CertificadosForms.get('ope_cod_credito')?.disable();
     this.CertificadosForms.get('cli_identificacion')?.disable();
     this.CertificadosForms.get('cli_nombres')?.disable();
     this.CertificadosForms.get('cart_descripcion')?.disable();
@@ -214,8 +236,6 @@ AgregarEditarElemento(num: number) {
 
 CargarElemento(datos: any, num: number) {
   this.CertificadosForms.patchValue({
-    id_certificado: datos.id_certificado,
-    id_gestor: datos.id_gestor,
     ope_cod_credito: datos.ope_cod_credito,
     cli_identificacion: datos.cli_identificacion,
     cli_nombres: datos.cli_nombres,
@@ -225,6 +245,23 @@ CargarElemento(datos: any, num: number) {
     cert_comentario: datos.cert_comentario,
     ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
     gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion)
+  });
+  if (num != 1) {
+    this.BuscarCliente(datos.cli_identificacion);
+  }
+
+  this.AgregarEditarElemento(num);
+}
+
+CargarElementoDato(datos: any, num: number) {
+  this.DatosForms.patchValue({
+    id_certificado: datos.id_certificado,
+    id_gestor: datos.id_gestor,
+    ope_cod_credito: datos.ope_cod_credito,
+    cli_identificacion: datos.cli_identificacion,
+    cli_nombres: datos.cli_nombres,
+    cart_descripcion: datos.cart_descripcion,
+    cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra)
   });
 
   this.AgregarEditarElemento(num);
@@ -277,9 +314,174 @@ GuardarObjeto(datos: any) {
   .subscribe();
 }
 
+// ****************************************** OTROS ELEMENTOS ****************************************************************
+
+/* Area para mostrar al cliente */
+ClienteSeleccionado!: ClienteI | null;
+
+BuscarCliente(identificacion: any) {
+  this.ClienteInfo.patchValue('');
+  if (identificacion == '') {
+    this.alerta.ErrorEnLaPeticion(
+      'No ingreso ningun identificador para su busqueda'
+    );
+  } else {
+    this.api
+      .GetClienteFracionadoFiltro(identificacion, 10)
+      .pipe(
+        map((tracks) => {
+          const datos = tracks['data'];
+          if (!datos) {
+            this.alerta.NoExistenDatos();
+          } else {
+            this.ClienteSeleccionado = datos;
+            this.ClienteInfo.patchValue(datos.cli_nombres);
+          }
+          console.log(datos);
+        }),
+        catchError((error) => {
+          this.alerta.ErrorAlRecuperarElementos();
+          throw new Error(error);
+        })
+      )
+      .subscribe();
+  }
+}
+
+  ////////////////////////////////////////  CLIENTE   ////////////////////////////////////////////////
+  TipoIdentificacion: any[] = [
+    { id: 1, name: 'Cedula', value: '1' },
+    { id: 2, name: 'Ruc', value: '2' },
+    { id: 3, name: 'Pasaporte', value: '3' },
+  ];
+  Genero: any[] = [
+    { id: 1, name: 'Hombre', value: 'M' },
+    { id: 2, name: 'Mujer', value: 'F' },
+    { id: 3, name: 'No responder', value: '0' },
+  ];
+  EstadoCivil: any[] = [
+    { id: 1, name: 'Soltero/a', value: '1' },
+    { id: 2, name: 'Casado/a', value: '2' },
+    { id: 3, name: 'Divorciado/a', value: '3' },
+    { id: 4, name: 'Viudo/a', value: '4' },
+    { id: 5, name: 'Union-Libre', value: '5' },
+    { id: 6, name: 'No especificado', value: '6' },
+  ];
+
+  ClienteForms = new FormGroup({
+    id_cliente: new FormControl(0),
+    cli_identificacion: new FormControl(''),
+    cli_nombres: new FormControl(''),
+    cli_tipo_identificacion: new FormControl(''),
+    cli_genero: new FormControl('0'),
+    cli_estado_civil: new FormControl(''),
+    cli_ocupacion: new FormControl(''),
+    cli_fecha_nacimiento: new FormControl(''),
+    cli_score: new FormControl(''),
+    cli_fallecido: new FormControl(false),
+    cli_fecha_fallecido: new FormControl(''),
+    cli_observacion: new FormControl(''),
+    cli_provincia: new FormControl(''),
+    cli_canton: new FormControl(''),
+    cli_parroquia: new FormControl(''),
+    cli_esactivo: new FormControl(true)
+  });
+
+  ResetClienteForms() {
+    this.ClienteForms.reset({
+      id_cliente: 0,
+      cli_identificacion: '',
+      cli_nombres: '',
+      cli_tipo_identificacion: '',
+      cli_genero: '0',
+      cli_estado_civil: '',
+      cli_ocupacion: '',
+      cli_fecha_nacimiento: '',
+      cli_score: '',
+      cli_fallecido: false,
+      cli_fecha_fallecido: '',
+      cli_observacion: '',
+      cli_provincia: '',
+      cli_canton: '',
+      cli_parroquia: '',
+      cli_esactivo: true
+    });
+  }
+
+  VerCliente() {
+    this.ClienteForms.get('cli_identificacion')?.disable();
+    this.ClienteForms.get('cli_nombres')?.disable();
+    this.ClienteForms.get('cli_tipo_identificacion')?.disable();
+    this.ClienteForms.get('cli_genero')?.disable();
+    this.ClienteForms.get('cli_estado_civil')?.disable();
+    this.ClienteForms.get('cli_ocupacion')?.disable();
+    this.ClienteForms.get('cli_fecha_nacimiento')?.disable();
+    this.ClienteForms.get('cli_score')?.disable();
+    this.ClienteForms.get('cli_fallecido')?.disable();
+    this.ClienteForms.get('cli_fecha_fallecido')?.disable();
+    this.ClienteForms.get('cli_observacion')?.disable();
+    this.ClienteForms.get('cli_provincia')?.disable();
+    this.ClienteForms.get('cli_canton')?.disable();
+    this.ClienteForms.get('cli_parroquia')?.disable();
+    this.ClienteForms.get('cli_esactivo')?.disable();
+    (<HTMLElement>document.getElementById('ModalCliente')).classList.add(
+      'modal--show'
+    );
+    console.log('modal--show');
+    this.ClienteForms.patchValue({
+      id_cliente: this.ClienteSeleccionado!.id_cliente,
+      cli_identificacion: this.ClienteSeleccionado!.cli_identificacion,
+      cli_nombres: this.ClienteSeleccionado!.cli_nombres,
+      cli_tipo_identificacion:
+        this.ClienteSeleccionado!.cli_tipo_identificacion.toString(),
+      cli_genero: this.ClienteSeleccionado!.cli_genero,
+      cli_estado_civil: this.ClienteSeleccionado!.cli_estado_civil,
+      cli_ocupacion: this.ClienteSeleccionado!.cli_ocupacion,
+      cli_fecha_nacimiento: this.fechas.fechaCortaFormato(
+        this.ClienteSeleccionado!.cli_fecha_nacimiento
+      ),
+      cli_score: this.ClienteSeleccionado!.cli_score,
+      cli_fallecido:
+        this.ClienteSeleccionado!.cli_fallecido === '1' ? true : false,
+      cli_fecha_fallecido: this.fechas.fechaCortaFormato(
+        this.ClienteSeleccionado!.cli_fecha_fallecido
+      ),
+      cli_observacion: this.ClienteSeleccionado!.cli_observacion,
+      cli_provincia: this.ClienteSeleccionado!.cli_provincia,
+      cli_canton: this.ClienteSeleccionado!.cli_canton,
+      cli_parroquia: this.ClienteSeleccionado!.cli_parroquia,
+      cli_esactivo:
+        this.ClienteSeleccionado!.cli_esactivo === '1' ? true : false,
+    });
+  }
+
+  CerrarModalCliente() {
+    this.ClienteForms.get('cli_identificacion')?.enable();
+    this.ClienteForms.get('cli_nombres')?.enable();
+    this.ClienteForms.get('cli_tipo_identificacion')?.enable();
+    this.ClienteForms.get('cli_genero')?.enable();
+    this.ClienteForms.get('cli_estado_civil')?.enable();
+    this.ClienteForms.get('cli_ocupacion')?.enable();
+    this.ClienteForms.get('cli_fecha_nacimiento')?.enable();
+    this.ClienteForms.get('cli_score')?.enable();
+    this.ClienteForms.get('cli_fallecido')?.enable();
+    this.ClienteForms.get('cli_fecha_fallecido')?.enable();
+    this.ClienteForms.get('cli_observacion')?.enable();
+    this.ClienteForms.get('cli_provincia')?.enable();
+    this.ClienteForms.get('cli_canton')?.enable();
+    this.ClienteForms.get('cli_parroquia')?.enable();
+    this.ClienteForms.get('cli_esactivo')?.enable();
+    (<HTMLElement>document.getElementById('ModalCliente')).classList.remove(
+      'modal--show'
+    );
+    this.ResetClienteForms();
+  }
+
 // ****************************************** ENCERAR COMPONENTES *****************************************************************
 EncerarComponentes() {
   //this.CarterasList = [];
+  this.ClienteInfo.patchValue('');
+  this.ClienteSeleccionado = null;
   this.ResetCertificadosForms();
   this.loading = false;
   this.itemBusqueda.patchValue('');
