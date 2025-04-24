@@ -181,7 +181,6 @@ export class CertificadosComponent implements OnInit {
 
   GetFiltrarElemento(datos: any) {
      let filtro: FiltroCredito = {
-      tipo: 1,
        identificacion: (datos.identificacion.trim() == ''
          ? '0'
          : datos.identificacion.trim())!,
@@ -213,7 +212,7 @@ export class CertificadosComponent implements OnInit {
            } else {
              this.loading = false;
              this.ContadorDatosGeneral = this.ListaCreditos.length;
-             this.FraccionarValores(1, this.ListaCreditos, this.ConstanteFraccion);
+             this.FraccionarValores(0, this.ListaCreditos, this.ConstanteFraccion);
            }
          }),
          catchError((error) => {

@@ -633,7 +633,6 @@ export interface GestionarPropio {
 }
 
 export interface FiltroCredito {
-  tipo: number;
   identificacion: string;
   nombres_cliente: string;
   cartera: number[];
