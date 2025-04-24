@@ -45,7 +45,7 @@
                     </div>
                   </form>
                 </section>
-                <section class="horizontal-center">
+                <section class="horizontal-center" *ngIf="TituloFormulario == ''">
                   <form [formGroup]="BuscarForms">
                       <div class="row">
                           <div class="accordion" id="AcordionParametrosBus">
