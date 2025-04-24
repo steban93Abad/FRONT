@@ -395,13 +395,15 @@
                               <tr>
                                 <th style="width: 10px">#</th>
                                 <th>Acciones</th>
+                                <th>Id. Gestion</th>
                                 <th id="ThCodCredito0">Cod. Credito</th>
                                 <th id="ThIdentificacion0">Identificacion</th>
                                 <th id="ThCliente0">Cliente</th>
-                                <th id="ThContactabilidad0" class="OcultarMax450px">Contactabilidad</th>
-                                <th class="OcultarMax450px">Gestor</th>
-                                <th id="ThCartera0" class="OcultarMax450px">Cartera</th>
-                                <th class="OcultarMax450px">Fec. Gestion</th>
+                                <th>Producto</th>
+                                <th id="ThContactabilidad0">Contactabilidad</th>
+                                <th>Gestor</th>
+                                <th id="ThCartera0">Cartera</th>
+                                <th>Fec. Gestion</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -414,9 +416,11 @@
                                       </button>
                                   </div>
                                 </th>
+                                <th>{{ datos.id_gestion }}</th>
                                 <th>{{ datos.ope_cod_credito }}</th>
                                 <th>{{ datos.cli_identificacion }}</th>
                                 <th>{{ datos.cli_nombres }}</th>
+                                <th>{{ datos.ope_producto }}</th>
                                 <th>{{ datos.ope_estado_contacta }}</th>
                                 <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                                 <th>{{ datos.cart_descripcion }}</th>
@@ -452,32 +456,29 @@
                         <div class="col-lg-2 col-6">
                           <!-- <p>Grupo<strong>&nbsp;1</strong>-<strong>&nbsp;10</strong></p> -->
                         </div>
-                      <div class="col-lg-4 col-12">
-                        <div class="form-group">
-                          <div class="float-right">
-                            <small>
-                              <button (click)="
-                                  InicioPaginacion == 0
-                                    ? BtnPrevious(0, 1)
-                                    : BtnPrevious(0)
-                                " *ngIf="FraccionDatos !== 0 || InicioPaginacion !== 0" type="button" class="BtnNextPrevious"
-                                aria-label="" style="display: inline-block">
-                                <i class="bi bi-arrow-left-circle"></i> Anterior
-                              </button>
+                        <div class="col-lg-4 col-12">
+                          <div class="form-group">
+                              <div class="float-right">
+                                  <small>
+                                      <button
+                                          (click)="InicioPaginacion == 0?BtnPreviousUser(1):BtnPreviousUser()"
+                                          *ngIf="FraccionDatos !== 0||InicioPaginacion !==0" type="button"
+                                          class="BtnNextPrevious" aria-label=""
+                                          style="display: inline-block;"><i
+                                              class="bi bi-arrow-left-circle"></i>
+                                          Anterior</button>
 
-                              <button *ngIf="
-                                  InicioPaginacion + RangoPaginacion <
-                                    ContadorDatos || ContadorDatos == RangoDatos
-                                " (click)="
-                                  InicioPaginacion + RangoPaginacion == ContadorDatos
-                                    ? BtnNext(0, 1)
-                                    : BtnNext(0)
-                                " type="button" class="BtnNextPrevious ml-2" aria-label="" style="display: inline-block">
-                                Siguiente <i class="bi bi-arrow-right-circle"></i>
-                              </button>
-                            </small>
+                                      <button
+                                          *ngIf="(InicioPaginacion + RangoPaginacion) < ContadorDatos||ContadorDatos == RangoDatos"
+                                          (click)="(InicioPaginacion + RangoPaginacion) == ContadorDatos?BtnNextUser(1):BtnNextUser()"
+                                          type="button" class="BtnNextPrevious ml-2 " aria-label=""
+                                          style="display: inline-block;">Siguiente <i
+                                              class="bi bi-arrow-right-circle"></i></button>
+                                  </small>
+
+                              </div>
                           </div>
-                        </div>
+
                       </div>
                     </div>
                   </div>

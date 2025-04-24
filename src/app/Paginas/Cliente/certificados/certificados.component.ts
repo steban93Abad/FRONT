@@ -145,6 +145,8 @@ export class CertificadosComponent implements OnInit {
 
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCreditos: any[] = [];
+  FraccionDatos: number = 0;
+  ContadorDatosGeneral: number = 0;
 
   ListarElementos(num: number) {
     if (num === 1) {
@@ -167,7 +169,7 @@ export class CertificadosComponent implements OnInit {
         } else {
           this.loading = false;
           this.ContadorDatosGeneral = this.ListaCreditos.length;
-          this.FraccionarValores(0, this.ListaCreditos, this.ConstanteFraccion);
+          this.FraccionarValores(this.ListaCreditos, this.ConstanteFraccion);
         }
       }),
       catchError((error) => {
@@ -212,7 +214,7 @@ export class CertificadosComponent implements OnInit {
            } else {
              this.loading = false;
              this.ContadorDatosGeneral = this.ListaCreditos.length;
-             this.FraccionarValores(0, this.ListaCreditos, this.ConstanteFraccion);
+             this.FraccionarValores(this.ListaCreditos, this.ConstanteFraccion);
            }
          }),
          catchError((error) => {
@@ -349,6 +351,7 @@ export class CertificadosComponent implements OnInit {
       ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
       gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion),
     });
+
     if (num != 1) {
       this.ListarCarteras();
       this.BuscarCliente(datos.cli_identificacion);
@@ -376,6 +379,14 @@ export class CertificadosComponent implements OnInit {
       datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
       datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
       datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+
+      // Verificar si el estado de contactabilidad es Liquidado
+      const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
+
+      if (estadoContactabilidad !== 'LIQUIDADO') {
+        this.alerta.ErrorEnLaPeticion('No se puede generar el certificado. El estado de contactabilidad debe ser "LIQUIDADO".');
+        return; // Detener el proceso si no está Liquidado
+      }
 
       // Generar Certificado
       let listadoObjeto:any[] = [];
@@ -651,67 +662,55 @@ export class CertificadosComponent implements OnInit {
   RangoPaginacion: number = 0;
   InicioPaginacion: number = 0;
   FinalPaginacion: number = 0;
-  FraccionDatos: number = 0;
-  ContadorDatosGeneral: number = 0;
 
-  FraccionarValores(tipo: number, datos?: any, rango?: number) {
+  FraccionarValores(datos?: any, rango?: number) {
     if (rango != null && datos != null) {
-      if (tipo == 0) {
-        this.EncerarVariablesPaginacion(0);
-        this.ContadorDatos = datos.length;
-        this.DatosTemporales = datos;
-        this.RangoPaginacion = rango;
-        this.FinalPaginacion = rango;
-        this.DatosCargaMasiva = datos.slice(
-          this.InicioPaginacion,
-          this.FinalPaginacion
-        );
-      }
+      this.EncerarVariablesPaginacion();
+      this.ContadorDatos = datos.length;
+      this.DatosTemporales = datos;
+      this.RangoPaginacion = rango;
+      this.FinalPaginacion = rango;
+      this.DatosCargaMasiva = datos.slice(
+        this.InicioPaginacion,
+        this.FinalPaginacion
+      );
     } else {
-      if (tipo == 0) {
-        this.DatosCargaMasiva = this.DatosTemporales.slice(
-          this.InicioPaginacion,
-          this.FinalPaginacion
-        );
-      }
+      this.DatosCargaMasiva = this.DatosTemporales.slice(
+        this.InicioPaginacion,
+        this.FinalPaginacion
+      );
     }
   }
 
-  BtnNext(tipo: number, rango?: number) {
-    if (tipo == 0) {
-      if (rango != null) {
-        this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
-        this.ListarElementos(2);
-      }
-      this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
-      this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
-      this.FraccionarValores(0);
+  BtnNextUser(rango?: number) {
+    if (rango != null) {
+      this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
+      this.ListarElementos(2);
+    }
+    this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
+    this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
+    this.FraccionarValores();
+  }
+
+  BtnPreviousUser(rango?: number) {
+    if (rango != null) {
+      this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
+      this.ListarElementos(2);
+    }
+
+    if (this.InicioPaginacion >= this.RangoPaginacion) {
+      this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
+      this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+      this.FraccionarValores();
     }
   }
 
-  BtnPrevious(tipo: number, rango?: number) {
-    if (tipo == 0) {
-      if (rango != null) {
-        this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
-        this.ListarElementos(2);
-      }
-
-      if (this.InicioPaginacion >= this.RangoPaginacion) {
-        this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
-        this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
-        this.FraccionarValores(0);
-      }
-    }
-  }
-
-  EncerarVariablesPaginacion(tipo: number) {
-    if (tipo == 0) {
-      this.ContadorDatos = 0;
-      this.RangoPaginacion = 0;
-      this.InicioPaginacion = 0;
-      this.FinalPaginacion = 0;
-      this.DatosTemporales = [];
-    }
+  EncerarVariablesPaginacion() {
+    this.ContadorDatos = 0;
+    this.RangoPaginacion = 0;
+    this.InicioPaginacion = 0;
+    this.FinalPaginacion = 0;
+    this.DatosTemporales = [];
   }
 
   /*********************  FILTRO MODO GENERAL *********************** */
@@ -785,7 +784,6 @@ export class CertificadosComponent implements OnInit {
     this.FirltroPor = '';
     if (etiqueta === 0) {
       this.FraccionarValores(
-        0,
         this.DatosTemporalesBusqueda,
         this.ConstanteFraccion
       );
@@ -800,7 +798,7 @@ export class CertificadosComponent implements OnInit {
       'lblFiltro' + etiqueta
     ) as HTMLInputElement;
     const contador = TxtFiltro.value!.length;
-    this.EncerarVariablesPaginacion(0);
+    this.EncerarVariablesPaginacion();
     lblFiltro.textContent != 'ThCodCredito'
       ? (TxtFiltro.value = TxtFiltro.value!.toUpperCase())
       : (TxtFiltro.value = TxtFiltro.value!);
@@ -826,7 +824,7 @@ export class CertificadosComponent implements OnInit {
         const resultado = this.ListaCreditos.filter((elemento) => {
           return elemento.cli_nombres.includes(nombre.toUpperCase());
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
@@ -841,7 +839,7 @@ export class CertificadosComponent implements OnInit {
         const resultado = this.ListaCreditos.filter((elemento) => {
           return elemento.cli_identificacion.includes(nombre.toUpperCase());
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
@@ -856,7 +854,7 @@ export class CertificadosComponent implements OnInit {
         const resultado = this.ListaCreditos.filter((elemento) => {
           return elemento.ope_cod_credito.includes(nombre);
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
@@ -871,7 +869,7 @@ export class CertificadosComponent implements OnInit {
         const resultado = this.ListaCreditos.filter((elemento) => {
           return elemento.ope_estado_contacta.includes(nombre);
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
@@ -886,7 +884,7 @@ export class CertificadosComponent implements OnInit {
         const resultado = this.ListaCreditos.filter((elemento) => {
           return elemento.cart_descripcion.includes(nombre);
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
