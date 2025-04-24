@@ -9,37 +9,39 @@
 
                   <!-- BARRA PRINCIPAL Y FILTROS DE BUSQUEDA -->
                 <section class="horizontal-center" *ngIf="TituloFormulario == ''">
-                  <div class="card-header" style="background-color: var(--color-formulario-primario)">
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                      <div class="form-floating">
-                          <input type="text" class="form-control" id="identificacion" placeholder=""
-                              formControlName="identificacion">
-                          <label class="truncate-text" for="identificacion">Cédula/Ruc/Pasaporte</label>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-md-5 col-sm-6 col-12 mt-2">
-                      <button type="button" class="btnBuscar  ml-2"><i
-                              class="fa-solid fa-magnifying-glass"></i>&nbsp;Buscar</button>
-                      <button type="button" class="btnLimpiar ml-2" (click)="ResetBuscarClienteForms()"><i
-                              class="fa-solid fa-trash-can"></i></button>
-                    </div>
-                    <div class="col">
-                      <div class="row  justify-content-end">
+                  <form [formGroup]="BuscarForms">
+                    <div class="card-header" style="background-color: var(--color-formulario-primario)">
+                      <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                          <div class="form-floating">
+                              <input type="text" class="form-control" id="identificacion" placeholder=""
+                                  formControlName="identificacion">
+                              <label class="truncate-text" for="identificacion">Cédula/Ruc/Pasaporte</label>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-5 col-sm-6 col-12 mt-2">
+                          <button type="button" class="btnBuscar  ml-2" (click)="GetFiltrarElemento(BuscarForms.value)"><i
+                                  class="fa-solid fa-magnifying-glass"></i>&nbsp;Buscar</button>
+                          <button type="button" class="btnLimpiar ml-2" (click)="ResetBuscarClienteForms()"><i
+                                  class="fa-solid fa-trash-can"></i></button>
+                        </div>
                         <div class="col">
-                          <div class="btn-group float-right" role="group">
-                            <button class="btnFilter collapsed" type="button"
-                              data-bs-toggle="collapse"
-                              data-bs-target="#MasParametrosBusqueda" aria-expanded="false"
-                              aria-controls="MasParametrosBusqueda">
-                              <i class="bi bi-funnel"></i>
-                            </button>
+                          <div class="row  justify-content-end">
+                            <div class="col">
+                              <div class="btn-group float-right" role="group">
+                                <button class="btnFilter collapsed" type="button"
+                                  data-bs-toggle="collapse"
+                                  data-bs-target="#MasParametrosBusqueda" aria-expanded="false"
+                                  aria-controls="MasParametrosBusqueda">
+                                  <i class="bi bi-funnel"></i>
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </form>
                 </section>
                 <section class="horizontal-center">
                   <form [formGroup]="BuscarForms">

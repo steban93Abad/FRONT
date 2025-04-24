@@ -632,6 +632,18 @@ export interface GestionarPropio {
   [key: string]: string | number | string[] | number[];
 }
 
+export interface FiltroCredito {
+  tipo: number;
+  identificacion: string;
+  nombres_cliente: string;
+  cartera: number[];
+  gestor: number;
+  contactabilidad: number;
+  fecha_inicial: string;
+  fecha_final: string;
+  [key: string]: string | number | boolean | string[] | number[] | boolean[];
+}
+
 export interface FiltroGestion {
   tipo: number;
   identificacion: string;

@@ -29,6 +29,7 @@ import {
   DetalleTelefonoI,
   DireccionI,
   EntidadEncriptado,
+  FiltroCredito,
   FiltroDescarga,
   FiltroGestion,
   FiltroGestion2,
@@ -1180,6 +1181,24 @@ export class ApiService {
           );
         }
         console.log(error);
+        throw error;
+      })
+    );
+  }
+  GetCreditoFracionadoFiltro(filtro: FiltroCredito): Observable<ResponseI> {
+    let direccion = this.url + 'CxcOperacion/FiltroCredito';
+    const params = new HttpParams({ fromObject: filtro });
+    return this.http.get<any>(direccion, { params }).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
         throw error;
       })
     );

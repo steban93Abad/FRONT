@@ -16,7 +16,7 @@ import {
 } from 'src/app/Modelos/login.interface';
 import {
   ContactabilidadI,
-  FiltroGestion,
+  FiltroCredito,
   CxcOperacionI,
   CertificadoI,
   generarPDF,
@@ -179,55 +179,51 @@ export class CertificadosComponent implements OnInit {
     .subscribe();
   }
 
-  GetFiltrarElemento(valor: string, tipo: number) {
-    this.ListaCreditos = [];
-    this.loading = true;
-    let listadoObjeto:any[] = [];
-    this.api
-      .GetCxcOperacionFracionadoFiltro(valor, tipo)
-      .pipe(
-        map((tracks) => {
-          this.ListaCreditos = tracks['data'];
-          this.DatosTemporalesBusqueda = tracks['data'];
-          for (const credito of this.ListaCreditos)
-            {
-              let ocD: any = {
-                CodigoCxc:credito.ope_cod_credito,
-                Cedula:credito.cli_identificacion,
-                Nombres:credito.cli_nombres,
-                EstadoContactabilidad:credito.ope_estado_contacta,
-                Gestor:credito.ges_nombres+' '+credito.ges_apellidos,
-                Cartera:credito.cart_descripcion,
-                FechaGestion:credito.gest_fecha_gestion ===null?null:this.fechas.fechaCortaAbt(credito.gest_fecha_gestion.toString())
-              };
-              listadoObjeto.push(ocD);
-            }
-            let om: generarPDF = {
-              entidad: 'Credito', listado: listadoObjeto
-            };
-            this.gCredito=om;
-          if (this.ListaCreditos.length === 0) {
-            this.loading = false;
-            this.alerta.NoExistenDatos();
-          } else {
-            this.loading = false;
-            this.ContadorDatosGeneral = this.ListaCreditos.length;
-            this.FraccionarValores(
-              0,
-              this.ListaCreditos,
-              this.ConstanteFraccion
-            );
-          }
-        }),
-        catchError((error) => {
-          this.loading = false;
-          this.alerta.ErrorAlRecuperarElementos();
-          throw new Error(error);
-        })
-      )
-      .subscribe();
-
-  }
+  GetFiltrarElemento(datos: any) {
+     let filtro: FiltroCredito = {
+      tipo: 1,
+       identificacion: (datos.identificacion.trim() == ''
+         ? '0'
+         : datos.identificacion.trim())!,
+       nombres_cliente: (datos.nombres_cliente.trim() == ''
+         ? '0'
+         : datos.nombres_cliente.trim())!,
+       cartera:
+         datos.cartera == '0' ? this.TodasCarteras : [Number(datos.cartera)],
+       gestor: datos.gestor,
+       contactabilidad: (datos.nombres_cliente == '0'
+         ? 0
+         : Number(datos.contactabilidad))!,
+       fecha_inicial: datos.fecha_inicial == ''?this.fechas.fechaMinDate():datos.fecha_inicial,
+       fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final
+     };
+ 
+     this.ListaCreditos = [];
+     this.loading = true;
+     this.api
+       .GetCreditoFracionadoFiltro(filtro)
+       .pipe(
+         map((tracks) => {
+           console.log(tracks['data']);
+           this.ListaCreditos = tracks['data'];
+           this.DatosTemporalesBusqueda = tracks['data'];
+           if (this.ListaCreditos.length === 0) {
+             this.loading = false;
+             this.alerta.NoExistenDatos();
+           } else {
+             this.loading = false;
+             this.ContadorDatosGeneral = this.ListaCreditos.length;
+             this.FraccionarValores(1, this.ListaCreditos, this.ConstanteFraccion);
+           }
+         }),
+         catchError((error) => {
+           this.loading = false;
+           this.alerta.ErrorAlRecuperarElementos();
+           throw new Error(error);
+         })
+       )
+       .subscribe();
+   }
 
   /************************************** VER ELEMENTO  ******************************************************** */
   TituloFormulario = '';
