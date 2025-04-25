@@ -1185,10 +1185,10 @@ export class ApiService {
       })
     );
   }
-  GetCreditoFracionadoFiltro(filtro: FiltroCredito): Observable<ResponseI> {
+  GetCreditoFracionadoFiltro(filtro: FiltroCredito, codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'CxcOperacion/FiltroCredito';
-    const params = new HttpParams({ fromObject: filtro });
-    return this.http.get<any>(direccion, { params }).pipe(
+    const params = new HttpParams({ fromObject: { ...(filtro as any), codigo: codigo.toString(), rango: rango.toString() } });
+    return this.http.get<any>(direccion, { params }, ).pipe(
       map((data) => {
         return JSON.parse(this.objeto.decrypt(data['valor']));
       }),
