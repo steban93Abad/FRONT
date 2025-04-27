@@ -395,7 +395,6 @@
                               <tr>
                                 <th style="width: 10px">#</th>
                                 <th>Acciones</th>
-                                <th>Id. Gestion</th>
                                 <th id="ThCodCredito0">Cod. Credito</th>
                                 <th id="ThIdentificacion0">Identificacion</th>
                                 <th id="ThCliente0">Cliente</th>
@@ -416,12 +415,11 @@
                                       </button>
                                   </div>
                                 </th>
-                                <th>{{ datos.id_gestion }}</th>
                                 <th>{{ datos.ope_cod_credito }}</th>
                                 <th>{{ datos.cli_identificacion }}</th>
                                 <th>{{ datos.cli_nombres }}</th>
                                 <th>{{ datos.ope_producto }}</th>
-                                <th>{{ datos.ope_estado_contacta }}</th>
+                                <th>{{ datos.contac_descripcion }}</th>
                                 <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                                 <th>{{ datos.cart_descripcion }}</th>
                                 <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>

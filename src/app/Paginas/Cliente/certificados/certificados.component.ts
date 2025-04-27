@@ -200,9 +200,9 @@ export class CertificadosComponent implements OnInit {
        fecha_inicial: datos.fecha_inicial == ''?this.fechas.fechaMinDate():datos.fecha_inicial,
        fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final
      };
- 
-     this.ModoBusqueda = true; 
-     this.FiltroActual = filtro; 
+
+     this.ModoBusqueda = true;
+     this.FiltroActual = filtro;
 
      this.ListaCreditos = [];
      this.loading = true;
@@ -259,7 +259,7 @@ export class CertificadosComponent implements OnInit {
       ope_estado_contacta: '',
       ope_descrip_unidad_gestion: '',
       cart_fecha_compra: '',
-      gest_fecha_gestion: '', 
+      gest_fecha_gestion: '',
       ges_nombres: '',
     });
   }
@@ -408,7 +408,7 @@ export class CertificadosComponent implements OnInit {
       };
       this.gCredito=om;
       this.certificado.generarCertificadoPDF(this.gCredito);
-      
+
       // Guardar Certificado
       this.api
       .PostCertificado(datos)
@@ -488,7 +488,7 @@ export class CertificadosComponent implements OnInit {
 
   BuscarCertificado(credito: any) {
     this.CertificadoInfo.patchValue('');
-    
+
     if (credito == '') {
       this.alerta.ErrorEnLaPeticion(
         'No ingreso ningun identificador para su busqueda'
@@ -700,7 +700,7 @@ export class CertificadosComponent implements OnInit {
     if (this.ModoBusqueda) {
       if (rango != null) {
       this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
-      this.GetFiltrarElemento(this.BuscarForms.value); 
+      this.GetFiltrarElemento(this.BuscarForms.value);
       }
       this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
       this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
@@ -722,7 +722,7 @@ export class CertificadosComponent implements OnInit {
     if (this.ModoBusqueda) {
       if (rango != null) {
         this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
-        this.GetFiltrarElemento(this.BuscarForms.value); 
+        this.GetFiltrarElemento(this.BuscarForms.value);
       }
 
       if (this.InicioPaginacion >= this.RangoPaginacion) {
