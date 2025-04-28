@@ -202,7 +202,7 @@ export class DescargarCertificadoComponent implements OnInit {
          .subscribe();
      }
 
-/************************************** VER ELEMENTO  ******************************************************** */
+/************************************** AGREGAR ELEMENTO  ******************************************************** */
 TituloFormulario = '';
 ClienteInfo = new FormControl({ value: '', disabled: true });
 
@@ -301,6 +301,10 @@ AgregarEditarElemento(num: number) {
     this.ActDesControles(0);
   }
 }
+
+/************************************** EDITAR ELEMENTO  ******************************************************** */
+
+
 
 CargarElemento(datos: any, num: number) {
   this.CertificadosForms.patchValue({
@@ -606,15 +610,6 @@ FraccionarValores(datos?: any, rango?: number) {
 }
 
 BtnNext(rango?: number) {
-  /*
-  if (rango != null) {
-    this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
-    this.ListarElementos(2);
-  }
-  this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
-  this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
-  this.FraccionarValores();
-  */
   if (this.ModoBusqueda) {
     if (rango != null) {
     this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
@@ -636,18 +631,6 @@ BtnNext(rango?: number) {
 }
 
 BtnPrevious(rango?: number) {
-  /*
-  if (rango != null) {
-    this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
-    this.ListarElementos(2);
-  }
-
-  if (this.InicioPaginacion >= this.RangoPaginacion) {
-    this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
-    this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
-    this.FraccionarValores();
-  }
-    */
   if (this.ModoBusqueda) {
     if (rango != null) {
       this.FraccionDatos = this.FraccionDatos - this.RangoDatos;

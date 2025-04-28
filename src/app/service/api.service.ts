@@ -378,6 +378,27 @@ export class ApiService {
       })
     );
   }
+  PutCertificados(elemento: CertificadoI): Observable<any> {
+    let Encryptado: EntidadEncriptado = {
+      valor: this.objeto.encriptarAES(elemento),
+    };
+    let direccion = this.url + 'Certificado';
+    return this.http.put<any>(direccion, Encryptado).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
+
+        throw error;
+      })
+    );
+  }
 
   //********************* CERTIFICADO HISTORIAL *********************** */
   PostCertificadoHistorial(elemento: Certificado_HistorialI): Observable<any> {

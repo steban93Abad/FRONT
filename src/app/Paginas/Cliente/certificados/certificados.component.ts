@@ -231,7 +231,7 @@ export class CertificadosComponent implements OnInit {
        .subscribe();
    }
 
-  /************************************** VER ELEMENTO  ******************************************************** */
+  /************************************** AGREGAR ELEMENTO  ******************************************************** */
   TituloFormulario = '';
   ClienteInfo = new FormControl({ value: '', disabled: true });
   CertificadoInfo = new FormControl({ value: '', disabled: true });
@@ -343,6 +343,65 @@ export class CertificadosComponent implements OnInit {
     this.EncerarComponentes();
   }
 
+  GuardarObjeto(datos: any) {
+
+    datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+    datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
+    datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+
+    // Verificar si el estado de contactabilidad es Liquidado
+    const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
+
+    if (estadoContactabilidad !== 'LIQUIDADO') {
+      this.alerta.ErrorEnLaPeticion('No se puede generar el certificado. El estado de contactabilidad debe ser "LIQUIDADO".');
+      return; // Detener el proceso si no está Liquidado
+    }
+
+    // Generar Certificado
+    let listadoObjeto:any[] = [];
+    let ocD: any = {
+      CarteraNom: datos.cart_descripcion,
+      FechaCompra: datos.cart_fecha_compra,
+      Identificacion:datos.cli_identificacion,
+      Nombres: datos.cli_nombres,
+      CodCredito: datos.ope_cod_credito,
+    }
+    listadoObjeto.push(ocD);
+    let om: generarCertificadoPDF = {
+      entidad: 'Credito', listado: listadoObjeto
+    };
+    this.gCredito=om;
+    this.certificado.generarCertificadoPDF(this.gCredito);
+
+    // Guardar Certificado
+    this.api
+    .PostCertificado(datos)
+    .pipe(
+      map((tracks) => {
+        const exito = tracks['exito'];
+        if (exito == 1) {
+          this.ListarElementos(1);
+          this.CerrarAgregarEditarElemento();
+          this.EncerarComponentes();
+          // this.TextoFiltro.patchValue('');
+          this.alerta.CertificadoGenerado();
+        } else {
+          this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+          this.ActDesControles(0);
+        }
+      }),
+      catchError((error) => {
+        this.alerta.ErrorEnLaOperacion();
+        this.ActDesControles(0);
+        console.log(error);
+        throw new Error(error);
+      })
+    )
+    .subscribe();
+}
+
+/************************************** VER ELEMENTO  ******************************************************** */
+
   CargarElemento(datos: any, num: number) {
     this.CreditosForms.patchValue({
       id_cxc_operacion: datos.id_cxc_operacion,
@@ -377,63 +436,6 @@ export class CertificadosComponent implements OnInit {
       this.BuscarCertificado(datos.ope_cod_credito);
     }
     this.AgregarEditarElemento(num);
-  }
-
-  GuardarObjeto(datos: any) {
-
-      datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
-      datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
-      datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
-
-      // Verificar si el estado de contactabilidad es Liquidado
-      const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
-
-      if (estadoContactabilidad !== 'LIQUIDADO') {
-        this.alerta.ErrorEnLaPeticion('No se puede generar el certificado. El estado de contactabilidad debe ser "LIQUIDADO".');
-        return; // Detener el proceso si no está Liquidado
-      }
-
-      // Generar Certificado
-      let listadoObjeto:any[] = [];
-      let ocD: any = {
-        CarteraNom: datos.cart_descripcion,
-        FechaCompra: datos.cart_fecha_compra,
-        Identificacion:datos.cli_identificacion,
-        Nombres: datos.cli_nombres,
-        CodCredito: datos.ope_cod_credito,
-      }
-      listadoObjeto.push(ocD);
-      let om: generarCertificadoPDF = {
-        entidad: 'Credito', listado: listadoObjeto
-      };
-      this.gCredito=om;
-      this.certificado.generarCertificadoPDF(this.gCredito);
-
-      // Guardar Certificado
-      this.api
-      .PostCertificado(datos)
-      .pipe(
-        map((tracks) => {
-          const exito = tracks['exito'];
-          if (exito == 1) {
-            this.ListarElementos(1);
-            this.CerrarAgregarEditarElemento();
-            this.EncerarComponentes();
-            // this.TextoFiltro.patchValue('');
-            this.alerta.CertificadoGenerado();
-          } else {
-            this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
-            this.ActDesControles(0);
-          }
-        }),
-        catchError((error) => {
-          this.alerta.ErrorEnLaOperacion();
-          this.ActDesControles(0);
-          console.log(error);
-          throw new Error(error);
-        })
-      )
-      .subscribe();
   }
 
 // ****************************************** OTROS ELEMENTOS *****************************************************************
