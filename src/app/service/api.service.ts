@@ -30,6 +30,7 @@ import {
   DireccionI,
   EntidadEncriptado,
   FiltroCredito,
+  FiltroCertificado,
   FiltroDescarga,
   FiltroGestion,
   FiltroGestion2,
@@ -355,6 +356,24 @@ export class ApiService {
           );
         }
 
+        throw error;
+      })
+    );
+  }
+  GetCertificadoDatoFracionadoFiltro(filtro: FiltroCertificado): Observable<ResponseI> {
+    let direccion = this.url + 'Certificado/FiltroCertificado';
+    const params = new HttpParams({ fromObject: filtro });
+    return this.http.get<any>(direccion, { params }, ).pipe(
+      map((data) => {
+        return JSON.parse(this.objeto.decrypt(data['valor']));
+      }),
+      catchError((error) => {
+        if ([undefined].indexOf(error.status) !== -1) {
+          this.alerta.ErrorAlRecuperarElementosError(
+            'Encriptar-ES8',
+            'Error al desencriptar los datos'
+          );
+        }
         throw error;
       })
     );

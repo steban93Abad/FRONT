@@ -643,6 +643,16 @@ export interface FiltroCredito {
   [key: string]: string | number | boolean | string[] | number[] | boolean[];
 }
 
+export interface FiltroCertificado {
+  identificacion: string;
+  nombres_cliente: string;
+  cartera: number[];
+  gestor: number;
+  fecha_inicial: string;
+  fecha_final: string;
+  [key: string]: string | number | boolean | string[] | number[] | boolean[];
+}
+
 export interface FiltroGestion {
   tipo: number;
   identificacion: string;

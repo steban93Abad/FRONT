@@ -715,7 +715,6 @@ export class CertificadosComponent implements OnInit {
   }
 
   BtnPreviousUser(rango?: number) {
-
     if (this.ModoBusqueda) {
       if (rango != null) {
         this.FraccionDatos = this.FraccionDatos - this.RangoDatos;

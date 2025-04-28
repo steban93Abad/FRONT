@@ -14,13 +14,12 @@ import {
   ResultadoPermisosI,
 } from 'src/app/Modelos/login.interface';
 import {
-  ContactabilidadI,
-  FiltroGestion,
   CxcOperacionI,
   CertificadoI,
   generarPDF,
   ClienteI,
   GestorI,
+  FiltroCertificado,
   generarCertificadoPDF,
 } from 'src/app/Modelos/response.interface';
 import { ApiService } from 'src/app/service/api.service';
@@ -44,6 +43,19 @@ export class DescargarCertificadoComponent implements OnInit {
 
   ngOnInit(): void {
     this.ListarElementos(1);
+    this.CarterasGestor();
+  }
+
+  CarterasGestor() {
+    for (let datos of this.Cartera) {
+      let cartera: any = {
+        cart_id: Number(datos.cart_id),
+        cart_descripcion: datos.cart_descripcion,
+        cart_tip_descripcion: datos.cart_tip_descripcion,
+      };
+      this.CarteraGestor.push(cartera);
+      this.TodasCarteras.push(cartera.cart_id);
+    }
   }
 
   permisos: ResultadoPermisosI = JSON.parse(localStorage.getItem('usuario')!);
@@ -61,47 +73,58 @@ export class DescargarCertificadoComponent implements OnInit {
   TodasCarteras: number[] = [];
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
   gCredito!:generarCertificadoPDF;
+  ModoBusqueda: boolean = false;
+   FiltroActual: FiltroCertificado | null = null;
 
   // ****************************************** CONTROLES DE BUSQUEDA *****************************************************************
-  ParametrosDeBusqueda: Array<string> = [
-    '',
-    'Identificación',
-    'Nombre Completo',
-    'Nombre Incompleto',
-    'Codigo Credito'
-  ];
 
-  itemBusqueda = new FormControl('', [Validators.required]);
-  txtBusqueda = new FormControl('', [Validators.required]);
+  BuscarForms = new FormGroup({
+    identificacion: new FormControl('', Validators.required),
+    nombres_cliente: new FormControl('', Validators.required),
+    cartera: new FormControl('0', Validators.required),
+    gestor: new FormControl('0', Validators.required),
+    fecha_inicial: new FormControl('',
+      Validators.required
+    ),
+    fecha_final: new FormControl('',
+      Validators.required
+    )
+  });
 
-  GetBusquedaPor(item: string) {
-    this.itemBusqueda.patchValue(item);
-    this.txtBusqueda.patchValue('');
-    const inputElement = document.getElementById(
-      'txtValorBusqueda'
-    ) as HTMLInputElement;
-
-    if (item.length > 0 && inputElement != null) {
-      inputElement.focus();
-    }
+  ResetBuscarClienteForms() {
+    this.BuscarForms.reset({
+      identificacion: '',
+      nombres_cliente: '',
+      cartera: '0',
+      gestor: '0',
+      fecha_inicial: '',
+      fecha_final: ''
+    });
   }
 
-  ConvertirMayusculas() {
-    if (
-      this.itemBusqueda.value != 'Nombre Completo' &&
-      this.itemBusqueda.value != 'Nombre Incompleto' &&
-      this.itemBusqueda.value != 'Codigo Credito'
-    ) {
-      this.txtBusqueda.patchValue(this.txtBusqueda.value!.toUpperCase());
-    }
-  }
+  ListaGestores: GestorI[] = [];
 
+  ListarGestores() {
+    this.ListaGestores = [];
+    this.api
+      .GetGestoresFracionadoFiltro('g', 20)
+      .pipe(
+        map((tracks) => {
+          this.ListaGestores = tracks['data'];
+        }),
+        catchError((error) => {
+          this.loading = false;
+          this.alerta.ErrorAlRecuperarElementos();
+          throw new Error(error);
+        })
+      )
+      .subscribe();
+  }
 
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCertificados: any[] = [];
 
   ListarElementos(num: number) {
-    this.GetBusquedaPor('');
     if (num === 1) {
       this.ListaCertificados = [];
       this.FraccionDatos = 0;
@@ -122,7 +145,7 @@ export class DescargarCertificadoComponent implements OnInit {
         } else {
           this.loading = false;
           this.ContadorDatosGeneral = this.ListaCertificados.length;
-          this.FraccionarValores(0, this.ListaCertificados, this.ConstanteFraccion);
+          this.FraccionarValores(this.ListaCertificados, this.ConstanteFraccion);
         }
       }),
       catchError((error) => {
@@ -316,6 +339,20 @@ GuardarObjeto(datos: any) {
 
 // ****************************************** OTROS ELEMENTOS ****************************************************************
 
+CarterasList: any[] = [];
+
+ListarCarteras() {
+  this.api
+    .GetCarteraFracionado(0, 0)
+    .pipe(
+      map((tracks) => {
+        console.log(tracks['data'])
+        this.CarterasList = tracks['data'];
+      })
+    )
+    .subscribe();
+}
+
 /* Area para mostrar al cliente */
 ClienteSeleccionado!: ClienteI | null;
 
@@ -346,6 +383,12 @@ BuscarCliente(identificacion: any) {
       )
       .subscribe();
   }
+}
+
+ListaInicio()
+{
+  this.ListarElementos(1);
+  this.ResetBuscarClienteForms();
 }
 
   ////////////////////////////////////////  CLIENTE   ////////////////////////////////////////////////
@@ -484,8 +527,6 @@ EncerarComponentes() {
   this.ClienteSeleccionado = null;
   this.ResetCertificadosForms();
   this.loading = false;
-  this.itemBusqueda.patchValue('');
-  this.txtBusqueda.patchValue('');
   this.TituloFormulario = '';
   this.ActDesControles(0);
 }
@@ -500,64 +541,54 @@ FinalPaginacion: number = 0;
 FraccionDatos: number = 0;
 ContadorDatosGeneral: number = 0;
 
-FraccionarValores(tipo: number, datos?: any, rango?: number) {
+FraccionarValores(datos?: any, rango?: number) {
   if (rango != null && datos != null) {
-    if (tipo == 0) {
-      this.EncerarVariablesPaginacion(0);
-      this.ContadorDatos = datos.length;
-      this.DatosTemporales = datos;
-      this.RangoPaginacion = rango;
-      this.FinalPaginacion = rango;
-      this.DatosCargaMasiva = datos.slice(
-        this.InicioPaginacion,
-        this.FinalPaginacion
-      );
-    }
+    this.EncerarVariablesPaginacion();
+    this.ContadorDatos = datos.length;
+    this.DatosTemporales = datos;
+    this.RangoPaginacion = rango;
+    this.FinalPaginacion = rango;
+    this.DatosCargaMasiva = datos.slice(
+      this.InicioPaginacion,
+      this.FinalPaginacion
+    );
   } else {
-    if (tipo == 0) {
-      this.DatosCargaMasiva = this.DatosTemporales.slice(
-        this.InicioPaginacion,
-        this.FinalPaginacion
-      );
-    }
+    this.DatosCargaMasiva = this.DatosTemporales.slice(
+      this.InicioPaginacion,
+      this.FinalPaginacion
+    );
   }
 }
 
-BtnNext(tipo: number, rango?: number) {
-  if (tipo == 0) {
-    if (rango != null) {
-      this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
-      this.ListarElementos(2);
-    }
-    this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
-    this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
-    this.FraccionarValores(0);
+BtnNext(rango?: number) {
+  if (rango != null) {
+    this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
+    this.ListarElementos(2);
+  }
+  this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
+  this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
+  this.FraccionarValores();
+}
+
+BtnPrevious(rango?: number) {
+  if (rango != null) {
+    this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
+    this.ListarElementos(2);
+  }
+
+  if (this.InicioPaginacion >= this.RangoPaginacion) {
+    this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
+    this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+    this.FraccionarValores();
   }
 }
 
-BtnPrevious(tipo: number, rango?: number) {
-  if (tipo == 0) {
-    if (rango != null) {
-      this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
-      this.ListarElementos(2);
-    }
-
-    if (this.InicioPaginacion >= this.RangoPaginacion) {
-      this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
-      this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
-      this.FraccionarValores(0);
-    }
-  }
-}
-
-EncerarVariablesPaginacion(tipo: number) {
-  if (tipo == 0) {
-    this.ContadorDatos = 0;
-    this.RangoPaginacion = 0;
-    this.InicioPaginacion = 0;
-    this.FinalPaginacion = 0;
-    this.DatosTemporales = [];
-  }
+EncerarVariablesPaginacion() {
+  this.ContadorDatos = 0;
+  this.RangoPaginacion = 0;
+  this.InicioPaginacion = 0;
+  this.FinalPaginacion = 0;
+  this.DatosTemporales = [];
 }
 
   /*********************  FILTRO MODO GENERAL *********************** */
@@ -623,7 +654,6 @@ EncerarVariablesPaginacion(tipo: number) {
     this.FirltroPor = '';
     if (etiqueta === 0) {
       this.FraccionarValores(
-        0,
         this.DatosTemporalesBusqueda,
         this.ConstanteFraccion
       );
@@ -638,7 +668,7 @@ EncerarVariablesPaginacion(tipo: number) {
       'lblFiltro' + etiqueta
     ) as HTMLInputElement;
     const contador = TxtFiltro.value!.length;
-    this.EncerarVariablesPaginacion(0);
+    this.EncerarVariablesPaginacion();
     lblFiltro.textContent != 'ThCodCredito'
       ? (TxtFiltro.value = TxtFiltro.value!.toUpperCase())
       : (TxtFiltro.value = TxtFiltro.value!);
@@ -661,7 +691,7 @@ EncerarVariablesPaginacion(tipo: number) {
         const resultado = this.ListaCertificados.filter((elemento) => {
           return elemento.cli_nombres.includes(nombre.toUpperCase());
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
@@ -676,7 +706,7 @@ EncerarVariablesPaginacion(tipo: number) {
         const resultado = this.ListaCertificados.filter((elemento) => {
           return elemento.cli_identificacion.includes(nombre.toUpperCase());
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
@@ -691,7 +721,7 @@ EncerarVariablesPaginacion(tipo: number) {
         const resultado = this.ListaCertificados.filter((elemento) => {
           return elemento.ope_cod_credito.includes(nombre);
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
@@ -706,7 +736,7 @@ EncerarVariablesPaginacion(tipo: number) {
         const resultado = this.ListaCertificados.filter((elemento) => {
           return elemento.cart_descripcion.includes(nombre);
         });
-        this.FraccionarValores(0, resultado, this.ConstanteFraccion);
+        this.FraccionarValores(resultado, this.ConstanteFraccion);
       }
 
       if (contador != 0) {
