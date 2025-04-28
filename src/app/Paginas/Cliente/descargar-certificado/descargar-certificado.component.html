@@ -348,6 +348,7 @@
                     <th id="ThGestor0">Gestor</th>
                     <th id="ThCartera0">Cartera</th>
                     <th>Fec. Gestion</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
@@ -360,6 +361,13 @@
                     <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                     <th>{{ datos.cart_descripcion }}</th>
                     <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>
+                    <th>
+                      <input type="checkbox" class="custom-control-input"
+                          id="idEstado_{{datos.id_correo}}"
+                          [checked]="datos.cor_esactivo==='1'?true:false" name="estado">
+                      <label class="custom-control-label"
+                          for="idEstado_{{datos.id_correo}}"></label>
+                    </th>
                     <th>
                       <div class="btn-group" role="group">
                         <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoDato(datos, 3)">
