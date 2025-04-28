@@ -518,6 +518,12 @@ export class CertificadosComponent implements OnInit {
     }
   }
 
+  ListaInicio()
+  {
+    this.ListarElementos(1);
+    this.ResetBuscarClienteForms();
+  }
+
   ////////////////////////////////////////  CLIENTE   ////////////////////////////////////////////////
   TipoIdentificacion: any[] = [
     { id: 1, name: 'Cedula', value: '1' },
