@@ -157,6 +157,51 @@ export class DescargarCertificadoComponent implements OnInit {
     .subscribe();
   }
 
+  GetFiltrarElemento(datos: any) {
+       let filtro: FiltroCertificado = {
+         identificacion: (datos.identificacion.trim() == ''
+           ? '0'
+           : datos.identificacion.trim())!,
+         nombres_cliente: (datos.nombres_cliente.trim() == ''
+           ? '0'
+           : datos.nombres_cliente.trim())!,
+         cartera:
+           datos.cartera == '0' ? this.TodasCarteras : [Number(datos.cartera)],
+         gestor: datos.gestor,
+         fecha_inicial: datos.fecha_inicial == ''?this.fechas.fechaMinDate():datos.fecha_inicial,
+         fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final
+       };
+  
+       this.ModoBusqueda = true;
+       this.FiltroActual = filtro;
+  
+       this.ListaCertificados = [];
+       this.loading = true;
+       this.api
+         .GetCertificadoDatoFracionadoFiltro(filtro)
+         .pipe(
+           map((tracks) => {
+             console.log(tracks['data']);
+             this.ListaCertificados = tracks['data'];
+             this.DatosTemporalesBusqueda = tracks['data'];
+             if (this.ListaCertificados.length === 0) {
+               this.loading = false;
+               this.alerta.NoExistenDatos();
+             } else {
+               this.loading = false;
+               this.ContadorDatosGeneral = this.ListaCertificados.length;
+               this.FraccionarValores(this.ListaCertificados, this.ConstanteFraccion);
+             }
+           }),
+           catchError((error) => {
+             this.loading = false;
+             this.alerta.ErrorAlRecuperarElementos();
+             throw new Error(error);
+           })
+         )
+         .subscribe();
+     }
+
 /************************************** VER ELEMENTO  ******************************************************** */
 TituloFormulario = '';
 ClienteInfo = new FormControl({ value: '', disabled: true });
@@ -561,6 +606,7 @@ FraccionarValores(datos?: any, rango?: number) {
 }
 
 BtnNext(rango?: number) {
+  /*
   if (rango != null) {
     this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
     this.ListarElementos(2);
@@ -568,9 +614,29 @@ BtnNext(rango?: number) {
   this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
   this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
   this.FraccionarValores();
+  */
+  if (this.ModoBusqueda) {
+    if (rango != null) {
+    this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
+    this.GetFiltrarElemento(this.BuscarForms.value);
+    }
+    this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
+    this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
+    this.FraccionarValores();
+  } else {
+    // Si no es modo búsqueda, paginación normal
+    if (rango != null) {
+      this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
+      this.ListarElementos(2);
+    }
+    this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
+    this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
+    this.FraccionarValores();
+  }
 }
 
 BtnPrevious(rango?: number) {
+  /*
   if (rango != null) {
     this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
     this.ListarElementos(2);
@@ -580,6 +646,30 @@ BtnPrevious(rango?: number) {
     this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
     this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
     this.FraccionarValores();
+  }
+    */
+  if (this.ModoBusqueda) {
+    if (rango != null) {
+      this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
+      this.GetFiltrarElemento(this.BuscarForms.value);
+    }
+
+    if (this.InicioPaginacion >= this.RangoPaginacion) {
+      this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
+      this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+      this.FraccionarValores();
+    }
+  } else {
+    if (rango != null) {
+      this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
+      this.ListarElementos(2);
+    }
+
+    if (this.InicioPaginacion >= this.RangoPaginacion) {
+      this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
+      this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+      this.FraccionarValores();
+    }
   }
 }
 
