@@ -694,15 +694,6 @@ export class CertificadosComponent implements OnInit {
   }
 
   BtnNextUser(rango?: number) {
-    /*
-    if (rango != null) {
-      this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
-      this.ListarElementos(2);
-    }
-    this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
-    this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
-    this.FraccionarValores();
-    */
     if (this.ModoBusqueda) {
       if (rango != null) {
       this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
