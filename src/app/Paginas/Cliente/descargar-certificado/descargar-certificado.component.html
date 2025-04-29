@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="col-md-3 col-6">
                                             <div class="form-group">
-                                                <span title="Cantidad de meses sin gestión">Cartera</span>
+                                                <span title="Cantidad de meses sin credito">Cartera</span>
 
                                                 <select style="height: 35px;" class="form-select"
                                                     formControlName="cartera">
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="col-md-3 col-6">
                                             <div class="form-group">
-                                                <span title="Cantidad de meses sin gestión">Gestor</span>
+                                                <span title="Cantidad de meses sin credito">Gestor</span>
 
                                                 <select style="height: 35px;" class="form-select"
                                                     (click)="ListaGestores.length == 0?ListarGestores():null"
@@ -117,6 +117,18 @@
                                                     Final</label>
                                             </div>
                                         </div>
+                                        <div class="col-md-3 col-6">
+                                          <div class="btn-group ml-2" role="group"
+                                              aria-label="Basic example">
+                                              <div class="custom-control custom-checkbox">
+                                                  <input class="custom-control-input" type="checkbox"
+                                                      formControlName="estado"
+                                                      id="chkEstado" value="1" checked>
+                                                  <label class="truncate-text" for="chkEstado"
+                                                      class="custom-control-label">Estado</label>
+                                              </div>
+                                          </div>
+                                      </div>
 
                                     </div>
                                 </div>
@@ -376,6 +388,9 @@
                         <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoDato(datos, 3)">
                           <i class="fa-regular fa-eye"></i>
                         </button>
+                        <button *ngIf="LecturaEscritura != 0" class="ml-2 btnEliminar"
+                          (click)="EliminarElemento(datos)">
+                        <i class="bi bi-trash"></i></button>
                       </div>
                     </th>
                   </tr>

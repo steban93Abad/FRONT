@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -74,7 +74,8 @@ export class DescargarCertificadoComponent implements OnInit {
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
   gCredito!:generarCertificadoPDF;
   ModoBusqueda: boolean = false;
-   FiltroActual: FiltroCertificado | null = null;
+  FiltroActual: FiltroCertificado | null = null;
+  estado: number = 2;
 
   // ****************************************** CONTROLES DE BUSQUEDA *****************************************************************
 
@@ -120,6 +121,12 @@ export class DescargarCertificadoComponent implements OnInit {
       )
       .subscribe();
   }
+
+  ParametrosEstado: any[] = [
+    { name: 'Activo', value: 1 },
+    { name: 'Inactivo', value: 0 },
+    // { name: 'Eliminados', value: 3 },
+  ];
 
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCertificados: any[] = [];
@@ -307,6 +314,18 @@ AgregarEditarElemento(num: number) {
 ActualizaEstado(elemento: CertificadoI) {
   elemento.cert_esactivo = (elemento.cert_esactivo == '1' ? 0 : 1).toString();
   this.api.PutCertificados(elemento).subscribe((x) => this.ListarElementos(1));
+}
+
+EliminarElemento(elemento: CertificadoI) {
+  this.alerta.EliminarRegistro().then((confirmado) => {
+    if (confirmado) {
+      elemento.cert_esactivo = '3';
+      this.api.PutCertificados(elemento).subscribe((x) => {
+        this.ListarElementos(1);
+        this.alerta.RegistroEliminado();
+      });
+    }
+  });
 }
 
 CargarElemento(datos: any, num: number) {
