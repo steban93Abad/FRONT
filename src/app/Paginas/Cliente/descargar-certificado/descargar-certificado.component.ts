@@ -171,10 +171,10 @@ export class DescargarCertificadoComponent implements OnInit {
          fecha_inicial: datos.fecha_inicial == ''?this.fechas.fechaMinDate():datos.fecha_inicial,
          fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final
        };
-  
+
        this.ModoBusqueda = true;
        this.FiltroActual = filtro;
-  
+
        this.ListaCertificados = [];
        this.loading = true;
        this.api
@@ -304,7 +304,10 @@ AgregarEditarElemento(num: number) {
 
 /************************************** EDITAR ELEMENTO  ******************************************************** */
 
-
+ActualizaEstado(elemento: CertificadoI) {
+  elemento.cert_esactivo = (elemento.cert_esactivo == '1' ? 0 : 1).toString();
+  this.api.PutCertificados(elemento).subscribe((x) => this.ListarElementos(1));
+}
 
 CargarElemento(datos: any, num: number) {
   this.CertificadosForms.patchValue({
@@ -358,7 +361,7 @@ GuardarObjeto(datos: any) {
   };
   this.gCredito=om;
   this.certificado.generarCertificadoPDF(this.gCredito);
-  
+
   // Guardar Registro
   this.api
   .PostCertificadoHistorial(datos)

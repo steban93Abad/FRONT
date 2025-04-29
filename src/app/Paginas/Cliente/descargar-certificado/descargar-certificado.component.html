@@ -44,7 +44,7 @@
                 </div>
               </div>
             </form>
-           </section> 
+           </section>
            <section class="horizontal-center" *ngIf="TituloFormulario == ''">
             <form [formGroup]="BuscarForms">
                 <div class="row">
@@ -229,7 +229,7 @@
                           formControlName="gest_fecha_gestion" />
                         <label class="truncate-text" for="gest_fecha_gestion">Fecha de Gestion</label>
                       </div>
-                    </div>                    
+                    </div>
 
                   </div>
                 </form>
@@ -299,7 +299,7 @@
 
            <!-- FORMULARIO PARA LISTAR ELEMENTOS -->
            <section class="expand-bottom" *ngIf="TituloFormulario == ''">
-            <div class="card-body" style="background-color: var(--color-formulario-secundario)" *ngIf="!loading; 
+            <div class="card-body" style="background-color: var(--color-formulario-secundario)" *ngIf="!loading;
               else loadingOrError">
               <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
               *ngIf="ListaCertificados.length != 0">
@@ -338,7 +338,7 @@
                 </div>
               </div>
 
-              <table class="table table-bordered table-responsive   table-auto medium" *ngIf="ListaCertificados.length != 0">
+              <table class="table table-bordered table-responsive-md" *ngIf="ListaCertificados.length != 0">
                 <thead>
                   <tr>
                     <th style="width: 10px">#</th>
@@ -361,13 +361,16 @@
                     <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                     <th>{{ datos.cart_descripcion }}</th>
                     <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>
-                    <th>
-                      <input type="checkbox" class="custom-control-input"
-                          id="idEstado_{{datos.id_correo}}"
-                          [checked]="datos.cor_esactivo==='1'?true:false" name="estado">
-                      <label class="custom-control-label"
-                          for="idEstado_{{datos.id_correo}}"></label>
-                    </th>
+                    <th class="OcultarMax450px ContenidoCentrado" *ngIf="LecturaEscritura != 0">
+                      <div class="custom-switch">
+                          <input type="checkbox" class="custom-control-input"
+                              id="idEstado_{{datos.id_certificado}}"
+                              [checked]="datos.cert_esactivo==='1'?true:false" name="estado"
+                              (change)="ActualizaEstado(datos)">
+                          <label class="custom-control-label"
+                              for="idEstado_{{datos.id_certificado}}"></label>
+                      </div>
+                  </th>
                     <th>
                       <div class="btn-group" role="group">
                         <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoDato(datos, 3)">
@@ -381,7 +384,7 @@
 
             </div>
 
-            <div class="card-footer" style="background-color: var(--color-formulario-terciario)" 
+            <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
               *ngIf="ListaCertificados.length != 0">
                 <div class="row">
                   <div class="col-lg-2 col-6">
