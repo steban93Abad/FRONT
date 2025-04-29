@@ -650,6 +650,7 @@ export interface FiltroCertificado {
   gestor: number;
   fecha_inicial: string;
   fecha_final: string;
+  estado: string;
   [key: string]: string | number | boolean | string[] | number[] | boolean[];
 }
 

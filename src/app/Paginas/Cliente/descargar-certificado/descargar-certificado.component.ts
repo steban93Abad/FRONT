@@ -75,7 +75,6 @@ export class DescargarCertificadoComponent implements OnInit {
   gCredito!:generarCertificadoPDF;
   ModoBusqueda: boolean = false;
   FiltroActual: FiltroCertificado | null = null;
-  estado: number = 2;
 
   // ****************************************** CONTROLES DE BUSQUEDA *****************************************************************
 
@@ -89,7 +88,8 @@ export class DescargarCertificadoComponent implements OnInit {
     ),
     fecha_final: new FormControl('',
       Validators.required
-    )
+    ),
+    estado: new FormControl(false, Validators.required)
   });
 
   ResetBuscarClienteForms() {
@@ -99,7 +99,8 @@ export class DescargarCertificadoComponent implements OnInit {
       cartera: '0',
       gestor: '0',
       fecha_inicial: '',
-      fecha_final: ''
+      fecha_final: '',
+      estado: false
     });
   }
 
@@ -122,11 +123,6 @@ export class DescargarCertificadoComponent implements OnInit {
       .subscribe();
   }
 
-  ParametrosEstado: any[] = [
-    { name: 'Activo', value: 1 },
-    { name: 'Inactivo', value: 0 },
-    // { name: 'Eliminados', value: 3 },
-  ];
 
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaCertificados: any[] = [];
@@ -176,12 +172,14 @@ export class DescargarCertificadoComponent implements OnInit {
            datos.cartera == '0' ? this.TodasCarteras : [Number(datos.cartera)],
          gestor: datos.gestor,
          fecha_inicial: datos.fecha_inicial == ''?this.fechas.fechaMinDate():datos.fecha_inicial,
-         fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final
+         fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final,
+         estado: datos.estado == true ? '1' : '0'
        };
 
        this.ModoBusqueda = true;
        this.FiltroActual = filtro;
 
+       datos.estado = datos.estado == true ? '1' : '0';
        this.ListaCertificados = [];
        this.loading = true;
        this.api
