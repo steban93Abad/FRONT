@@ -8,6 +8,7 @@ import { Fechas } from 'src/app/Control/Fechas';
 import { TipoDeTexto } from 'src/app/Control/TipoDeTexto';
 import { GeneradorReporte } from 'src/app/Control/GeneradoReporte';
 import { GeneradorCertificado } from 'src/app/Control/GeneradoCertificado';
+import { GeneradorCertificadoSergSur } from 'src/app/Control/GeneradoCertificadoSergSur';
 import {
   ResultadoCarteraI,
   ResultadoGestorI,
@@ -23,6 +24,7 @@ import {
   ClienteI,
   GestorI,
   generarCertificadoPDF,
+  generarCertificadoSergSurPDF
 } from 'src/app/Modelos/response.interface';
 import { ApiService } from 'src/app/service/api.service';
 
@@ -40,6 +42,7 @@ export class CertificadosComponent implements OnInit {
     private cookeService: CookieService,
     private router: Router,public reporte:GeneradorReporte,
     public certificado:GeneradorCertificado,
+    public certficadoSergvSur:GeneradorCertificadoSergSur,
     public validar: TipoDeTexto
   ) {}
 
@@ -72,6 +75,7 @@ export class CertificadosComponent implements OnInit {
   loading: boolean = false;
   LecturaEscritura: number = Number(this.PaginaActual.men_lectura);
   gCredito!:generarCertificadoPDF;
+  gCreditoSergSur!:generarCertificadoSergSurPDF;
   CarteraGestor: any[] = [];
   TodasCarteras: number[] = [];
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
@@ -273,6 +277,7 @@ export class CertificadosComponent implements OnInit {
     cli_nombres: new FormControl(''),
     cart_fecha_compra: new FormControl(''),
     cert_comentario: new FormControl(''),
+    cert_modelo: new FormControl('0'),
     cert_esactivo: new FormControl(true),
     cert_esdescargado: new FormControl(true),
     cert_baseactual: new FormControl(true),
@@ -290,6 +295,7 @@ export class CertificadosComponent implements OnInit {
       cart_descripcion: '',
       cart_fecha_compra: '',
       cert_comentario: '',
+      cert_modelo: '0',
       cert_esactivo: true,
       cert_esdescargado: true,
       cert_baseactual: true,
@@ -349,6 +355,7 @@ export class CertificadosComponent implements OnInit {
     datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
     datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
 
+
     // Verificar si el estado de contactabilidad es Liquidado
     const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
 
@@ -358,20 +365,40 @@ export class CertificadosComponent implements OnInit {
     }
 
     // Generar Certificado
-    let listadoObjeto:any[] = [];
-    let ocD: any = {
-      CarteraNom: datos.cart_descripcion,
-      FechaCompra: datos.cart_fecha_compra,
-      Identificacion:datos.cli_identificacion,
-      Nombres: datos.cli_nombres,
-      CodCredito: datos.ope_cod_credito,
-    }
-    listadoObjeto.push(ocD);
-    let om: generarCertificadoPDF = {
-      entidad: 'Credito', listado: listadoObjeto
-    };
-    this.gCredito=om;
-    this.certificado.generarCertificadoPDF(this.gCredito);
+    
+    /*
+      let listadoObjeto:any[] = [];
+      let ocD: any = {
+        NumModelo: datos.cert_modelo,
+        CarteraNom: datos.cart_descripcion,
+        FechaCompra: datos.cart_fecha_compra,
+        Identificacion:datos.cli_identificacion,
+        Nombres: datos.cli_nombres,
+        CodCredito: datos.ope_cod_credito
+      }
+      listadoObjeto.push(ocD);
+      let om: generarCertificadoPDF = {
+        entidad: 'Credito', listado: listadoObjeto
+      };
+      this.gCredito=om;
+      this.certificado.generarCertificadoPDF(this.gCredito);
+    */
+    
+      let listadoObjeto:any[] = [];
+      let ocD: any = {
+        NumModelo: datos.cert_modelo,
+        CarteraNom: datos.cart_descripcion,
+        FechaCompra: datos.cart_fecha_compra,
+        Identificacion:datos.cli_identificacion,
+        Nombres: datos.cli_nombres,
+        CodCredito: datos.ope_cod_credito
+      }
+      listadoObjeto.push(ocD);
+      let om: generarCertificadoSergSurPDF = {
+        entidad: 'Credito', listado: listadoObjeto
+      };
+      this.gCreditoSergSur=om;
+      this.certficadoSergvSur.generarCertificadoSergSurPDF(this.gCreditoSergSur);
 
     // Guardar Certificado
     this.api
@@ -525,6 +552,12 @@ export class CertificadosComponent implements OnInit {
     this.ListarElementos(1);
     this.ResetBuscarClienteForms();
   }
+
+  ////////////////////////////////////////  PARAMETROS PARA IMPRESION   ////////////////////////////////////////////////
+  ModeloEmpresa: any[] = [
+    { id: 1, name: 'POLCOMP CIA. LTDA', value:'1' },
+    { id: 2, name: 'SERVIGESUR CIA. LTDA', value:'2' },
+  ];
 
   ////////////////////////////////////////  CLIENTE   ////////////////////////////////////////////////
   TipoIdentificacion: any[] = [

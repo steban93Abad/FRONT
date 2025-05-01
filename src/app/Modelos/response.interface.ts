@@ -1220,3 +1220,8 @@ export interface generarCertificadoPDF {
   entidad: string;
   listado:any[];
 }
+
+export interface generarCertificadoSergSurPDF {
+  entidad: string;
+  listado:any[];
+}

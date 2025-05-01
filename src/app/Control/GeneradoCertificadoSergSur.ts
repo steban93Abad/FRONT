@@ -2,19 +2,19 @@ import jsPDF from 'jspdf';
 import autotable from 'jspdf-autotable';
 import { Injectable } from '@angular/core';
 import { Fechas } from 'src/app/Control/Fechas';
-import { cargaMasiva, generarCertificadoPDF } from '../Modelos/response.interface';
+import { cargaMasiva, generarCertificadoSergSurPDF } from '../Modelos/response.interface';
 
 @Injectable({
     providedIn: 'root',
 })
 
-export class GeneradorCertificado {
+export class GeneradorCertificadoSergSur {
 
     constructor(
         public fechas: Fechas
     ) {}
     
-    generarCertificadoPDF(objeto:generarCertificadoPDF) {
+    generarCertificadoSergSurPDF(objeto:generarCertificadoSergSurPDF) {
         if (objeto.entidad === 'Credito') {
             const fecha = new Date().toLocaleDateString('es-EC', {
                 day: 'numeric',
@@ -25,9 +25,9 @@ export class GeneradorCertificado {
             const doc = new jsPDF('p', 'pt', 'a4');
             
             // Rutas locales relativas al proyecto Angular
-            const encabezadoPath = './assets/Imagenes/assetsCertificados/encabezadoCertPOLCOMP.png';
-            const firmaPath = './assets/Imagenes/assetsCertificados/FirmaMariaPaz.png';
-            const piePath = './assets/Imagenes/assetsCertificados/piePaginaCertPOLCOMP.png';
+            const encabezadoPath = './assets/Imagenes/assetsCertificados/encabezadoCertSERVIGESUR.png';
+            const firmaPath = './assets/Imagenes/assetsCertificados/FirmaMariaEugenia.png';
+            const piePath = './assets/Imagenes/assetsCertificados/piePaginaCertSERVIGESUR.png';
 
             const datos = objeto.listado[0];
 
@@ -64,16 +64,16 @@ export class GeneradorCertificado {
                 /* Parrafo 1 */
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(12);
-                const texto1 = `POLCOMP CIA. LTDA., mediante contrato celebrado con el ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en el que se adquirió la cartera con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que consta como deudor/a el/la Señor/a ${datos.Nombres} con el Número de Operación de Tarjeta de Crédito N° ${datos.CodCredito}.`;
+                const texto1 = `${datos.NumModelo}, mediante contrato celebrado con el Almacenes ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en la que se adquirió la cartera de crédito con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que constaba como deudor/a el/la Señor/a ${datos.Nombres} con la Operación N° ${datos.CodCredito} de fecha.`;
                 doc.text(doc.splitTextToSize(texto1, 400), 75, 315, {maxWidth: 445, align: "justify"});
 
                 /* Parrafo 2 */
-                const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por la Operación N° ${datos.CodCredito}.`;
+                const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por el crédito N° ${datos.CodCredito} por el artículo.`;
                 doc.text(doc.splitTextToSize(texto2, 400), 75, 415, {maxWidth: 445, align: "justify"});
                             
                 /* Parrafo 3 */
-                const textoCompleto = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para POLCOMP CIA. LTDA., ni para ninguno de sus funcionarios.`;
-                const palabraNegrita = "POLCOMP CIA. LTDA.";
+                const textoCompleto = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para ${datos.NumModelo}., ni para ninguno de sus funcionarios.`;
+                const palabraNegrita = `${datos.NumModelo}.`;
                 const maxWidth = 450;
                 const xInicial = 75;
                 let y = 475;
@@ -150,12 +150,12 @@ export class GeneradorCertificado {
                 // Firma
                 doc.addImage(firma, 'PNG', 235, 540, 120, 60); // Ajustar tamaño según resolución real
                 doc.setFontSize(12);
-                doc.text('MA. PAZ GOMEZCOELLO SERRANO', 187, 610);
+                doc.text('MARÍA EUGENIA VICUÑA', 187, 610);
 
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(12);
                 doc.text('REPRESENTANTE LEGAL', 215, 630);
-                doc.text('POLCOMP CIA. LTDA', 225, 650
+                doc.text(`${datos.NumModelo}`, 225, 650
 
                 );
             

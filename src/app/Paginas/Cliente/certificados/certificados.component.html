@@ -255,7 +255,7 @@
                       </form>
                     </div>
 
-                     <!-- AGREGAR CERTIFICADO FORMULARIO -->
+                     <!-- ELABORAR CERTIFICADO FORMULARIO -->
                     <div class="card-header" style="background-color: var(--color-formulario-primario);" *ngIf="mostrarBtnImprimir">
                       <h2 class="Centrar">Elaborar Certificado</h2>
                     </div>
@@ -302,6 +302,28 @@
                                 <input type="text" class="form-control" id="cert_comentario"
                                     placeholder="" formControlName="cert_comentario">
                                 <label class="truncate-text" for="cert_comentario">Comentario</label>
+                            </div>
+                          </div>
+
+                          <div class="col-md-2 col-12">
+                            <div class="form-group">
+                                <span>Modelo</span>
+                                <select style="height: 35px;" class="form-select" 
+                                formControlName="cert_modelo">
+                                    <option value="" disabled selected>
+                                      Seleccione ...
+                                    </option>
+                                    <option *ngFor="let s of ModeloEmpresa"
+                                        [value]="s.name">
+                                        {{s.name}}
+                                    </option>
+                                </select>
+                                <Section>
+                                  <div class="error-message" *ngIf="CertificadoForms.get('cert_modelo')?.hasError('required') 
+                                  && CertificadoForms.get('cert_modelo')?.touched">
+                                      <span style="color: brown;">*Campo obligatorio.</span>
+                                  </div>
+                              </Section>                                
                             </div>
                           </div>
 
