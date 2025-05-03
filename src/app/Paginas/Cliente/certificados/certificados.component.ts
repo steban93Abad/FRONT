@@ -700,6 +700,7 @@ export class CertificadosComponent implements OnInit {
     this.ClienteSeleccionado = null;
     this.CertificadoInfo.patchValue('');
     this.ResetCertificadoForms();
+    this.ResetBuscarClienteForms();
     //this.ResetCreditosForms();
     this.loading = false;
     this.TituloFormulario = '';

@@ -13,7 +13,7 @@ export class GeneradorCertificadoSergSur {
     constructor(
         public fechas: Fechas
     ) {}
-    
+
     generarCertificadoSergSurPDF(objeto:generarCertificadoSergSurPDF) {
         if (objeto.entidad === 'Credito') {
             const fecha = new Date().toLocaleDateString('es-EC', {
@@ -21,9 +21,9 @@ export class GeneradorCertificadoSergSur {
                 month: 'long',
                 year: 'numeric',
                 timeZone: 'America/Guayaquil',
-                });  
+                });
             const doc = new jsPDF('p', 'pt', 'a4');
-            
+
             // Rutas locales relativas al proyecto Angular
             const encabezadoPath = './assets/Imagenes/assetsCertificados/encabezadoCertSERVIGESUR.png';
             const firmaPath = './assets/Imagenes/assetsCertificados/FirmaMariaEugenia.png';
@@ -38,28 +38,28 @@ export class GeneradorCertificadoSergSur {
                 img.crossOrigin = 'anonymous';
                 img.onload = () => resolve(img);
                 });
-            
+
                 Promise.all([
                     loadImage(encabezadoPath),
                     loadImage(firmaPath),
                     loadImage(piePath),
                 ]).then(([encabezado, firma, pie]) => {
                 // Agregar encabezado
-                doc.addImage(encabezado, 'PNG', 10, 0, 590, 170); // ancho completo (A4 en puntos)
-            
+                doc.addImage(encabezado, 'PNG', 10, 0, 590, 110); // ancho completo (A4 en puntos)
+
                 // Título
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(18);
                 doc.text('CERTIFICADO DE NO ADEUDAR', 150, 150);
-            
+
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(12);
                 doc.text(`Cuenca, ${fecha}`, 370, 215);
-            
+
                 // Cuerpo del certificado
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(12);
-                doc.text('ANTECEDENTES:', 75, 275);        
+                doc.text('ANTECEDENTES:', 75, 275);
 
                 /* Parrafo 1 */
                 doc.setFont('helvetica', 'normal');
@@ -70,13 +70,13 @@ export class GeneradorCertificadoSergSur {
                 /* Parrafo 2 */
                 const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por el crédito N° ${datos.CodCredito} por el artículo.`;
                 doc.text(doc.splitTextToSize(texto2, 400), 75, 415, {maxWidth: 445, align: "justify"});
-                            
+
                 /* Parrafo 3 */
                 const textoCompleto = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para ${datos.NumModelo}., ni para ninguno de sus funcionarios.`;
                 const palabraNegrita = `${datos.NumModelo}.`;
                 const maxWidth = 450;
                 const xInicial = 75;
-                let y = 475;
+                let y = 485;
 
                 // Dividir el texto completo en partes
                 const partes = textoCompleto.split(palabraNegrita);
@@ -146,22 +146,22 @@ export class GeneradorCertificadoSergSur {
                         x += doc.getTextWidth(p.texto);
                     });
                 }
-                
+
                 // Firma
                 doc.addImage(firma, 'PNG', 235, 540, 120, 60); // Ajustar tamaño según resolución real
                 doc.setFontSize(12);
-                doc.text('MARÍA EUGENIA VICUÑA', 187, 610);
+                doc.text('MARÍA EUGENIA VICUÑA', 225, 620);
 
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(12);
-                doc.text('REPRESENTANTE LEGAL', 215, 630);
-                doc.text(`${datos.NumModelo}`, 225, 650
+                doc.text('REPRESENTANTE LEGAL', 223, 642);
+                doc.text(`${datos.NumModelo}`, 226, 665
 
                 );
-            
+
                 // Pie de página
-                doc.addImage(pie, 'PNG', -10, 650, 615, 200); // parte inferior de la hoja A4
-            
+                doc.addImage(pie, 'PNG', -10, 710, 645, 130); // parte inferior de la hoja A4
+
                 // Descargar PDF
                 const pdf = doc.output('blob');
                 const url = window.URL.createObjectURL(pdf);
@@ -178,7 +178,7 @@ export class GeneradorCertificadoSergSur {
         if (valor.length > 0) { // Checks if ListaResultado array has elements
             return Object.keys(valor[0]); // Returns the keys of the first object in ListaResultado array
         }
-        
+
         return []; // Returns an empty array if ListaResultado is empty
     }
 }
