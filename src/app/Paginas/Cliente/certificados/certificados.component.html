@@ -355,7 +355,7 @@
                         <small>
                           <button class="btnImprimir ml-3" id="btnImpresion" name="btnImpresion" *ngIf="mostrarBtnImprimir"
                           [disabled]="CertificadoForms.invalid"
-                          (click)="GuardarObjeto(CertificadoForms.value)">
+                          (click)="ActDesControles(1);GuardarObjeto(CertificadoForms.value);ActDesControles(0)">
                             Imprimir
                           </button>
 

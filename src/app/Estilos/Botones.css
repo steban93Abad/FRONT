@@ -94,6 +94,11 @@
   color: #4b4e4aaa;
   background-color: #fff;
 }
+
+.btnImprimir:disabled {
+  color: var(--color-texto-primario);
+  background-color: var(--color-quinto);
+}
 /************************* BOTON HOME ********************************/
 .btnHome {
   text-decoration: none;
@@ -157,7 +162,7 @@
   border-radius: 8px;
   display: inline-block;
   font-weight: 300;
-  transition: background-color .3s; 
+  transition: background-color .3s;
 }
 
 
@@ -165,7 +170,7 @@
 .btnEditar:hover{
   color: #4146e8;
   background-color: #8782d8;
-} 
+}
 
 /************************* BOTON VER ********************************/
 
@@ -394,7 +399,7 @@
 /************************* BOTON INFO 3 ********************************/
 
 .btnInfo3 {
-  text-decoration: none;  
+  text-decoration: none;
   color: #fff;
   background-color:#01b1d9;
   padding: 0.5em 1em;

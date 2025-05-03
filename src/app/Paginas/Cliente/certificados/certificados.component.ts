@@ -18,7 +18,6 @@ import {
 import {
   ContactabilidadI,
   FiltroCredito,
-  CxcOperacionI,
   CertificadoI,
   generarPDF,
   ClienteI,
@@ -315,19 +314,15 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('cart_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
       this.CreditosForms.get('gest_fecha_gestion')?.disable();
+      this.CertificadoForms.get('cert_modelo')?.disable();
+    }
+    if (num === 1) {
+      //activo
+      this.CertificadoForms.get('cert_modelo')?.enable();
     }
     if (num === 2) {
       //edicion
-      this.CreditosForms.get('cart_descripcion')?.enable();
-      this.CreditosForms.get('cart_fecha_compra')?.enable();
-      this.CreditosForms.get('ope_cod_credito')?.enable();
-      this.CreditosForms.get('cli_nombres')?.enable();
-      this.CreditosForms.get('cli_identificacion')?.enable();
-      this.CreditosForms.get('id_gestor')?.enable();
-      this.CreditosForms.get('cert_comentario')?.enable();
-      this.CreditosForms.get('cert_esactivo')?.enable();
-      this.CreditosForms.get('cert_esdescargado')?.enable();
-      this.CreditosForms.get('cert_baseactual')?.enable();
+      this.CertificadoForms.get('cert_modelo')?.enable();
     }
   }
 
@@ -338,8 +333,9 @@ export class CertificadosComponent implements OnInit {
       this.ActDesControles(2);
     }
     if (num === 3) {
-      this.TituloFormulario = 'Visualizar';
       this.ActDesControles(0);
+      this.TituloFormulario = 'Visualizar';
+      this.ActDesControles(2);
     }
   }
 
