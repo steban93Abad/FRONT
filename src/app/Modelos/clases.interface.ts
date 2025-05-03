@@ -347,13 +347,13 @@ export class GestionCClass implements GestionICC {
 	gest_hora_volver_llamar:string='';
 	gest_perdio_contacto:string='';
   gest_fecha_in:string='';
-  gest_fecha_gestion:string='';	
+  gest_fecha_gestion:string='';
   gest_hora_gestion:string='';
 
 }
 export class PagoCClass implements PagosICU {
   id_gestor:number=0;
-	cli_identificacion:string='';	
+	cli_identificacion:string='';
 	ope_cod_credito:string='';
 	id_cuenta:number=0;
 	pag_pago:string='';
@@ -455,7 +455,7 @@ export class clsCertificado implements CertificadoI {
   cert_esdescargado: string;
   cert_baseactual: string;
   cert_origendatos: string;
-  cert_url_certificado: string;
+  cert_modelo: string;
 
   constructor() {
     this.id_certificado = 0;
@@ -475,7 +475,7 @@ export class clsCertificado implements CertificadoI {
     this.cert_esdescargado = '';
     this.cert_baseactual = '';
     this.cert_origendatos = '';
-    this.cert_url_certificado = '';
+    this.cert_modelo = '';
   }
 }
 export class clsCertificado_Historial implements Certificado_HistorialI {

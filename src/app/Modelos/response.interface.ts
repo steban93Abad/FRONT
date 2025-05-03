@@ -52,7 +52,7 @@ export interface CertificadoI {
   cert_esdescargado: string;
   cert_baseactual: string;
   cert_origendatos: string;
-  cert_url_certificado: string;
+  cert_modelo: string;
 }
 
 export interface Certificado_HistorialI {

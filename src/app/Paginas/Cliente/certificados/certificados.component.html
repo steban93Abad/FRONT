@@ -305,28 +305,6 @@
                             </div>
                           </div>
 
-                          <div class="col-md-2 col-12">
-                            <div class="form-group">
-                                <span>Modelo</span>
-                                <select style="height: 35px;" class="form-select" 
-                                formControlName="cert_modelo">
-                                    <option value="" disabled selected>
-                                      Seleccione ...
-                                    </option>
-                                    <option *ngFor="let s of ModeloEmpresa"
-                                        [value]="s.name">
-                                        {{s.name}}
-                                    </option>
-                                </select>
-                                <Section>
-                                  <div class="error-message" *ngIf="CertificadoForms.get('cert_modelo')?.hasError('required') 
-                                  && CertificadoForms.get('cert_modelo')?.touched">
-                                      <span style="color: brown;">*Campo obligatorio.</span>
-                                  </div>
-                              </Section>                                
-                            </div>
-                          </div>
-
                           <div class="col-lg-4 col-12">
                               <div class="Centrar">
                                   <div class="btn-group">
@@ -346,6 +324,28 @@
                                   </div>
                               </div>
                           </div>
+
+                          <div class="col-md-2 col-12">
+                            <div class="form-group">
+                                <span><small>*</small>Modelo</span>
+                                <select style="height: 35px;" class="form-select"
+                                formControlName="cert_modelo">
+                                    <option value="" disabled selected>
+                                      Seleccione ...
+                                    </option>
+                                    <option *ngFor="let s of ModeloEmpresa"
+                                        [value]="s.name">
+                                        {{s.name}}
+                                    </option>
+                                </select>
+                                <Section>
+                                  <div class="error-message" *ngIf="CertificadoForms.get('cert_modelo')?.hasError('required')
+                                  && CertificadoForms.get('cert_modelo')?.touched">
+                                      <span style="color: brown;">*Campo obligatorio.</span>
+                                  </div>
+                              </Section>
+                            </div>
+                          </div>
                         </div>
                       </form>
                     </div>
@@ -354,6 +354,7 @@
                       <div class="row Centrar">
                         <small>
                           <button class="btnImprimir ml-3" id="btnImpresion" name="btnImpresion" *ngIf="mostrarBtnImprimir"
+                          [disabled]="CertificadoForms.invalid"
                           (click)="GuardarObjeto(CertificadoForms.value)">
                             Imprimir
                           </button>

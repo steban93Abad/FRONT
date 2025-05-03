@@ -277,12 +277,11 @@ export class CertificadosComponent implements OnInit {
     cli_nombres: new FormControl(''),
     cart_fecha_compra: new FormControl(''),
     cert_comentario: new FormControl(''),
-    cert_modelo: new FormControl('0'),
     cert_esactivo: new FormControl(true),
     cert_esdescargado: new FormControl(true),
     cert_baseactual: new FormControl(true),
     cert_origendatos: new FormControl('Sistema_CobroSys'),
-    cert_url_certificado: new FormControl('')
+    cert_modelo: new FormControl('', Validators.required),
   });
 
   ResetCertificadoForms() {
@@ -295,12 +294,11 @@ export class CertificadosComponent implements OnInit {
       cart_descripcion: '',
       cart_fecha_compra: '',
       cert_comentario: '',
-      cert_modelo: '0',
       cert_esactivo: true,
       cert_esdescargado: true,
       cert_baseactual: true,
       cert_origendatos: 'Sistema_CobroSys',
-      cert_url_certificado: '',
+      cert_modelo: ''
     });
   }
 
@@ -355,9 +353,9 @@ export class CertificadosComponent implements OnInit {
     datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
     datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
 
-
     // Verificar si el estado de contactabilidad es Liquidado
     const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
+    const opcionDescarga = this.CertificadoForms.get('cert_modelo')?.value;
 
     if (estadoContactabilidad !== 'LIQUIDADO') {
       this.alerta.ErrorEnLaPeticion('No se puede generar el certificado. El estado de contactabilidad debe ser "LIQUIDADO".');
@@ -365,40 +363,50 @@ export class CertificadosComponent implements OnInit {
     }
 
     // Generar Certificado
-    
-    /*
-      let listadoObjeto:any[] = [];
-      let ocD: any = {
-        NumModelo: datos.cert_modelo,
-        CarteraNom: datos.cart_descripcion,
-        FechaCompra: datos.cart_fecha_compra,
-        Identificacion:datos.cli_identificacion,
-        Nombres: datos.cli_nombres,
-        CodCredito: datos.ope_cod_credito
-      }
-      listadoObjeto.push(ocD);
-      let om: generarCertificadoPDF = {
-        entidad: 'Credito', listado: listadoObjeto
-      };
-      this.gCredito=om;
-      this.certificado.generarCertificadoPDF(this.gCredito);
-    */
-    
-      let listadoObjeto:any[] = [];
-      let ocD: any = {
-        NumModelo: datos.cert_modelo,
-        CarteraNom: datos.cart_descripcion,
-        FechaCompra: datos.cart_fecha_compra,
-        Identificacion:datos.cli_identificacion,
-        Nombres: datos.cli_nombres,
-        CodCredito: datos.ope_cod_credito
-      }
-      listadoObjeto.push(ocD);
-      let om: generarCertificadoSergSurPDF = {
-        entidad: 'Credito', listado: listadoObjeto
-      };
-      this.gCreditoSergSur=om;
-      this.certficadoSergvSur.generarCertificadoSergSurPDF(this.gCreditoSergSur);
+    switch (opcionDescarga) {
+      case 'POLCOMP CIA. LTDA':
+        let listadoObjeto:any[] = [];
+        let ocD: any = {
+          CarteraNom: datos.cart_descripcion,
+          FechaCompra: datos.cart_fecha_compra,
+          Identificacion:datos.cli_identificacion,
+          Nombres: datos.cli_nombres,
+          CodCredito: datos.ope_cod_credito,
+          NumModelo: datos.cert_modelo
+        }
+        listadoObjeto.push(ocD);
+        let om: generarCertificadoPDF = {
+          entidad: 'Credito', listado: listadoObjeto
+        };
+        this.gCredito=om;
+        this.certificado.generarCertificadoPDF(this.gCredito);
+        break;
+      case 'SERVIGESUR CIA. LTDA':
+        let listadoObjeto2:any[] = [];
+        let ocD2: any = {
+          CarteraNom: datos.cart_descripcion,
+          FechaCompra: datos.cart_fecha_compra,
+          Identificacion:datos.cli_identificacion,
+          Nombres: datos.cli_nombres,
+          CodCredito: datos.ope_cod_credito,
+          NumModelo: datos.cert_modelo
+        }
+        listadoObjeto2.push(ocD2);
+        let om2: generarCertificadoSergSurPDF = {
+          entidad: 'Credito', listado: listadoObjeto2
+        };
+        this.gCreditoSergSur=om2;
+        this.certficadoSergvSur.generarCertificadoSergSurPDF(this.gCreditoSergSur);
+        break;
+      default:
+        catchError((error) => {
+          this.alerta.ErrorEnLaOperacion();
+          this.ActDesControles(0);
+          console.log(error);
+          throw new Error(error);
+        })
+        break;
+    }
 
     // Guardar Certificado
     this.api
@@ -457,7 +465,8 @@ export class CertificadosComponent implements OnInit {
       cart_descripcion: datos.cart_descripcion,
       cli_identificacion: datos.cli_identificacion,
       cli_nombres: datos.cli_nombres,
-      cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra)
+      cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
+      //cert_modelo: datos.cert_modelo.toString()
     });
     if (num != 1) {
       this.BuscarCertificado(datos.ope_cod_credito);
