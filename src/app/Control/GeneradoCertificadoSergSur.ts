@@ -15,7 +15,7 @@ export class GeneradorCertificadoSergSur {
     ) {}
 
     generarCertificadoSergSurPDF(objeto:generarCertificadoSergSurPDF) {
-        if (objeto.entidad === 'Credito') {
+        if (objeto.entidad === 'CreditoSerg') {
             const fecha = new Date().toLocaleDateString('es-EC', {
                 day: 'numeric',
                 month: 'long',
@@ -64,11 +64,11 @@ export class GeneradorCertificadoSergSur {
                 /* Parrafo 1 */
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(12);
-                const texto1 = `${datos.NumModelo}, mediante contrato celebrado con el Almacenes ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en la que se adquirió la cartera de crédito con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que constaba como deudor/a el/la Señor/a ${datos.Nombres} con la Operación N° ${datos.CodCredito} de fecha.`;
+                const texto1 = `${datos.NumModelo}., mediante contrato celebrado con Almacenes ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en la que se adquirió la cartera de crédito con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que constaba como deudor/a el/la Señor/a ${datos.Nombres} con la Operación N° ${datos.CodCredito} de fecha ${datos.FechaCompraCred}.`;
                 doc.text(doc.splitTextToSize(texto1, 400), 75, 315, {maxWidth: 445, align: "justify"});
 
                 /* Parrafo 2 */
-                const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por el crédito N° ${datos.CodCredito} por el artículo.`;
+                const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por el crédito N° ${datos.CodCredito} por el artículo ${datos.Producto}.`;
                 doc.text(doc.splitTextToSize(texto2, 400), 75, 415, {maxWidth: 445, align: "justify"});
 
                 /* Parrafo 3 */

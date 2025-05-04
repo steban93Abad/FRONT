@@ -426,6 +426,7 @@
                                 <th>Gestor</th>
                                 <th id="ThCartera0">Cartera</th>
                                 <th>Fec. Gestion</th>
+                                <th>Fecha Com. Credito</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -446,6 +447,7 @@
                                 <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                                 <th>{{ datos.cart_descripcion }}</th>
                                 <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>
+                                <th>{{ datos.ope_fecha_compra==null?null:fechas.fechaCorta(datos.ope_fecha_compra) }}</th>
                               </tr>
                           </tbody>
                       </table>

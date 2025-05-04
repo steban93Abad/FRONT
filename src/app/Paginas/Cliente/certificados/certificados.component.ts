@@ -275,6 +275,8 @@ export class CertificadosComponent implements OnInit {
     cli_identificacion: new FormControl(''),
     cli_nombres: new FormControl(''),
     cart_fecha_compra: new FormControl(''),
+    ope_fecha_compra: new FormControl(''),
+    ope_producto: new FormControl(''),
     cert_comentario: new FormControl(''),
     cert_esactivo: new FormControl(true),
     cert_esdescargado: new FormControl(true),
@@ -292,6 +294,8 @@ export class CertificadosComponent implements OnInit {
       cli_nombres: '',
       cart_descripcion: '',
       cart_fecha_compra: '',
+      ope_fecha_compra: '',
+      ope_producto: '',
       cert_comentario: '',
       cert_esactivo: true,
       cert_esdescargado: true,
@@ -318,10 +322,12 @@ export class CertificadosComponent implements OnInit {
     }
     if (num === 1) {
       //activo
+      this.CertificadoForms.get('ope_fecha_compra')?.enable();
       this.CertificadoForms.get('cert_modelo')?.enable();
     }
     if (num === 2) {
       //edicion
+      this.CertificadoForms.get('ope_fecha_compra')?.enable();
       this.CertificadoForms.get('cert_modelo')?.enable();
     }
   }
@@ -358,6 +364,7 @@ export class CertificadosComponent implements OnInit {
       return; // Detener el proceso si no está Liquidado
     }
 
+    console.log(datos);
     // Generar Certificado
     switch (opcionDescarga) {
       case 'POLCOMP CIA. LTDA':
@@ -385,11 +392,13 @@ export class CertificadosComponent implements OnInit {
           Identificacion:datos.cli_identificacion,
           Nombres: datos.cli_nombres,
           CodCredito: datos.ope_cod_credito,
+          FechaCompraCred: datos.ope_fecha_compra,
+          Producto: datos.ope_producto,
           NumModelo: datos.cert_modelo
         }
         listadoObjeto2.push(ocD2);
         let om2: generarCertificadoSergSurPDF = {
-          entidad: 'Credito', listado: listadoObjeto2
+          entidad: 'CreditoSerg', listado: listadoObjeto2
         };
         this.gCreditoSergSur=om2;
         this.certficadoSergvSur.generarCertificadoSergSurPDF(this.gCreditoSergSur);
@@ -462,11 +471,14 @@ export class CertificadosComponent implements OnInit {
       cli_identificacion: datos.cli_identificacion,
       cli_nombres: datos.cli_nombres,
       cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
+      ope_fecha_compra: datos.ope_fecha_compra == null?'': this.fechas.fechaCorta(datos.ope_fecha_compra),
+      ope_producto: datos.ope_producto
       //cert_modelo: datos.cert_modelo.toString()
     });
     if (num != 1) {
       this.BuscarCertificado(datos.ope_cod_credito);
     }
+    console.log(datos);
     this.AgregarEditarElemento(num);
   }
 
