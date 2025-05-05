@@ -242,7 +242,6 @@
                         <label class="truncate-text" for="gest_fecha_gestion">Fecha de Gestion</label>
                       </div>
                     </div>
-
                   </div>
                 </form>
               </div>
@@ -292,9 +291,103 @@
                 </form>
               </div>
 
+              <!-- DESCARGAR CERTIFICADO FORMULARIO - CAMBIAR ESTADO -->
+              <div class="card-header" style="background-color: var(--color-formulario-primario);" hidden>
+                <h2 class="Centrar">Cambiar Estado</h2>
+              </div>
+
+              <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+                <form [formGroup]="CertificadoEditForms">
+                  <div class="row">
+
+                    <div class="col-lg-4 col-12" hidden>
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="id_certificado" placeholder=""
+                              formControlName="id_certificado">
+                          <label class="truncate-text" for="id_certificado"><small>*</small>Id Certificado</label>
+                          <Section>
+                            <div class="error-message" *ngIf="CertificadoEditForms.get('id_certificado')?.hasError('required')
+                            && CertificadoEditForms.get('id_certificado')?.touched">
+                                <span style="color: brown;">*Campo obligatorio.</span>
+                            </div>
+                          </Section>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12" hidden>
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="id_gestor" placeholder=""
+                              formControlName="id_gestor">
+                          <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
+                          <Section>
+                            <div class="error-message" *ngIf="CertificadoEditForms.get('id_gestor')?.hasError('required')
+                            && CertificadoEditForms.get('id_gestor')?.touched">
+                                <span style="color: brown;">*Campo obligatorio.</span>
+                            </div>
+                          </Section>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12" hidden>
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
+                          formControlName="ope_cod_credito"/>
+                        <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
+                        <Section>
+                          <div class="error-message" *ngIf="CertificadoEditForms.get('ope_cod_credito')?.hasError('required')
+                          && CertificadoEditForms.get('ope_cod_credito')?.touched">
+                            <span style="color: brown;">*Campo obligatorio.</span>
+                          </div>
+                          <div class="error-message"
+                            *ngIf="CertificadoEditForms.get('ope_cod_credito')?.value != ''
+                                            ? validar.V_AlfaNumerico(CertificadoEditForms.get('ope_cod_credito')?.value!)  === false:null ">
+                            <span style="color: brown;">*Caracteres no permitidos</span>
+                          </div>
+                        </Section>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12" hidden>
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cert_comentario" placeholder=""
+                          formControlName="cert_comentario" />
+                        <label class="truncate-text" for="cert_comentario">Comentario</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="Centrar">
+                          <div class="btn-group">
+                              <div class="form-group">
+                                  <label class="truncate-text" for="cert_esactivo">Estado</label>&nbsp;
+                                  <div class="custom-control custom-switch Centrar"
+                                      title="Estado">
+                                      <input type="checkbox" class="custom-control-input"
+                                          formControlName="cert_esactivo" name="estado"
+                                          id="cert_esactivo">
+                                      <label class="custom-control-label"
+                                          for="cert_esactivo">{{CertificadoEditForms.get('cert_esactivo')!.value
+                                          == false ?
+                                          'Inactivo' : 'Activo'}}</label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+
               <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
                 <div class="row Centrar">
                   <small>
+
+                    <button class="btnAceptar ml-3"
+                      (click)="CambiarEstadoObjeto(CertificadoEditForms.value)">
+                      Cambiar Estado
+                    </button>
+
                     <button class="btnImprimir ml-3"
                       (click)="GuardarObjeto(DatosForms.value)">
                       Imprimir
@@ -385,7 +478,7 @@
                   </th>
                     <th>
                       <div class="btn-group" role="group">
-                        <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoDato(datos, 3)">
+                        <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoDato(datos, 3);CargarCertificadoElementoDato(datos, 3)">
                           <i class="fa-regular fa-eye"></i>
                         </button>
                         <button *ngIf="LecturaEscritura != 0" class="ml-2 btnEliminar"

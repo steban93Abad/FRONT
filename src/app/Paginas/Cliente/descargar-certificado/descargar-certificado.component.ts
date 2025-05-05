@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -7,6 +7,7 @@ import { Alertas } from 'src/app/Control/Alerts';
 import { Fechas } from 'src/app/Control/Fechas';
 import { TipoDeTexto } from 'src/app/Control/TipoDeTexto';
 import { GeneradorCertificado } from 'src/app/Control/GeneradoCertificado';
+import { GeneradorCertificadoSergSur } from 'src/app/Control/GeneradoCertificadoSergSur';
 import {
   ResultadoCarteraI,
   ResultadoGestorI,
@@ -21,6 +22,7 @@ import {
   GestorI,
   FiltroCertificado,
   generarCertificadoPDF,
+  generarCertificadoSergSurPDF
 } from 'src/app/Modelos/response.interface';
 import { ApiService } from 'src/app/service/api.service';
 
@@ -38,6 +40,7 @@ export class DescargarCertificadoComponent implements OnInit {
     private cookeService: CookieService,
     private router: Router,
     public certificado:GeneradorCertificado,
+    public certficadoSergvSur:GeneradorCertificadoSergSur,
     public validar: TipoDeTexto
   ) {}
 
@@ -73,6 +76,7 @@ export class DescargarCertificadoComponent implements OnInit {
   TodasCarteras: number[] = [];
   Cartera: ResultadoCarteraI[] = this.permisos.cartera;
   gCredito!:generarCertificadoPDF;
+  gCreditoSergSur!:generarCertificadoSergSurPDF;
   ModoBusqueda: boolean = false;
   FiltroActual: FiltroCertificado | null = null;
 
@@ -161,51 +165,51 @@ export class DescargarCertificadoComponent implements OnInit {
   }
 
   GetFiltrarElemento(datos: any) {
-       let filtro: FiltroCertificado = {
-         identificacion: (datos.identificacion.trim() == ''
-           ? '0'
-           : datos.identificacion.trim())!,
-         nombres_cliente: (datos.nombres_cliente.trim() == ''
-           ? '0'
-           : datos.nombres_cliente.trim())!,
-         cartera:
-           datos.cartera == '0' ? this.TodasCarteras : [Number(datos.cartera)],
-         gestor: datos.gestor,
-         fecha_inicial: datos.fecha_inicial == ''?this.fechas.fechaMinDate():datos.fecha_inicial,
-         fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final,
-         estado: datos.estado == true ? '1' : '0'
-       };
+    let filtro: FiltroCertificado = {
+      identificacion: (datos.identificacion.trim() == ''
+        ? '0'
+        : datos.identificacion.trim())!,
+      nombres_cliente: (datos.nombres_cliente.trim() == ''
+        ? '0'
+        : datos.nombres_cliente.trim())!,
+      cartera:
+        datos.cartera == '0' ? this.TodasCarteras : [Number(datos.cartera)],
+      gestor: datos.gestor,
+      fecha_inicial: datos.fecha_inicial == ''?this.fechas.fechaMinDate():datos.fecha_inicial,
+      fecha_final: datos.fecha_final == ''?this.fechas.fechaMinDate():datos.fecha_final,
+      estado: datos.estado == true ? '1' : '0'
+    };
 
-       this.ModoBusqueda = true;
-       this.FiltroActual = filtro;
+    this.ModoBusqueda = true;
+    this.FiltroActual = filtro;
 
-       datos.estado = datos.estado == true ? '1' : '0';
-       this.ListaCertificados = [];
-       this.loading = true;
-       this.api
-         .GetCertificadoDatoFracionadoFiltro(filtro)
-         .pipe(
-           map((tracks) => {
-             console.log(tracks['data']);
-             this.ListaCertificados = tracks['data'];
-             this.DatosTemporalesBusqueda = tracks['data'];
-             if (this.ListaCertificados.length === 0) {
-               this.loading = false;
-               this.alerta.NoExistenDatos();
-             } else {
-               this.loading = false;
-               this.ContadorDatosGeneral = this.ListaCertificados.length;
-               this.FraccionarValores(this.ListaCertificados, this.ConstanteFraccion);
-             }
-           }),
-           catchError((error) => {
-             this.loading = false;
-             this.alerta.ErrorAlRecuperarElementos();
-             throw new Error(error);
-           })
-         )
-         .subscribe();
-     }
+    datos.estado = datos.estado == true ? '1' : '0';
+    this.ListaCertificados = [];
+    this.loading = true;
+    this.api
+      .GetCertificadoDatoFracionadoFiltro(filtro)
+      .pipe(
+        map((tracks) => {
+          console.log(tracks['data']);
+          this.ListaCertificados = tracks['data'];
+          this.DatosTemporalesBusqueda = tracks['data'];
+          if (this.ListaCertificados.length === 0) {
+            this.loading = false;
+            this.alerta.NoExistenDatos();
+          } else {
+            this.loading = false;
+            this.ContadorDatosGeneral = this.ListaCertificados.length;
+            this.FraccionarValores(this.ListaCertificados, this.ConstanteFraccion);
+          }
+        }),
+        catchError((error) => {
+          this.loading = false;
+          this.alerta.ErrorAlRecuperarElementos();
+          throw new Error(error);
+        })
+      )
+      .subscribe();
+  }
 
 /************************************** AGREGAR ELEMENTO  ******************************************************** */
 TituloFormulario = '';
@@ -245,6 +249,9 @@ DatosForms = new FormGroup({
   cli_nombres: new FormControl(''),
   cart_descripcion: new FormControl(''),
   cart_fecha_compra: new FormControl(''),
+  ope_fecha_compra: new FormControl(''),
+  ope_producto: new FormControl(''),
+  cert_modelo: new FormControl(''),
   gest_fecha_gestion: new FormControl(''),
   cert_hist_esactivo: new FormControl(true),
   cert_hist_baseactual: new FormControl(true),
@@ -260,10 +267,34 @@ ResetDatosForms() {
     cli_nombres: '',
     cart_descripcion: '',
     cart_fecha_compra: '',
+    ope_fecha_compra: '',
+    ope_producto: '',
+    cert_modelo: '',
     gest_fecha_gestion: '',
     cert_hist_esactivo: true,
     cert_hist_baseactual: true,
     cert_hist_origendatos: 'Sistema_CobroSys'
+  });
+}
+
+CertificadoEditForms = new FormGroup({
+  id_certificado: new FormControl(0, Validators.required),
+  id_gestor: new FormControl(0, Validators.required),
+  ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
+  cert_comentario: new FormControl(''),
+  cert_esactivo: new FormControl(true),
+  cert_baseactual: new FormControl(true),
+  cert_origendatos: new FormControl('Sistema_CobroSys')
+});
+
+ResetCertificadoEditForms() {
+  this.CertificadoEditForms.reset({
+    id_certificado: 0,
+    id_gestor: 0,
+    ope_cod_credito: '',
+    cert_comentario: '',
+    cert_esactivo: true,
+    cert_origendatos: 'Sistema_CobroSys'
   });
 }
 
@@ -353,7 +384,24 @@ CargarElementoDato(datos: any, num: number) {
     cli_identificacion: datos.cli_identificacion,
     cli_nombres: datos.cli_nombres,
     cart_descripcion: datos.cart_descripcion,
-    cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra)
+    cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
+    ope_fecha_compra: datos.ope_fecha_compra == null?'': this.fechas.fechaCorta(datos.ope_fecha_compra),
+    ope_producto: datos.ope_producto,
+    cert_modelo: datos.cert_modelo
+  });
+
+  this.AgregarEditarElemento(num);
+}
+
+CargarCertificadoElementoDato(datos: any, num: number) {
+  this.CertificadoEditForms.patchValue({
+    id_certificado: datos.id_certificado,
+    id_gestor: datos.id_gestor,
+    ope_cod_credito: datos.ope_cod_credito,
+    cert_comentario: datos.cert_comentario,
+    cert_esactivo: datos.cert_esactivo === '1' ? true : false,
+    cert_baseactual: datos.cert_baseactual === '1' ? true : false,
+    cert_origendatos: datos.cert_origendatos
   });
 
   this.AgregarEditarElemento(num);
@@ -363,21 +411,55 @@ GuardarObjeto(datos: any) {
   datos.cert_hist_esactivo = datos.cert_hist_esactivo.toString() === 'true' ? '1' : '0';
   datos.cert_hist_baseactual = datos.cert_hist_baseactual.toString() === 'true' ? '1' : '0';
 
+  const opcionDescarga = this.DatosForms.get('cert_modelo')?.value;
+
   // Generar Certificado
-  let listadoObjeto:any[] = [];
-  let ocD: any = {
-    CarteraNom: datos.cart_descripcion,
-    FechaCompra: datos.cart_fecha_compra,
-    Identificacion:datos.cli_identificacion,
-    Nombres: datos.cli_nombres,
-    CodCredito: datos.ope_cod_credito,
+  switch (opcionDescarga) {
+    case 'POLCOMP CIA. LTDA':
+      let listadoObjeto:any[] = [];
+      let ocD: any = {
+        CarteraNom: datos.cart_descripcion,
+        FechaCompra: datos.cart_fecha_compra,
+        Identificacion:datos.cli_identificacion,
+        Nombres: datos.cli_nombres,
+        CodCredito: datos.ope_cod_credito,
+        NumModelo: datos.cert_modelo
+      }
+      listadoObjeto.push(ocD);
+      let om: generarCertificadoPDF = {
+        entidad: 'Credito', listado: listadoObjeto
+      };0
+      this.gCredito=om;
+      this.certificado.generarCertificadoPDF(this.gCredito);
+      break;
+    case 'SERVIGESUR CIA. LTDA':
+      let listadoObjeto2:any[] = [];
+      let ocD2: any = {
+        CarteraNom: datos.cart_descripcion,
+        FechaCompra: datos.cart_fecha_compra,
+        Identificacion:datos.cli_identificacion,
+        Nombres: datos.cli_nombres,
+        CodCredito: datos.ope_cod_credito,
+        FechaCompraCred: datos.ope_fecha_compra,
+        Producto: datos.ope_producto,
+        NumModelo: datos.cert_modelo
+      }
+      listadoObjeto2.push(ocD2);
+      let om2: generarCertificadoSergSurPDF = {
+        entidad: 'CreditoSerg', listado: listadoObjeto2
+      };
+      this.gCreditoSergSur=om2;
+      this.certficadoSergvSur.generarCertificadoSergSurPDF(this.gCreditoSergSur);
+      break;
+    default:
+      catchError((error) => {
+        this.alerta.ErrorEnLaOperacion();
+        this.ActDesControles(0);
+        console.log(error);
+        throw new Error(error);
+      })
+      break;
   }
-  listadoObjeto.push(ocD);
-  let om: generarCertificadoPDF = {
-    entidad: 'Credito', listado: listadoObjeto
-  };
-  this.gCredito=om;
-  this.certificado.generarCertificadoPDF(this.gCredito);
 
   // Guardar Registro
   this.api
@@ -400,6 +482,37 @@ GuardarObjeto(datos: any) {
       this.alerta.ErrorEnLaOperacion();
       this.ActDesControles(0);
       console.log(error);
+      throw new Error(error);
+    })
+  )
+  .subscribe();
+}
+
+CambiarEstadoObjeto(datos: any) {
+  datos.id_certificado = Number(datos.id_certificado);
+  datos.id_gestor = Number(datos.id_gestor);
+  datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+  datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+
+  this.api
+  .PutCertificados(datos)
+  .pipe(
+    map((tracks) => {
+      const exito = tracks['exito'];
+      if (exito == 1) {
+        this.ListarElementos(1);
+        this.CerrarAgregarEditarElemento();
+        this.EncerarComponentes();
+        // this.TextoFiltro.patchValue('');
+        this.alerta.RegistroActualizado();
+      } else {
+        this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+        this.ActDesControles(2);
+      }
+    }),
+    catchError((error) => {
+      this.alerta.ErrorEnLaOperacion();
+      this.ActDesControles(2);
       throw new Error(error);
     })
   )
@@ -595,6 +708,7 @@ EncerarComponentes() {
   this.ClienteInfo.patchValue('');
   this.ClienteSeleccionado = null;
   this.ResetCertificadosForms();
+  this.ResetCertificadoEditForms();
   this.loading = false;
   this.TituloFormulario = '';
   this.ActDesControles(0);
