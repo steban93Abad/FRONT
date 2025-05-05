@@ -419,6 +419,59 @@ export class CertificadosComponent implements OnInit {
     }
 
     // Guardar Certificado
+    /*
+    if (datos.ope_cod_credito && datos.id_gestor) {
+      this.api
+      .PutCertificados(datos)
+      .pipe(
+        map((tracks) => {
+          const exito = tracks['exito'];
+          if (exito == 1) {
+            this.ListarElementos(1);
+            this.CerrarAgregarEditarElemento();
+            this.EncerarComponentes();
+            // this.TextoFiltro.patchValue('');
+            this.alerta.RegistroActualizado();
+          } else {
+            this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+            this.ActDesControles(2);
+          }
+        }),
+        catchError((error) => {
+          this.alerta.ErrorEnLaOperacion();
+          this.ActDesControles(2);
+          throw new Error(error);
+        })
+      )
+      .subscribe();
+    } else {
+      this.api
+      .PostCertificado(datos)
+      .pipe(
+        map((tracks) => {
+          const exito = tracks['exito'];
+          if (exito == 1) {
+            this.ListarElementos(1);
+            this.CerrarAgregarEditarElemento();
+            this.EncerarComponentes();
+            // this.TextoFiltro.patchValue('');
+            this.alerta.CertificadoGenerado();
+          } else {
+            this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+            this.ActDesControles(0);
+          }
+        }),
+        catchError((error) => {
+          this.alerta.ErrorEnLaOperacion();
+          this.ActDesControles(0);
+          console.log(error);
+          throw new Error(error);
+        })
+      )
+      .subscribe();
+    }
+    */
+    
     this.api
     .PostCertificado(datos)
     .pipe(
@@ -443,6 +496,7 @@ export class CertificadosComponent implements OnInit {
       })
     )
     .subscribe();
+    
 }
 
 /************************************** VER ELEMENTO  ******************************************************** */
@@ -566,10 +620,37 @@ export class CertificadosComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     }
   }
 
+  /*
+  BuscarCertificadoDatos(credito: any) {
+    this.CertificadoInfo.patchValue('');
+
+    if (credito == '') {
+      this.alerta.ErrorEnLaPeticion(
+        'No ingreso ningun identificador para su busqueda'
+      );
+    } else {
+      this.api
+        .GetCertificadoFracionadoFiltro(credito, 10)
+        .pipe(
+          map((tracks) => {
+            const datos = tracks['data'];
+            this.CertificadoSeleccionado = datos;
+            this.CertificadoInfo.patchValue(datos.cert_esactivo);
+            console.log(datos);
+          }),
+          catchError((error) => {
+            this.alerta.ErrorAlRecuperarElementos();
+            throw new Error(error);
+          })
+        )
+        .subscribe();
+    }
+  }
+  */
   ListaInicio()
   {
     this.ListarElementos(1);
