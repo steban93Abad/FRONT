@@ -205,6 +205,22 @@
 
                     <div class="col-lg-4 col-12">
                       <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ope_producto" placeholder=""
+                          formControlName="ope_producto"/>
+                        <label class="truncate-text" for="ope_producto">Producto</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ope_fecha_compra" placeholder=""
+                          formControlName="ope_fecha_compra"/>
+                        <label class="truncate-text" for="ope_fecha_compra">Fecha de Compra Prod.</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="ope_estado_contacta" placeholder=""
                           formControlName="ope_estado_contacta" />
                         <label class="truncate-text" for="ope_estado_contacta">Estado Contactabilidad</label>
@@ -443,7 +459,7 @@
                 </div>
               </div>
 
-              <table class="table table-bordered table-responsive-md" *ngIf="ListaCertificados.length != 0">
+              <table class="table table-bordered table-responsive   table-auto small" *ngIf="ListaCertificados.length != 0">
                 <thead>
                   <tr>
                     <th style="width: 10px">#</th>
@@ -453,6 +469,7 @@
                     <th id="ThGestor0">Gestor</th>
                     <th id="ThCartera0">Cartera</th>
                     <th>Fec. Gestion</th>
+                    <th>Modelo</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
@@ -466,6 +483,7 @@
                     <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                     <th>{{ datos.cart_descripcion }}</th>
                     <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>
+                    <th>{{ datos.cert_modelo }}</th>
                     <th class="OcultarMax450px ContenidoCentrado" *ngIf="LecturaEscritura != 0">
                       <div class="custom-switch">
                           <input type="checkbox" class="custom-control-input"

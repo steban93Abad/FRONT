@@ -220,8 +220,10 @@ CertificadosForms = new FormGroup({
   cli_identificacion: new FormControl(''),
   cli_nombres: new FormControl(''),
   cart_descripcion: new FormControl(''),
+  ope_producto: new FormControl(''),
   ope_estado_contacta: new FormControl(''),
   cart_fecha_compra: new FormControl(''),
+  ope_fecha_compra: new FormControl(''),
   cert_comentario: new FormControl(''),
   ges_nombres: new FormControl(''),
   gest_fecha_gestion: new FormControl('')
@@ -233,8 +235,10 @@ ResetCertificadosForms() {
     cli_identificacion: '',
     cli_nombres: '',
     cart_descripcion: '',
+    ope_producto: '',
     ope_estado_contacta: '',
     cart_fecha_compra: '',
+    ope_fecha_compra: '',
     cert_comentario: '',
     ges_nombres: '',
     gest_fecha_gestion: ''
@@ -310,6 +314,8 @@ ActDesControles(num: number) {
     this.CertificadosForms.get('cli_identificacion')?.disable();
     this.CertificadosForms.get('cli_nombres')?.disable();
     this.CertificadosForms.get('cart_descripcion')?.disable();
+    this.CertificadosForms.get('ope_producto')?.disable();
+    this.CertificadosForms.get('ope_fecha_compra')?.disable();
     this.CertificadosForms.get('ope_estado_contacta')?.disable();
     this.CertificadosForms.get('cart_fecha_compra')?.disable();
     this.CertificadosForms.get('cert_comentario')?.disable();
@@ -363,8 +369,10 @@ CargarElemento(datos: any, num: number) {
     cli_identificacion: datos.cli_identificacion,
     cli_nombres: datos.cli_nombres,
     cart_descripcion: datos.cart_descripcion,
+    ope_producto: datos.ope_producto,
     ope_estado_contacta: datos.ope_estado_contacta,
     cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
+    ope_fecha_compra: datos.ope_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.ope_fecha_compra),
     cert_comentario: datos.cert_comentario,
     ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
     gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion)
