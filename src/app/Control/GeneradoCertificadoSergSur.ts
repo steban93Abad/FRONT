@@ -64,7 +64,7 @@ export class GeneradorCertificadoSergSur {
                 /* Parrafo 1 */
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(12);
-                const texto1 = `${datos.NumModelo}., mediante contrato celebrado con Almacenes ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en la que se adquirió la cartera de crédito con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que constaba como deudor/a el/la Señor/a ${datos.Nombres} con la Operación N° ${datos.CodCredito} de fecha ${datos.FechaCompraCred}.`;
+                const texto1 = `${datos.NumModelo}., mediante contrato celebrado con ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en la que se adquirió la cartera de crédito con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que constaba como deudor/a el/la Señor/a ${datos.Nombres} con la Operación N° ${datos.CodCredito} de fecha ${datos.FechaCompraCred}.`;
 
                 /* Parrafo 2 */
                 const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por el crédito N° ${datos.CodCredito} por el artículo ${datos.Producto}.`;
@@ -78,7 +78,7 @@ export class GeneradorCertificadoSergSur {
                 /* texto1 - Negrita */
                 const maxWidth = 451;
                 const xInicial = 75;
-                let y = 300;
+                let y = 305;
 
                 // Dividir el texto completo en partes
                 const partes = texto1.split(palabraNegrita);
@@ -152,7 +152,7 @@ export class GeneradorCertificadoSergSur {
                 /* texto2 - Negrita */
                 const maxWidthTexto2 = 451;
                 const xInicialTexto2 = 75;
-                let yTexto2 = 400;
+                let yTexto2 = 399;
 
                 // Dividir el texto completo en partes
                 const partesTexto2 = texto2.split(palabraNegrita);
