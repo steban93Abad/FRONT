@@ -550,7 +550,7 @@ export class CertificadosComponent implements OnInit {
               this.CertificadoSeleccionado = datos;
               this.CertificadoInfo.patchValue(datos.cert_esdescargado);
               this.mostrarBtnImprimir = (datos.cert_esdescargado == 0);
-              this.alerta.MensajePersonalizado("Certificado Descargado","No se puede descargar este certificado otra vez. Vaya al menu y descargue en Descargar Certificado.", 0);
+              this.alerta.MensajePersonalizado("Certificado Descargado","No se puede descargar este certificado otra vez.", 0);
             }
             console.log(datos);
           }),
