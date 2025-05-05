@@ -446,8 +446,6 @@ export class clsCertificado implements CertificadoI {
   cert_gestor_in: string;
   cert_gestor_up: string;
   cert_gestor_rem: string;
-  cert_gestor_act: string;
-  cert_gestor_desact: string;
   cert_fecha_act: Date;
   cert_fecha_desact: Date;
   cert_fecha_in: Date;
@@ -466,8 +464,6 @@ export class clsCertificado implements CertificadoI {
     this.cert_gestor_in = '';
     this.cert_gestor_up = '';
     this.cert_gestor_rem = '';
-    this.cert_gestor_act = '';
-    this.cert_gestor_desact = '';
     this.cert_fecha_act = new Date();
     this.cert_fecha_desact = new Date();
     this.cert_fecha_in = new Date();

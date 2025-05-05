@@ -364,7 +364,6 @@ export class CertificadosComponent implements OnInit {
       return; // Detener el proceso si no está Liquidado
     }
 
-    console.log(datos);
     // Generar Certificado
     switch (opcionDescarga) {
       case 'POLCOMP CIA. LTDA':

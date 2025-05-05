@@ -42,8 +42,6 @@ export interface CertificadoI {
   cert_gestor_in: string;
   cert_gestor_up: string;
   cert_gestor_rem: string;
-  cert_gestor_act: string;
-  cert_gestor_desact: string;
   cert_fecha_act: Date;
   cert_fecha_desact: Date;
   cert_fecha_in: Date;
