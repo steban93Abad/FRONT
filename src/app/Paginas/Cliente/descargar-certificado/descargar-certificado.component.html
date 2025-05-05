@@ -468,7 +468,7 @@
                     <th id="ThCliente0">Cliente</th>
                     <th id="ThGestor0">Gestor</th>
                     <th id="ThCartera0">Cartera</th>
-                    <th>Fec. Gestion</th>
+                    <th>Fec. Actualizacion</th>
                     <th>Modelo</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -482,7 +482,7 @@
                     <th>{{ datos.cli_nombres }}</th>
                     <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                     <th>{{ datos.cart_descripcion }}</th>
-                    <th>{{ datos.gest_fecha_gestion==null?null:fechas.fechaCorta(datos.gest_fecha_gestion) }}</th>
+                    <th>{{ datos.cert_fecha_up==null?null:fechas.fechaCorta(datos.cert_fecha_up) }}</th>
                     <th>{{ datos.cert_modelo }}</th>
                     <th class="OcultarMax450px ContenidoCentrado" *ngIf="LecturaEscritura != 0">
                       <div class="custom-switch">
