@@ -245,7 +245,9 @@ export class CertificadosComponent implements OnInit {
     cli_identificacion: new FormControl(''),
     cli_nombres: new FormControl(''),
     cart_descripcion: new FormControl(''),
+    ope_producto: new FormControl(''),
     ope_estado_contacta: new FormControl(''),
+    ope_fecha_compra: new FormControl(''),
     ope_descrip_unidad_gestion: new FormControl(''),
     cart_fecha_compra: new FormControl(''),
     gest_fecha_gestion: new FormControl(''),
@@ -259,7 +261,9 @@ export class CertificadosComponent implements OnInit {
       cli_identificacion: '',
       cli_nombres: '',
       cart_descripcion: '',
+      ope_producto: '',
       ope_estado_contacta: '',
+      ope_fecha_compra: '',
       ope_descrip_unidad_gestion: '',
       cart_fecha_compra: '',
       gest_fecha_gestion: '',
@@ -313,9 +317,11 @@ export class CertificadosComponent implements OnInit {
       this.CreditosForms.get('cli_identificacion')?.disable();
       this.CreditosForms.get('cli_nombres')?.disable();
       this.CreditosForms.get('cart_descripcion')?.disable();
+      this.CreditosForms.get('ope_producto')?.disable();
       this.CreditosForms.get('ope_estado_contacta')?.disable();
       this.CreditosForms.get('ope_descrip_unidad_gestion')?.disable();
       this.CreditosForms.get('cart_fecha_compra')?.disable();
+      this.CreditosForms.get('ope_fecha_compra')?.disable();
       this.CreditosForms.get('ges_nombres')?.disable();
       this.CreditosForms.get('gest_fecha_gestion')?.disable();
       this.CertificadoForms.get('cert_modelo')?.disable();
@@ -450,6 +456,8 @@ export class CertificadosComponent implements OnInit {
       cart_descripcion: datos.cart_descripcion,
       ope_estado_contacta: datos.ope_estado_contacta,
       ope_descrip_unidad_gestion: datos.ope_descrip_unidad_gestion,
+      ope_fecha_compra: datos.ope_fecha_compra,
+      ope_producto: datos.ope_producto,
       cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
       ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
       gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion),
@@ -472,7 +480,6 @@ export class CertificadosComponent implements OnInit {
       cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
       ope_fecha_compra: datos.ope_fecha_compra == null?'': this.fechas.fechaCorta(datos.ope_fecha_compra),
       ope_producto: datos.ope_producto
-      //cert_modelo: datos.cert_modelo.toString()
     });
     if (num != 1) {
       this.BuscarCertificado(datos.ope_cod_credito);
