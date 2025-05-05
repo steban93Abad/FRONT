@@ -148,14 +148,14 @@ export class GeneradorCertificado {
                 }
                 
                 // Firma
-                doc.addImage(firma, 'PNG', 235, 540, 120, 60); // Ajustar tamaño según resolución real
+                doc.addImage(firma, 'PNG', 236, 540, 120, 60); // Ajustar tamaño según resolución real
                 doc.setFontSize(12);
-                doc.text('MA. PAZ GOMEZCOELLO SERRANO', 187, 610);
+                doc.text('MA. PAZ GOMEZCOELLO SERRANO', 188, 610);
 
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(12);
-                doc.text('REPRESENTANTE LEGAL', 215, 630);
-                doc.text('POLCOMP CIA. LTDA', 225, 650
+                doc.text('REPRESENTANTE LEGAL', 219, 625);
+                doc.text('POLCOMP CIA. LTDA', 232, 640
 
                 );
             

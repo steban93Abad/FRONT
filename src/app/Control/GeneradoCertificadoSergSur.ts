@@ -65,21 +65,23 @@ export class GeneradorCertificadoSergSur {
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(12);
                 const texto1 = `${datos.NumModelo}., mediante contrato celebrado con Almacenes ${datos.CarteraNom}, con fecha ${datos.FechaCompra}, en la que se adquirió la cartera de crédito con todos los derechos, garantías y facultades inherentes a la calidad de acreedor, en la que constaba como deudor/a el/la Señor/a ${datos.Nombres} con la Operación N° ${datos.CodCredito} de fecha ${datos.FechaCompraCred}.`;
-                doc.text(doc.splitTextToSize(texto1, 400), 75, 315, {maxWidth: 445, align: "justify"});
 
                 /* Parrafo 2 */
                 const texto2 = `A petición de la parte interesada certifico que el/la Señor/a ${datos.Nombres} con C.I. ${datos.Identificacion}, ha realizado la cancelación total de su obligación por el crédito N° ${datos.CodCredito} por el artículo ${datos.Producto}.`;
-                doc.text(doc.splitTextToSize(texto2, 400), 75, 415, {maxWidth: 445, align: "justify"});
-
+                
                 /* Parrafo 3 */
-                const textoCompleto = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para ${datos.NumModelo}., ni para ninguno de sus funcionarios.`;
-                const palabraNegrita = `${datos.NumModelo}.`;
-                const maxWidth = 450;
+                const texto3 = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para ${datos.NumModelo}., ni para ninguno de sus funcionarios.`;
+                doc.text(doc.splitTextToSize(texto3, 400), 75, 465, {maxWidth: 445, align: "justify"});
+                
+                const palabraNegrita = `${datos.Nombres}`;
+                
+                /* texto1 - Negrita */
+                const maxWidth = 451;
                 const xInicial = 75;
-                let y = 485;
+                let y = 300;
 
                 // Dividir el texto completo en partes
-                const partes = textoCompleto.split(palabraNegrita);
+                const partes = texto1.split(palabraNegrita);
 
                 const secciones: { texto: string, negrita: boolean }[] = [];
                 if (partes[0]) secciones.push({ texto: partes[0], negrita: false });
@@ -146,6 +148,80 @@ export class GeneradorCertificadoSergSur {
                         x += doc.getTextWidth(p.texto);
                     });
                 }
+                
+                /* texto2 - Negrita */
+                const maxWidthTexto2 = 451;
+                const xInicialTexto2 = 75;
+                let yTexto2 = 400;
+
+                // Dividir el texto completo en partes
+                const partesTexto2 = texto2.split(palabraNegrita);
+
+                const seccionesTexto2: { texto2: string, negrita: boolean }[] = [];
+                if (partesTexto2[0]) seccionesTexto2.push({ texto2: partesTexto2[0], negrita: false });
+                seccionesTexto2.push({ texto2: palabraNegrita, negrita: true });
+                if (partesTexto2[1]) seccionesTexto2.push({ texto2: partesTexto2[1], negrita: false });
+
+                // Crear una lista de palabras con su atributo de negrita
+                const palabrasTexto2: { texto2: string, negrita: boolean }[] = [];
+                seccionesTexto2.forEach(seccionTexto2 => {
+                    seccionTexto2.texto2.split(' ').forEach((word, idx, arr) => {
+                        let palabraTexto2 = word;
+                        if (idx !== arr.length - 1) {
+                        palabraTexto2 += ' '; // agregar espacio solo si no es la última palabra
+                        }
+                        palabrasTexto2.push({ texto2: palabraTexto2, negrita: seccionTexto2.negrita });
+                    });
+                });
+
+                let linea2: { texto2: string, negrita: boolean }[] = [];
+
+                palabrasTexto2.forEach((palabraTexto2, index) => {
+                // Calcular ancho de la línea actual
+                const anchoLineaActualTexto2 = linea2.reduce((acc, p) => {
+                    doc.setFont('helvetica', p.negrita ? 'bold' : 'normal');
+                    return acc + doc.getTextWidth(p.texto2);
+                }, 0);
+
+                // Calcular ancho de la palabra nueva
+                doc.setFont('helvetica', palabraTexto2.negrita ? 'bold' : 'normal');
+                const anchoPalabraTexto2 = doc.getTextWidth(palabraTexto2.texto2);
+
+                if (anchoLineaActualTexto2 + anchoPalabraTexto2 > maxWidthTexto2 && linea2.length > 0) {
+                    // Escribir línea justificada
+                    const totalEspacioExtraTexto2 = maxWidthTexto2 - anchoLineaActualTexto2;
+                    const espaciosTexto2 = linea2.length - 1;
+                    const espacioExtraPorPalabraTexto2 = espaciosTexto2 > 0 ? totalEspacioExtraTexto2 / espaciosTexto2 : 0;
+
+                    let xTexto2 = xInicialTexto2;
+
+                    linea2.forEach((p, idx) => {
+                    doc.setFont('helvetica', p.negrita ? 'bold' : 'normal');
+                    doc.text(p.texto2.trim(), xTexto2, yTexto2);
+                    const anchoTexto2 = doc.getTextWidth(p.texto2);
+                    if (idx !== linea2.length - 1) {
+                        xTexto2 += anchoTexto2 + espacioExtraPorPalabraTexto2;
+                    }
+                    });
+
+                    // Nueva línea
+                    yTexto2 += 15;
+                    linea2 = [];
+                }
+
+                    // Agregar palabra a la línea
+                    linea2.push(palabraTexto2);
+                });
+
+                // Escribir la última línea (sin justificado, alineado normal)
+                if (linea2.length > 0) {
+                    let x2 = xInicialTexto2;
+                    linea2.forEach(p => {
+                        doc.setFont('helvetica', p.negrita ? 'bold' : 'normal');
+                        doc.text(p.texto2.trim(), x2, yTexto2);
+                        x2 += doc.getTextWidth(p.texto2);
+                    });
+                }
 
                 // Firma
                 doc.addImage(firma, 'PNG', 235, 540, 120, 60); // Ajustar tamaño según resolución real
@@ -154,13 +230,13 @@ export class GeneradorCertificadoSergSur {
 
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(12);
-                doc.text('REPRESENTANTE LEGAL', 223, 642);
-                doc.text(`${datos.NumModelo}`, 226, 665
+                doc.text('REPRESENTANTE LEGAL', 223, 635);
+                doc.text(`${datos.NumModelo}`, 226, 650
 
                 );
 
                 // Pie de página
-                doc.addImage(pie, 'PNG', -10, 710, 645, 130); // parte inferior de la hoja A4
+                doc.addImage(pie, 'PNG', -10, 715, 645, 130); // parte inferior de la hoja A4
 
                 // Descargar PDF
                 const pdf = doc.output('blob');
