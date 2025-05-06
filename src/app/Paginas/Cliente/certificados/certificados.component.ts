@@ -361,13 +361,15 @@ export class CertificadosComponent implements OnInit {
     datos.cert_esdescargado = datos.cert_esdescargado.toString() === 'true' ? '1' : '0';
     datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
 
-    // Verificar si el estado de contactabilidad es Liquidado
+    // Verifica si el estado de contactabilidad es Liquidado
     const estadoContactabilidad = this.CreditosForms.get('ope_estado_contacta')?.value;
+    
+    // Se muestra el modelo de formato para descargar el ceritificado
     const opcionDescarga = this.CertificadoForms.get('cert_modelo')?.value;
 
     if (estadoContactabilidad !== 'LIQUIDADO') {
       this.alerta.ErrorEnLaPeticion('No se puede generar el certificado. El estado de contactabilidad debe ser "LIQUIDADO".');
-      return; // Detener el proceso si no está Liquidado
+      return; // Detiene el proceso si no está Liquidado
     }
 
     // Generar Certificado
