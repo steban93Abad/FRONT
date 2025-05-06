@@ -71,7 +71,7 @@ export class GeneradorCertificadoSergSur {
                 
                 /* Parrafo 3 */
                 const texto3 = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para ${datos.NumModelo}., ni para ninguno de sus funcionarios.`;
-                doc.text(doc.splitTextToSize(texto3, 400), 75, 480, {maxWidth: 445, align: "justify"});
+                //doc.text(doc.splitTextToSize(texto3, 400), 75, 480, {maxWidth: 445, align: "justify"});
                 
                 const palabraNegrita = `${datos.Nombres}`;
                 
@@ -222,18 +222,21 @@ export class GeneradorCertificadoSergSur {
                         x2 += doc.getTextWidth(p.texto2);
                     });
                 }
+               
+                // Nuevo y dinámico para texto3
+                const yTexto3 = yTexto2 + 35; // Ajuste flexible después del texto2
+                const texto3Partes = doc.splitTextToSize(texto3, 400);
+                doc.text(texto3Partes, 75, yTexto3, { maxWidth: 445, align: 'justify' });
 
                 // Firma
-                doc.addImage(firma, 'PNG', 235, 550, 120, 60); // Ajustar tamaño según resolución real
+                doc.addImage(firma, 'PNG', 235, 560, 120, 60); // Ajustar tamaño según resolución real
                 doc.setFontSize(12);
-                doc.text('MARÍA EUGENIA VICUÑA', 225, 620);
+                doc.text('MARÍA EUGENIA VICUÑA', 225, 630);
 
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(12);
-                doc.text('REPRESENTANTE LEGAL', 223, 635);
-                doc.text(`${datos.NumModelo}`, 226, 650
-
-                );
+                doc.text('REPRESENTANTE LEGAL', 223, 645);
+                doc.text(`${datos.NumModelo}`, 226, 660);
 
                 // Pie de página
                 doc.addImage(pie, 'PNG', -10, 715, 645, 130); // parte inferior de la hoja A4
