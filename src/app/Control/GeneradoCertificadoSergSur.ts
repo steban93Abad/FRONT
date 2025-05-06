@@ -71,7 +71,7 @@ export class GeneradorCertificadoSergSur {
                 
                 /* Parrafo 3 */
                 const texto3 = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para ${datos.NumModelo}., ni para ninguno de sus funcionarios.`;
-                doc.text(doc.splitTextToSize(texto3, 400), 75, 460, {maxWidth: 445, align: "justify"});
+                doc.text(doc.splitTextToSize(texto3, 400), 75, 480, {maxWidth: 445, align: "justify"});
                 
                 const palabraNegrita = `${datos.Nombres}`;
                 
@@ -152,7 +152,7 @@ export class GeneradorCertificadoSergSur {
                 /* texto2 - Negrita */
                 const maxWidthTexto2 = 451;
                 const xInicialTexto2 = 75;
-                let yTexto2 = 399;
+                let yTexto2 = 400;
 
                 // Dividir el texto completo en partes
                 const partesTexto2 = texto2.split(palabraNegrita);
@@ -224,7 +224,7 @@ export class GeneradorCertificadoSergSur {
                 }
 
                 // Firma
-                doc.addImage(firma, 'PNG', 235, 540, 120, 60); // Ajustar tamaño según resolución real
+                doc.addImage(firma, 'PNG', 235, 550, 120, 60); // Ajustar tamaño según resolución real
                 doc.setFontSize(12);
                 doc.text('MARÍA EUGENIA VICUÑA', 225, 620);
 
