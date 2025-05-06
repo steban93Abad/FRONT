@@ -71,7 +71,7 @@ export class GeneradorCertificadoSergSur {
                 
                 /* Parrafo 3 */
                 const texto3 = `El cliente puede hacer uso del presente certificado en la forma que más convenga a sus intereses y sin responsabilidad para ${datos.NumModelo}., ni para ninguno de sus funcionarios.`;
-                doc.text(doc.splitTextToSize(texto3, 400), 75, 465, {maxWidth: 445, align: "justify"});
+                doc.text(doc.splitTextToSize(texto3, 400), 75, 460, {maxWidth: 445, align: "justify"});
                 
                 const palabraNegrita = `${datos.Nombres}`;
                 
