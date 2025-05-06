@@ -525,7 +525,6 @@ ActualizarObjetoCertificado(datos: any) {
         this.CerrarAgregarEditarElemento();
         this.EncerarComponentes();
         // this.TextoFiltro.patchValue('');
-        this.alerta.RegistroActualizado();
       } else {
         this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
         this.ActDesControles(2);
