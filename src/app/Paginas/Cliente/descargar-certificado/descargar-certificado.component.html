@@ -7,613 +7,613 @@
       <div class="container-fluid">
         <div class="card card-default">
 
-           <!-- BARRA PRINCIPAL Y FILTROS DE BUSQUEDA -->
-           <section class="horizontal-center" *ngIf="TituloFormulario == ''">
-            <form [formGroup]="BuscarForms">
-              <div class="card-header" style="background-color: var(--color-formulario-primario)">
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="identificacion" placeholder=""
-                            formControlName="identificacion">
-                        <label class="truncate-text" for="identificacion">Cédula/Ruc/Pasaporte</label>
-                    </div>
+          <!-- BARRA PRINCIPAL Y FILTROS DE BUSQUEDA -->
+          <section class="horizontal-center" *ngIf="TituloFormulario == ''">
+          <form [formGroup]="BuscarForms">
+            <div class="card-header" style="background-color: var(--color-formulario-primario)">
+              <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                  <div class="form-floating">
+                      <input type="text" class="form-control" id="identificacion" placeholder=""
+                          formControlName="identificacion">
+                      <label class="truncate-text" for="identificacion">Cédula/Ruc/Pasaporte</label>
                   </div>
-                  <div class="col-lg-3 col-md-5 col-sm-6 col-12 mt-2">
-                    <button type="button" class="btnBuscar  ml-2" (click)="GetFiltrarElemento(BuscarForms.value)"><i
-                            class="fa-solid fa-magnifying-glass"></i>&nbsp;Buscar</button>
-                    <button type="button" class="btnLimpiar ml-2" (click)="ResetBuscarClienteForms()"><i
-                            class="fa-solid fa-trash-can"></i></button>
-                  </div>
-                  <div class="col">
-                    <div class="row  justify-content-end">
-                      <div class="col">
-                        <div class="btn-group float-right" role="group">
-                          <button class="btnFilter collapsed" type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#MasParametrosBusqueda" aria-expanded="false"
-                            aria-controls="MasParametrosBusqueda">
-                            <i class="bi bi-funnel"></i>
-                          </button>
-                          <button class="btnHome ml-2" type="button" (click)="ListaInicio()"><i
-                            class="fa-solid fa-house"></i></button>
-                        </div>
+                </div>
+                <div class="col-lg-3 col-md-5 col-sm-6 col-12 mt-2">
+                  <button type="button" class="btnBuscar  ml-2" (click)="GetFiltrarElemento(BuscarForms.value)"><i
+                          class="fa-solid fa-magnifying-glass"></i>&nbsp;Buscar</button>
+                  <button type="button" class="btnLimpiar ml-2" (click)="ResetBuscarClienteForms()"><i
+                          class="fa-solid fa-trash-can"></i></button>
+                </div>
+                <div class="col">
+                  <div class="row  justify-content-end">
+                    <div class="col">
+                      <div class="btn-group float-right" role="group">
+                        <button class="btnFilter collapsed" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#MasParametrosBusqueda" aria-expanded="false"
+                          aria-controls="MasParametrosBusqueda">
+                          <i class="bi bi-funnel"></i>
+                        </button>
+                        <button class="btnHome ml-2" type="button" (click)="ListaInicio()"><i
+                          class="fa-solid fa-house"></i></button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </form>
-           </section>
-           <section class="horizontal-center" *ngIf="TituloFormulario == ''">
+            </div>
+          </form>
+          </section>
+          <section class="horizontal-center" *ngIf="TituloFormulario == ''">
             <form [formGroup]="BuscarForms">
-                <div class="row">
-                    <div class="accordion" id="AcordionParametrosBus">
-                        <div class="accordion-item">
+              <div class="row">
+                  <div class="accordion" id="AcordionParametrosBus">
+                      <div class="accordion-item">
 
-                            <div id="MasParametrosBusqueda" class="accordion-collapse collapse"
-                                data-bs-parent="#AcordionParametrosBus">
-                                <div class="accordion-body">
-                                    <div class="row">
-                                        <div class="col-md-3 col-12">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="nombres_cliente"
-                                                    placeholder="" formControlName="nombres_cliente">
-                                                <label class="truncate-text"
-                                                    for="nombres_cliente">Nombres</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="form-group">
-                                                <span title="Cantidad de meses sin credito">Cartera</span>
-
-                                                <select style="height: 35px;" class="form-select"
-                                                    formControlName="cartera">
-                                                    <option *ngIf="CarteraGestor.length == 0" disabled>
-                                                        Cargando
-                                                        ...
-                                                    </option>
-                                                    <option [value]="0">Todas</option>
-                                                    <option *ngFor="let s of CarteraGestor"
-                                                        [value]="s.cart_id">
-                                                        {{s.cart_descripcion+' '+s.cart_tip_descripcion}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="form-group">
-                                                <span title="Cantidad de meses sin credito">Gestor</span>
-
-                                                <select style="height: 35px;" class="form-select"
-                                                    (click)="ListaGestores.length == 0?ListarGestores():null"
-                                                    formControlName="gestor">
-                                                    <option *ngIf="ListaGestores.length == 0" disabled>
-                                                        Cargando...
-                                                    </option>
-                                                    <option [value]="0">Todos</option>
-                                                    <option *ngFor="let s of ListaGestores"
-                                                        [value]="s.id_gestor">
-                                                        {{s.ges_nombres+' '+s.ges_apellidos}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="form-floating mb-3">
-                                                <input type="date" class="form-control small"
-                                                    id="fecha_inicial" placeholder=""
-                                                    formControlName="fecha_inicial">
-                                                <label class="truncate-text" for="fecha_inicial">Fecha
-                                                    Inicial</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="form-floating mb-3">
-                                                <input type="date" class="form-control small"
-                                                    id="fecha_final" placeholder=""
-                                                    formControlName="fecha_final">
-                                                <label class="truncate-text" for="fecha_final">Fecha
-                                                    Final</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                          <div class="btn-group ml-2" role="group"
-                                              aria-label="Basic example">
-                                              <div class="custom-control custom-checkbox">
-                                                  <input class="custom-control-input" type="checkbox"
-                                                      formControlName="estado"
-                                                      id="chkEstado" value="0" checked="false">
-                                                  <label class="truncate-text" for="chkEstado"
-                                                      class="custom-control-label">Estado</label>
-                                              </div>
+                          <div id="MasParametrosBusqueda" class="accordion-collapse collapse"
+                              data-bs-parent="#AcordionParametrosBus">
+                              <div class="accordion-body">
+                                  <div class="row">
+                                      <div class="col-md-3 col-12">
+                                          <div class="form-floating">
+                                              <input type="text" class="form-control" id="nombres_cliente"
+                                                  placeholder="" formControlName="nombres_cliente">
+                                              <label class="truncate-text"
+                                                  for="nombres_cliente">Nombres</label>
                                           </div>
                                       </div>
+                                      <div class="col-md-3 col-6">
+                                          <div class="form-group">
+                                              <span title="Cantidad de meses sin credito">Cartera</span>
 
+                                              <select style="height: 35px;" class="form-select"
+                                                  formControlName="cartera">
+                                                  <option *ngIf="CarteraGestor.length == 0" disabled>
+                                                      Cargando
+                                                      ...
+                                                  </option>
+                                                  <option [value]="0">Todas</option>
+                                                  <option *ngFor="let s of CarteraGestor"
+                                                      [value]="s.cart_id">
+                                                      {{s.cart_descripcion+' '+s.cart_tip_descripcion}}
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3 col-6">
+                                          <div class="form-group">
+                                              <span title="Cantidad de meses sin credito">Gestor</span>
+
+                                              <select style="height: 35px;" class="form-select"
+                                                  (click)="ListaGestores.length == 0?ListarGestores():null"
+                                                  formControlName="gestor">
+                                                  <option *ngIf="ListaGestores.length == 0" disabled>
+                                                      Cargando...
+                                                  </option>
+                                                  <option [value]="0">Todos</option>
+                                                  <option *ngFor="let s of ListaGestores"
+                                                      [value]="s.id_gestor">
+                                                      {{s.ges_nombres+' '+s.ges_apellidos}}
+                                                  </option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3 col-6">
+                                          <div class="form-floating mb-3">
+                                              <input type="date" class="form-control small"
+                                                  id="fecha_inicial" placeholder=""
+                                                  formControlName="fecha_inicial">
+                                              <label class="truncate-text" for="fecha_inicial">Fecha
+                                                  Inicial</label>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3 col-6">
+                                          <div class="form-floating mb-3">
+                                              <input type="date" class="form-control small"
+                                                  id="fecha_final" placeholder=""
+                                                  formControlName="fecha_final">
+                                              <label class="truncate-text" for="fecha_final">Fecha
+                                                  Final</label>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3 col-6">
+                                        <div class="btn-group ml-2" role="group"
+                                            aria-label="Basic example">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox"
+                                                    formControlName="estado"
+                                                    id="chkEstado" value="0" checked="false">
+                                                <label class="truncate-text" for="chkEstado"
+                                                    class="custom-control-label">Estado</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
 
-                    </div>
-
-
-                </div>
-            </form>
-        </section>
-
-           <!-- FORMULARIO PARA VER ELEMENTOS -->
-           <section class="vertical-center" *ngIf="TituloFormulario != ''">
-            <div class="card-body" style="background-color: var(--color-formulario-secundario)">
-              <!-- INFORMACIÓN -->
-              <div class="card-header" style="background-color: var(--color-formulario-primario)">
-                <button type="button" (click)="CerrarAgregarEditarElemento()" class="btn btn-close float-right"></button>
-                <h2 class="Centrar">
-                  Información
-                </h2>
-              </div>
-              <div class="card-body" style="background-color: var(--color-formulario-secundario)">
-                <form [formGroup]="CertificadosForms">
-                  <div class="row">
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
-                          formControlName="ope_cod_credito"/>
-                        <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="row mb-3">
-                        <div class="col-lg-8 col-12">
-                          <div class="form-floating">
-                            <input type="text" class="form-control" id="cli_identificacion" placeholder=""
-                            formControlName="cli_identificacion" (keyup)="ClienteInfo.patchValue('')"/>
-                          <label class="truncate-text"
-                            for="cli_identificacion">Cedula/Ruc/Pasaporte</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="row mb-3">
-                        <div class="col-lg-10 col-9">
-                          <div class="form-floating">
-                            <input type="text" class="form-control" id="clinombres" placeholder="" [formControl]="ClienteInfo"/>
-                            <label class="truncate-text" for="clinombres">Nombres</label>
-                          </div>
-                        </div>
-                        <div class="col-lg-2 col-2">
-                          <small>
-                            <button type="button" class="btnVer" *ngIf="LecturaEscritura != 0" [disabled]="ClienteInfo.value == ''"
-                            (click)="VerCliente()">
-                              <i class="fa-solid fa-eye"></i>
-                            </button>
-                          </small>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="cart_descripcion" placeholder=""
-                          formControlName="cart_descripcion"/>
-                        <label class="truncate-text" for="cart_descripcion">Cartera</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="ope_producto" placeholder=""
-                          formControlName="ope_producto"/>
-                        <label class="truncate-text" for="ope_producto">Producto</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="ope_fecha_compra" placeholder=""
-                          formControlName="ope_fecha_compra"/>
-                        <label class="truncate-text" for="ope_fecha_compra">Fecha de Compra Prod.</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="ope_estado_contacta" placeholder=""
-                          formControlName="ope_estado_contacta" />
-                        <label class="truncate-text" for="ope_estado_contacta">Estado Contactabilidad</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="cart_fecha_compra" placeholder=""
-                          formControlName="cart_fecha_compra" />
-                        <label class="truncate-text" for="cart_fecha_compra">Fecha de Compra de Cartera</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="ges_nombres" placeholder=""
-                          formControlName="ges_nombres" />
-                        <label class="truncate-text" for="ges_nombres">Gestor</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="gest_fecha_gestion" placeholder=""
-                          formControlName="gest_fecha_gestion" />
-                        <label class="truncate-text" for="gest_fecha_gestion">Fecha de Gestion</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                          <input type="text" class="form-control" id="cert_fecha_act"
-                              placeholder="" formControlName="cert_fecha_act">
-                          <label class="truncate-text" for="cert_fecha_act">Fecha de Activación</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                          <input type="text" class="form-control" id="cert_fecha_desact"
-                              placeholder="" formControlName="cert_fecha_desact">
-                          <label class="truncate-text" for="cert_fecha_desact">Fecha de Desactivación</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                          <input type="text" class="form-control" id="cert_fecha_in" placeholder=""
-                              formControlName="cert_fecha_in">
-                          <label class="truncate-text" for="cert_fecha_in">Fecha de Descarga</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="cert_fecha_up" placeholder=""
-                                formControlName="cert_fecha_up">
-                            <label class="truncate-text" for="cert_fecha_up">Fecha de Actualización</label>
-                        </div>
-                    </div>
-
-                  </div>
-                </form>
-              </div>
-
-              <!-- DESCARGAR CERTIFICADO FORMULARIO -->
-              <div class="card-header" style="background-color: var(--color-formulario-primario);" hidden>
-                <h2 class="Centrar">Descargar Certificado</h2>
-              </div>
-
-              <div class="card-body" style="background-color: var(--color-formulario-secundario)">
-                <form [formGroup]="DatosForms">
-                  <div class="row">
-
-                    <div class="col-lg-4 col-12" hidden>
-                      <div class="form-floating mb-3">
-                          <input type="text" class="form-control" id="id_gestor" placeholder=""
-                              formControlName="id_gestor">
-                          <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
-                          <Section>
-                            <div class="error-message" *ngIf="DatosForms.get('id_gestor')?.hasError('required')
-                            && DatosForms.get('id_gestor')?.touched">
-                                <span style="color: brown;">*Campo obligatorio.</span>
-                            </div>
-                          </Section>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12" hidden>
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
-                          formControlName="ope_cod_credito"/>
-                        <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
-                        <Section>
-                          <div class="error-message" *ngIf="DatosForms.get('ope_cod_credito')?.hasError('required')
-                          && DatosForms.get('ope_cod_credito')?.touched">
-                            <span style="color: brown;">*Campo obligatorio.</span>
-                          </div>
-                          <div class="error-message"
-                            *ngIf="DatosForms.get('ope_cod_credito')?.value != ''
-                                            ? validar.V_AlfaNumerico(DatosForms.get('ope_cod_credito')?.value!)  === false:null ">
-                            <span style="color: brown;">*Caracteres no permitidos</span>
-                          </div>
-                        </Section>
-                      </div>
-                    </div>
-
-                    <div class="col-md-2 col-12">
-                      <div class="form-group">
-                          <span><small>*</small>Modelo</span>
-                          <select style="height: 35px;" class="form-select"
-                          formControlName="cert_modelo">
-                              <option value="" disabled selected>
-                                Seleccione ...
-                              </option>
-                              <option *ngFor="let s of ModeloEmpresa"
-                                  [value]="s.name">
-                                  {{s.name}}
-                              </option>
-                          </select>
-                          <Section>
-                            <div class="error-message" *ngIf="DatosForms.get('cert_modelo')?.hasError('required')
-                            && DatosForms.get('cert_modelo')?.touched">
-                                <span style="color: brown;">*Campo obligatorio.</span>
-                            </div>
-                        </Section>
-                      </div>
-                    </div>
-
-                  </div>
-                </form>
-              </div>
-
-              <!-- DESCARGAR CERTIFICADO FORMULARIO - CAMBIAR ESTADO -->
-              <div class="card-header" style="background-color: var(--color-formulario-primario);" hidden>
-                <h2 class="Centrar">Cambiar Estado</h2>
-              </div>
-
-              <div class="card-body" style="background-color: var(--color-formulario-secundario)">
-                <form [formGroup]="CertificadoEditForms">
-                  <div class="row">
-
-                    <div class="col-lg-4 col-12" hidden>
-                      <div class="form-floating mb-3">
-                          <input type="text" class="form-control" id="id_certificado" placeholder=""
-                              formControlName="id_certificado">
-                          <label class="truncate-text" for="id_certificado"><small>*</small>Id Certificado</label>
-                          <Section>
-                            <div class="error-message" *ngIf="CertificadoEditForms.get('id_certificado')?.hasError('required')
-                            && CertificadoEditForms.get('id_certificado')?.touched">
-                                <span style="color: brown;">*Campo obligatorio.</span>
-                            </div>
-                          </Section>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12" hidden>
-                      <div class="form-floating mb-3">
-                          <input type="text" class="form-control" id="id_gestor" placeholder=""
-                              formControlName="id_gestor">
-                          <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
-                          <Section>
-                            <div class="error-message" *ngIf="CertificadoEditForms.get('id_gestor')?.hasError('required')
-                            && CertificadoEditForms.get('id_gestor')?.touched">
-                                <span style="color: brown;">*Campo obligatorio.</span>
-                            </div>
-                          </Section>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12" hidden>
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
-                          formControlName="ope_cod_credito"/>
-                        <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
-                        <Section>
-                          <div class="error-message" *ngIf="CertificadoEditForms.get('ope_cod_credito')?.hasError('required')
-                          && CertificadoEditForms.get('ope_cod_credito')?.touched">
-                            <span style="color: brown;">*Campo obligatorio.</span>
-                          </div>
-                          <div class="error-message"
-                            *ngIf="CertificadoEditForms.get('ope_cod_credito')?.value != ''
-                                            ? validar.V_AlfaNumerico(CertificadoEditForms.get('ope_cod_credito')?.value!)  === false:null ">
-                            <span style="color: brown;">*Caracteres no permitidos</span>
-                          </div>
-                        </Section>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="cert_comentario" placeholder=""
-                          formControlName="cert_comentario" />
-                        <label class="truncate-text" for="cert_comentario">Comentario</label>
-                      </div>
-                    </div>
-
-                    <!-- <div class="col-lg-4 col-12">
-                      <div class="Centrar">
-                          <div class="btn-group">
-                              <div class="form-group">
-                                  <label class="truncate-text" for="cert_esactivo">Estado</label>&nbsp;
-                                  <div class="custom-control custom-switch Centrar"
-                                      title="Estado">
-                                      <input type="checkbox" class="custom-control-input"
-                                          formControlName="cert_esactivo" name="estado"
-                                          id="cert_esactivo">
-                                      <label class="custom-control-label"
-                                          for="cert_esactivo">{{CertificadoEditForms.get('cert_esactivo')!.value
-                                          == false ?
-                                          'Inactivo' : 'Activo'}}</label>
                                   </div>
                               </div>
                           </div>
                       </div>
-                    </div> -->
 
                   </div>
-                </form>
+
+
               </div>
+          </form>
+        </section>
 
-              <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
-                <div class="row Centrar">
-                  <small>
-
-                    <!-- <button class="btnAceptar ml-3"
-                      (click)="CambiarEstadoObjeto(CertificadoEditForms.value)">
-                      Cambiar Estado
-                    </button> -->
-
-                    <button class="btnImprimir ml-3"
-                      (click)="GuardarObjeto(DatosForms.value);ActualizarObjetoCertificado(CertificadoEditForms.value);">
-                      Imprimir
-                    </button>
-
-                    <button class="btnCancelar ml-3" (click)="CerrarAgregarEditarElemento()">
-                      Cancelar
-                    </button>
-                  </small>
-                </div>
-              </div>
+        <!-- FORMULARIO PARA VER ELEMENTOS -->
+        <section class="vertical-center" *ngIf="TituloFormulario != ''">
+          <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+            <!-- INFORMACIÓN -->
+            <div class="card-header" style="background-color: var(--color-formulario-primario)">
+              <button type="button" (click)="CerrarAgregarEditarElemento()" class="btn btn-close float-right"></button>
+              <h2 class="Centrar">
+                Información
+              </h2>
             </div>
-           </section>
-
-           <!-- FORMULARIO PARA LISTAR ELEMENTOS -->
-           <section class="expand-bottom" *ngIf="TituloFormulario == ''">
-            <div class="card-body" style="background-color: var(--color-formulario-secundario)" *ngIf="!loading;
-              else loadingOrError">
-              <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
-              *ngIf="ListaCertificados.length != 0">
-                <div class="float-right clearfix">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <button type="button" class="btn btnOk btn-sm dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
-                        <label id="lblFiltro0"></label>
-                      </button>
-                      <ul class="dropdown-menu" x-placement="top-start">
-                        <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Identificacion', 0)">
-                          <a>Identificación</a>
-                        </li>
-                        <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Nombres', 0)">
-                          <a>Nombres</a>
-                        </li>
-                        <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cod. Credito', 0)">
-                          <a>Cod. Credito</a>
-                        </li>
-                        <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cartera', 0)">
-                          <a>Cartera</a>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <input type="text" id="TxtFiltro0" (keyup)="FiltrarLista(0, 0)"
-                      class="form-control form-control-sm" />
-
-                    <div class="input-group-append">
-                      <button type="button" class="btn btnOk btn-sm" (click)="VaciarFiltro(0)">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <table class="table table-bordered table-responsive   table-auto small" *ngIf="ListaCertificados.length != 0">
-                <thead>
-                  <tr>
-                    <th style="width: 10px">#</th>
-                    <th id="ThCodCredito0">Cod. Credito</th>
-                    <th id="ThIdentificacion0">Identificacion</th>
-                    <th id="ThCliente0">Cliente</th>
-                    <th id="ThGestor0">Gestor</th>
-                    <th id="ThCartera0">Cartera</th>
-                    <th>Fec. Descarga</th>
-                    <th>Modelo</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let datos of DatosCargaMasiva; let i = index">
-                    <th>{{InicioPaginacion + i + 1}}</th>
-                    <th>{{ datos.ope_cod_credito }}</th>
-                    <th>{{ datos.cli_identificacion }}</th>
-                    <th>{{ datos.cli_nombres }}</th>
-                    <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
-                    <th>{{ datos.cart_descripcion }}</th>
-                    <th>{{ datos.cert_fecha_in==null?null:fechas.fechaCorta(datos.cert_fecha_in) }}</th>
-                    <th>{{ datos.cert_modelo }}</th>
-                    <th class="OcultarMax450px ContenidoCentrado" *ngIf="LecturaEscritura != 0">
-                      <div class="custom-switch">
-                          <input type="checkbox" class="custom-control-input"
-                              id="idEstado_{{datos.id_certificado}}"
-                              [checked]="datos.cert_esactivo==='1'?true:false" name="estado"
-                              (change)="ActualizaEstado(datos)">
-                          <label class="custom-control-label"
-                              for="idEstado_{{datos.id_certificado}}"></label>
-                      </div>
-                  </th>
-                    <th>
-                      <div class="btn-group" role="group">
-                        <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoDato(datos, 3);CargarCertificadoElementoDato(datos, 3)">
-                          <i class="fa-regular fa-eye"></i>
-                        </button>
-                        <button *ngIf="LecturaEscritura != 0" class="ml-2 btnEliminar"
-                          (click)="EliminarElemento(datos)">
-                        <i class="bi bi-trash"></i></button>
-                      </div>
-                    </th>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-
-            <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
-              *ngIf="ListaCertificados.length != 0">
+            <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+              <form [formGroup]="CertificadosForms">
                 <div class="row">
-                  <div class="col-lg-2 col-6">
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
+                        formControlName="ope_cod_credito"/>
+                      <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="row mb-3">
+                      <div class="col-lg-8 col-12">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="cli_identificacion" placeholder=""
+                          formControlName="cli_identificacion" (keyup)="ClienteInfo.patchValue('')"/>
+                        <label class="truncate-text"
+                          for="cli_identificacion">Cedula/Ruc/Pasaporte</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="row mb-3">
+                      <div class="col-lg-10 col-9">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" id="clinombres" placeholder="" [formControl]="ClienteInfo"/>
+                          <label class="truncate-text" for="clinombres">Nombres</label>
+                        </div>
+                      </div>
+                      <div class="col-lg-2 col-2">
+                        <small>
+                          <button type="button" class="btnVer" *ngIf="LecturaEscritura != 0" [disabled]="ClienteInfo.value == ''"
+                          (click)="VerCliente()">
+                            <i class="fa-solid fa-eye"></i>
+                          </button>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="cart_descripcion" placeholder=""
+                        formControlName="cart_descripcion"/>
+                      <label class="truncate-text" for="cart_descripcion">Cartera</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="ope_producto" placeholder=""
+                        formControlName="ope_producto"/>
+                      <label class="truncate-text" for="ope_producto">Producto</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="ope_fecha_compra" placeholder=""
+                        formControlName="ope_fecha_compra"/>
+                      <label class="truncate-text" for="ope_fecha_compra">Fecha de Compra Prod.</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="ope_estado_contacta" placeholder=""
+                        formControlName="ope_estado_contacta" />
+                      <label class="truncate-text" for="ope_estado_contacta">Estado Contactabilidad</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="cart_fecha_compra" placeholder=""
+                        formControlName="cart_fecha_compra" />
+                      <label class="truncate-text" for="cart_fecha_compra">Fecha de Compra de Cartera</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="ges_nombres" placeholder=""
+                        formControlName="ges_nombres" />
+                      <label class="truncate-text" for="ges_nombres">Gestor</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="gest_fecha_gestion" placeholder=""
+                        formControlName="gest_fecha_gestion" />
+                      <label class="truncate-text" for="gest_fecha_gestion">Fecha de Gestion</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cert_fecha_act"
+                            placeholder="" formControlName="cert_fecha_act">
+                        <label class="truncate-text" for="cert_fecha_act">Fecha de Activación</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cert_fecha_desact"
+                            placeholder="" formControlName="cert_fecha_desact">
+                        <label class="truncate-text" for="cert_fecha_desact">Fecha de Desactivación</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="cert_fecha_in" placeholder=""
+                            formControlName="cert_fecha_in">
+                        <label class="truncate-text" for="cert_fecha_in">Fecha de Descarga</label>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="cert_fecha_up" placeholder=""
+                              formControlName="cert_fecha_up">
+                          <label class="truncate-text" for="cert_fecha_up">Fecha de Actualización</label>
+                      </div>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+
+            <!-- DESCARGAR CERTIFICADO FORMULARIO -->
+            <div class="card-header" style="background-color: var(--color-formulario-primario);" hidden>
+              <h2 class="Centrar">Descargar Certificado</h2>
+            </div>
+
+            <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+              <form [formGroup]="DatosForms">
+                <div class="row">
+
+                  <div class="col-lg-4 col-12" hidden>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="id_gestor" placeholder=""
+                            formControlName="id_gestor">
+                        <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
+                        <Section>
+                          <div class="error-message" *ngIf="DatosForms.get('id_gestor')?.hasError('required')
+                          && DatosForms.get('id_gestor')?.touched">
+                              <span style="color: brown;">*Campo obligatorio.</span>
+                          </div>
+                        </Section>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12" hidden>
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
+                        formControlName="ope_cod_credito"/>
+                      <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
+                      <Section>
+                        <div class="error-message" *ngIf="DatosForms.get('ope_cod_credito')?.hasError('required')
+                        && DatosForms.get('ope_cod_credito')?.touched">
+                          <span style="color: brown;">*Campo obligatorio.</span>
+                        </div>
+                        <div class="error-message"
+                          *ngIf="DatosForms.get('ope_cod_credito')?.value != ''
+                                          ? validar.V_AlfaNumerico(DatosForms.get('ope_cod_credito')?.value!)  === false:null ">
+                          <span style="color: brown;">*Caracteres no permitidos</span>
+                        </div>
+                      </Section>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 col-12">
+                    <div class="form-group">
+                        <span><small>*</small>Modelo</span>
+                        <select style="height: 35px;" class="form-select"
+                        formControlName="cert_modelo">
+                            <option value="" disabled selected>
+                              Seleccione ...
+                            </option>
+                            <option *ngFor="let s of ModeloEmpresa"
+                                [value]="s.name">
+                                {{s.name}}
+                            </option>
+                        </select>
+                        <Section>
+                          <div class="error-message" *ngIf="DatosForms.get('cert_modelo')?.hasError('required')
+                          && DatosForms.get('cert_modelo')?.touched">
+                              <span style="color: brown;">*Campo obligatorio.</span>
+                          </div>
+                      </Section>
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+
+            <!-- DESCARGAR CERTIFICADO FORMULARIO - CAMBIAR ESTADO -->
+            <div class="card-header" style="background-color: var(--color-formulario-primario);" hidden>
+              <h2 class="Centrar">Cambiar Estado</h2>
+            </div>
+
+            <div class="card-body" style="background-color: var(--color-formulario-secundario)">
+              <form [formGroup]="CertificadoEditForms">
+                <div class="row">
+
+                  <div class="col-lg-4 col-12" hidden>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="id_certificado" placeholder=""
+                            formControlName="id_certificado">
+                        <label class="truncate-text" for="id_certificado"><small>*</small>Id Certificado</label>
+                        <Section>
+                          <div class="error-message" *ngIf="CertificadoEditForms.get('id_certificado')?.hasError('required')
+                          && CertificadoEditForms.get('id_certificado')?.touched">
+                              <span style="color: brown;">*Campo obligatorio.</span>
+                          </div>
+                        </Section>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12" hidden>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="id_gestor" placeholder=""
+                            formControlName="id_gestor">
+                        <label class="truncate-text" for="id_gestor"><small>*</small>Id Gestor</label>
+                        <Section>
+                          <div class="error-message" *ngIf="CertificadoEditForms.get('id_gestor')?.hasError('required')
+                          && CertificadoEditForms.get('id_gestor')?.touched">
+                              <span style="color: brown;">*Campo obligatorio.</span>
+                          </div>
+                        </Section>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12" hidden>
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="ope_cod_credito" placeholder=""
+                        formControlName="ope_cod_credito"/>
+                      <label class="truncate-text" for="ope_cod_credito">Codigo de credito</label>
+                      <Section>
+                        <div class="error-message" *ngIf="CertificadoEditForms.get('ope_cod_credito')?.hasError('required')
+                        && CertificadoEditForms.get('ope_cod_credito')?.touched">
+                          <span style="color: brown;">*Campo obligatorio.</span>
+                        </div>
+                        <div class="error-message"
+                          *ngIf="CertificadoEditForms.get('ope_cod_credito')?.value != ''
+                                          ? validar.V_AlfaNumerico(CertificadoEditForms.get('ope_cod_credito')?.value!)  === false:null ">
+                          <span style="color: brown;">*Caracteres no permitidos</span>
+                        </div>
+                      </Section>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="cert_comentario" placeholder=""
+                        formControlName="cert_comentario" />
+                      <label class="truncate-text" for="cert_comentario">Comentario</label>
+                    </div>
+                  </div>
+
+                  <!-- <div class="col-lg-4 col-12">
+                    <div class="Centrar">
+                        <div class="btn-group">
+                            <div class="form-group">
+                                <label class="truncate-text" for="cert_esactivo">Estado</label>&nbsp;
+                                <div class="custom-control custom-switch Centrar"
+                                    title="Estado">
+                                    <input type="checkbox" class="custom-control-input"
+                                        formControlName="cert_esactivo" name="estado"
+                                        id="cert_esactivo">
+                                    <label class="custom-control-label"
+                                        for="cert_esactivo">{{CertificadoEditForms.get('cert_esactivo')!.value
+                                        == false ?
+                                        'Inactivo' : 'Activo'}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div> -->
+
+                </div>
+              </form>
+            </div>
+
+            <div class="card-footer" style="background-color: var(--color-formulario-terciario)">
+              <div class="row Centrar">
+                <small>
+
+                  <!-- <button class="btnAceptar ml-3"
+                    (click)="CambiarEstadoObjeto(CertificadoEditForms.value)">
+                    Cambiar Estado
+                  </button> -->
+
+                  <button class="btnImprimir ml-3"
+                    (click)="GuardarObjeto(DatosForms.value);ActualizarObjetoCertificado(CertificadoEditForms.value);">
+                    Imprimir
+                  </button>
+
+                  <button class="btnCancelar ml-3" (click)="CerrarAgregarEditarElemento()">
+                    Cancelar
+                  </button>
+                </small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FORMULARIO PARA LISTAR ELEMENTOS -->
+        <section class="expand-bottom" *ngIf="TituloFormulario == ''">
+          <div class="card-body" style="background-color: var(--color-formulario-secundario)" *ngIf="!loading;
+            else loadingOrError">
+            <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
+            *ngIf="ListaCertificados.length != 0">
+              <div class="float-right clearfix">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <button type="button" class="btn btnOk btn-sm dropdown-toggle" data-toggle="dropdown"
+                      aria-expanded="false">
+                      <label id="lblFiltro0"></label>
+                    </button>
+                    <ul class="dropdown-menu" x-placement="top-start">
+                      <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Identificacion', 0)">
+                        <a>Identificación</a>
+                      </li>
+                      <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Nombres', 0)">
+                        <a>Nombres</a>
+                      </li>
+                      <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cod. Credito', 0)">
+                        <a>Cod. Credito</a>
+                      </li>
+                      <li class="dropdown-item" style="cursor: pointer" (click)="FiltrarPor('Cartera', 0)">
+                        <a>Cartera</a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <input type="text" id="TxtFiltro0" (keyup)="FiltrarLista(0, 0)"
+                    class="form-control form-control-sm" />
+
+                  <div class="input-group-append">
+                    <button type="button" class="btn btnOk btn-sm" (click)="VaciarFiltro(0)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <table class="table table-bordered table-responsive   table-auto small" *ngIf="ListaCertificados.length != 0">
+              <thead>
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th id="ThCodCredito0">Cod. Credito</th>
+                  <th id="ThIdentificacion0">Identificacion</th>
+                  <th id="ThCliente0">Cliente</th>
+                  <th id="ThGestor0">Gestor</th>
+                  <th id="ThCartera0">Cartera</th>
+                  <th>Fec. Descarga</th>
+                  <th>Modelo</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let datos of DatosCargaMasiva; let i = index">
+                  <th>{{InicioPaginacion + i + 1}}</th>
+                  <th>{{ datos.ope_cod_credito }}</th>
+                  <th>{{ datos.cli_identificacion }}</th>
+                  <th>{{ datos.cli_nombres }}</th>
+                  <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
+                  <th>{{ datos.cart_descripcion }}</th>
+                  <th>{{ datos.cert_fecha_in==null?null:fechas.fechaCorta(datos.cert_fecha_in) }}</th>
+                  <th>{{ datos.cert_modelo }}</th>
+                  <th class="OcultarMax450px ContenidoCentrado" *ngIf="LecturaEscritura != 0">
+                    <div class="custom-switch">
+                        <input type="checkbox" class="custom-control-input"
+                            id="idEstado_{{datos.id_certificado}}"
+                            [checked]="datos.cert_esactivo==='1'?true:false" name="estado"
+                            (change)="ActualizaEstado(datos)">
+                        <label class="custom-control-label"
+                            for="idEstado_{{datos.id_certificado}}"></label>
+                    </div>
+                </th>
+                  <th>
+                    <div class="btn-group" role="group">
+                      <button class="btnVer" (click)="CargarElemento(datos, 3);CargarElementoDato(datos, 3);CargarCertificadoElementoDato(datos, 3)">
+                        <i class="fa-regular fa-eye"></i>
+                      </button>
+                      <button *ngIf="LecturaEscritura != 0" class="ml-2 btnEliminar"
+                        (click)="EliminarElemento(datos)">
+                      <i class="bi bi-trash"></i></button>
+                    </div>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="card-footer" style="background-color: var(--color-formulario-terciario)"
+            *ngIf="ListaCertificados.length != 0">
+              <div class="row">
+                <div class="col-lg-2 col-6">
+                  <p>
+                    Total<strong>&nbsp;{{ ContadorDatosGeneral }}</strong>
+                  </p>
+                </div>
+                <div class="col-lg-2 col-6">
+                  <div *ngIf="ContadorDatosGeneral != ContadorDatos">
                     <p>
-                      Total<strong>&nbsp;{{ ContadorDatosGeneral }}</strong>
+                      Resultado Filtro<strong>&nbsp;{{ ContadorDatos }}</strong>
                     </p>
                   </div>
-                  <div class="col-lg-2 col-6">
-                    <div *ngIf="ContadorDatosGeneral != ContadorDatos">
-                      <p>
-                        Resultado Filtro<strong>&nbsp;{{ ContadorDatos }}</strong>
-                      </p>
-                    </div>
+                </div>
+                <div class="col-lg-2 col-6">
+                  <div>
+                    <p>
+                      Elementos<strong>&nbsp;{{ InicioPaginacion + 1 }}</strong>-<strong>&nbsp;{{ InicioPaginacion +
+                        RangoPaginacion }}</strong>
+                    </p>
                   </div>
-                  <div class="col-lg-2 col-6">
-                    <div>
-                      <p>
-                        Elementos<strong>&nbsp;{{ InicioPaginacion + 1 }}</strong>-<strong>&nbsp;{{ InicioPaginacion +
-                          RangoPaginacion }}</strong>
-                      </p>
-                    </div>
-                  </div>
-                  <div class="col-lg-2 col-6">
-                    <!-- <p>Grupo<strong>&nbsp;1</strong>-<strong>&nbsp;10</strong></p> -->
-                  </div>
-                <div class="col-lg-4 col-12">
-                  <div class="form-group">
-                    <div class="float-right">
-                      <small>
-                        <button (click)="
-                            InicioPaginacion == 0
-                              ? BtnPrevious(0)
-                              : BtnPrevious(0)
-                          " *ngIf="FraccionDatos !== 0 || InicioPaginacion !== 0" type="button" class="BtnNextPrevious"
-                          aria-label="" style="display: inline-block">
-                          <i class="bi bi-arrow-left-circle"></i> Anterior
-                        </button>
+                </div>
+                <div class="col-lg-2 col-6">
+                  <!-- <p>Grupo<strong>&nbsp;1</strong>-<strong>&nbsp;10</strong></p> -->
+                </div>
+              <div class="col-lg-4 col-12">
+                <div class="form-group">
+                  <div class="float-right">
+                    <small>
+                      <button (click)="
+                          InicioPaginacion == 0
+                            ? BtnPrevious(0)
+                            : BtnPrevious(0)
+                        " *ngIf="FraccionDatos !== 0 || InicioPaginacion !== 0" type="button" class="BtnNextPrevious"
+                        aria-label="" style="display: inline-block">
+                        <i class="bi bi-arrow-left-circle"></i> Anterior
+                      </button>
 
-                        <button *ngIf="
-                            InicioPaginacion + RangoPaginacion <
-                              ContadorDatos || ContadorDatos == RangoDatos
-                          " (click)="
-                            InicioPaginacion + RangoPaginacion == ContadorDatos
-                              ? BtnNext(0)
-                              : BtnNext(0)
-                          " type="button" class="BtnNextPrevious ml-2" aria-label="" style="display: inline-block">
-                          Siguiente <i class="bi bi-arrow-right-circle"></i>
-                        </button>
-                      </small>
-                    </div>
+                      <button *ngIf="
+                          InicioPaginacion + RangoPaginacion <
+                            ContadorDatos || ContadorDatos == RangoDatos
+                        " (click)="
+                          InicioPaginacion + RangoPaginacion == ContadorDatos
+                            ? BtnNext(0)
+                            : BtnNext(0)
+                        " type="button" class="BtnNextPrevious ml-2" aria-label="" style="display: inline-block">
+                        Siguiente <i class="bi bi-arrow-right-circle"></i>
+                      </button>
+                    </small>
                   </div>
                 </div>
               </div>
             </div>
-           </section>
+          </div>
+        </section>
 
         </div>
       </div>

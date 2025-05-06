@@ -162,9 +162,9 @@ export class DescargarCertificadoComponent implements OnInit {
       })
     )
     .subscribe();
-  }
+}
 
-  GetFiltrarElemento(datos: any) {
+GetFiltrarElemento(datos: any) {
     let filtro: FiltroCertificado = {
       identificacion: (datos.identificacion.trim() == ''
         ? '0'
@@ -211,418 +211,418 @@ export class DescargarCertificadoComponent implements OnInit {
       .subscribe();
   }
 
-/************************************** AGREGAR ELEMENTO  ******************************************************** */
-TituloFormulario = '';
-ClienteInfo = new FormControl({ value: '', disabled: true });
+  /************************************** AGREGAR ELEMENTO  ******************************************************** */
+  TituloFormulario = '';
+  ClienteInfo = new FormControl({ value: '', disabled: true });
 
-CertificadosForms = new FormGroup({
-  ope_cod_credito: new FormControl(''),
-  cli_identificacion: new FormControl(''),
-  cli_nombres: new FormControl(''),
-  cart_descripcion: new FormControl(''),
-  ope_producto: new FormControl(''),
-  ope_estado_contacta: new FormControl(''),
-  cart_fecha_compra: new FormControl(''),
-  ope_fecha_compra: new FormControl(''),
-  ges_nombres: new FormControl(''),
-  gest_fecha_gestion: new FormControl(''),
-  cert_fecha_act: new FormControl(this.fechas.fecha()),
-  cert_fecha_desact: new FormControl(this.fechas.fecha()),
-  cert_fecha_in: new FormControl(this.fechas.fecha()),
-  cert_fecha_up: new FormControl(this.fechas.fecha()),
-});
-
-ResetCertificadosForms() {
-  this.CertificadosForms.reset({
-    ope_cod_credito: '',
-    cli_identificacion: '',
-    cli_nombres: '',
-    cart_descripcion: '',
-    ope_producto: '',
-    ope_estado_contacta: '',
-    cart_fecha_compra: '',
-    ope_fecha_compra: '',
-    ges_nombres: '',
-    gest_fecha_gestion: '',
-    cert_fecha_act: this.fechas.fecha(),
-    cert_fecha_desact: this.fechas.fecha(),
-    cert_fecha_in: this.fechas.fecha(),
-    cert_fecha_up: this.fechas.fecha(),
+  CertificadosForms = new FormGroup({
+    ope_cod_credito: new FormControl(''),
+    cli_identificacion: new FormControl(''),
+    cli_nombres: new FormControl(''),
+    cart_descripcion: new FormControl(''),
+    ope_producto: new FormControl(''),
+    ope_estado_contacta: new FormControl(''),
+    cart_fecha_compra: new FormControl(''),
+    ope_fecha_compra: new FormControl(''),
+    ges_nombres: new FormControl(''),
+    gest_fecha_gestion: new FormControl(''),
+    cert_fecha_act: new FormControl(this.fechas.fecha()),
+    cert_fecha_desact: new FormControl(this.fechas.fecha()),
+    cert_fecha_in: new FormControl(this.fechas.fecha()),
+    cert_fecha_up: new FormControl(this.fechas.fecha()),
   });
-}
 
-DatosForms = new FormGroup({
-  id_certificado: new FormControl(0),
-  id_gestor: new FormControl(0, Validators.required),
-  ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
-  cli_identificacion: new FormControl(''),
-  cli_nombres: new FormControl(''),
-  cart_descripcion: new FormControl(''),
-  cart_fecha_compra: new FormControl(''),
-  ope_fecha_compra: new FormControl(''),
-  ope_producto: new FormControl(''),
-  //cert_modelo: new FormControl('', Validators.required),
-  cert_modelo: new FormControl('', Validators.required),
-  gest_fecha_gestion: new FormControl(''),
-  cert_hist_esactivo: new FormControl(true),
-  cert_hist_baseactual: new FormControl(true),
-  cert_hist_origendatos: new FormControl('Sistema_CobroSys')
-});
+  ResetCertificadosForms() {
+    this.CertificadosForms.reset({
+      ope_cod_credito: '',
+      cli_identificacion: '',
+      cli_nombres: '',
+      cart_descripcion: '',
+      ope_producto: '',
+      ope_estado_contacta: '',
+      cart_fecha_compra: '',
+      ope_fecha_compra: '',
+      ges_nombres: '',
+      gest_fecha_gestion: '',
+      cert_fecha_act: this.fechas.fecha(),
+      cert_fecha_desact: this.fechas.fecha(),
+      cert_fecha_in: this.fechas.fecha(),
+      cert_fecha_up: this.fechas.fecha(),
+    });
+  }
 
-ResetDatosForms() {
-  this.DatosForms.reset({
-    id_certificado: 0,
-    id_gestor: 0,
-    ope_cod_credito: '',
-    cli_identificacion: '',
-    cli_nombres: '',
-    cart_descripcion: '',
-    cart_fecha_compra: '',
-    ope_fecha_compra: '',
-    ope_producto: '',
-    cert_modelo: '',
-    gest_fecha_gestion: '',
-    cert_hist_esactivo: true,
-    cert_hist_baseactual: true,
-    cert_hist_origendatos: 'Sistema_CobroSys'
+  DatosForms = new FormGroup({
+    id_certificado: new FormControl(0),
+    id_gestor: new FormControl(0, Validators.required),
+    ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
+    cli_identificacion: new FormControl(''),
+    cli_nombres: new FormControl(''),
+    cart_descripcion: new FormControl(''),
+    cart_fecha_compra: new FormControl(''),
+    ope_fecha_compra: new FormControl(''),
+    ope_producto: new FormControl(''),
+    //cert_modelo: new FormControl('', Validators.required),
+    cert_modelo: new FormControl('', Validators.required),
+    gest_fecha_gestion: new FormControl(''),
+    cert_hist_esactivo: new FormControl(true),
+    cert_hist_baseactual: new FormControl(true),
+    cert_hist_origendatos: new FormControl('Sistema_CobroSys')
   });
-}
 
-CertificadoEditForms = new FormGroup({
-  id_certificado: new FormControl(0, Validators.required),
-  id_gestor: new FormControl(0, Validators.required),
-  ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
-  cert_comentario: new FormControl(''),
-  cert_esactivo: new FormControl(true),
-  cert_baseactual: new FormControl(true),
-  cert_origendatos: new FormControl('Sistema_CobroSys')
-});
+  ResetDatosForms() {
+    this.DatosForms.reset({
+      id_certificado: 0,
+      id_gestor: 0,
+      ope_cod_credito: '',
+      cli_identificacion: '',
+      cli_nombres: '',
+      cart_descripcion: '',
+      cart_fecha_compra: '',
+      ope_fecha_compra: '',
+      ope_producto: '',
+      cert_modelo: '',
+      gest_fecha_gestion: '',
+      cert_hist_esactivo: true,
+      cert_hist_baseactual: true,
+      cert_hist_origendatos: 'Sistema_CobroSys'
+    });
+  }
 
-ResetCertificadoEditForms() {
-  this.CertificadoEditForms.reset({
-    id_certificado: 0,
-    id_gestor: 0,
-    ope_cod_credito: '',
-    cert_comentario: '',
-    cert_esactivo: true,
-    cert_origendatos: 'Sistema_CobroSys'
+  CertificadoEditForms = new FormGroup({
+    id_certificado: new FormControl(0, Validators.required),
+    id_gestor: new FormControl(0, Validators.required),
+    ope_cod_credito: new FormControl('', [Validators.required,this.validar.VFN_AlfaNumerico()]),
+    cert_comentario: new FormControl(''),
+    cert_esactivo: new FormControl(true),
+    cert_baseactual: new FormControl(true),
+    cert_origendatos: new FormControl('Sistema_CobroSys')
   });
-}
 
-CerrarAgregarEditarElemento() {
-  this.EncerarComponentes();
-}
-
-ActDesControles(num: number) {
-  if (num === 0) {
-    //inactivos
-    this.CertificadosForms.get('id_certificado')?.disable();
-    this.CertificadosForms.get('ope_cod_credito')?.disable();
-    this.CertificadosForms.get('cli_identificacion')?.disable();
-    this.CertificadosForms.get('cli_nombres')?.disable();
-    this.CertificadosForms.get('cart_descripcion')?.disable();
-    this.CertificadosForms.get('ope_producto')?.disable();
-    this.CertificadosForms.get('ope_fecha_compra')?.disable();
-    this.CertificadosForms.get('ope_estado_contacta')?.disable();
-    this.CertificadosForms.get('cart_fecha_compra')?.disable();
-    this.CertificadosForms.get('ges_nombres')?.disable();
-    this.CertificadosForms.get('gest_fecha_gestion')?.disable();
-    this.CertificadosForms.get('cert_fecha_act')?.disable();
-    this.CertificadosForms.get('cert_fecha_desact')?.disable();
-    this.CertificadosForms.get('cert_fecha_in')?.disable();
-    this.CertificadosForms.get('cert_fecha_up')?.disable();
+  ResetCertificadoEditForms() {
+    this.CertificadoEditForms.reset({
+      id_certificado: 0,
+      id_gestor: 0,
+      ope_cod_credito: '',
+      cert_comentario: '',
+      cert_esactivo: true,
+      cert_origendatos: 'Sistema_CobroSys'
+    });
   }
-  if (num === 2) {
-    //edicion
-    this.CertificadosForms.get('ope_cod_credito')?.enable();
-    this.CertificadosForms.get('id_gestor')?.enable();
-    this.CertificadosForms.get('cert_hist_esactivo')?.enable();
-    this.CertificadosForms.get('cert_hist_baseactual')?.enable();
-    this.CertificadosForms.get('cert_hist_origendatos').enable();
+
+  CerrarAgregarEditarElemento() {
+    this.EncerarComponentes();
   }
-}
 
-AgregarEditarElemento(num: number) {
-  if (num === 2) {
-    this.ActDesControles(0);
-    this.TituloFormulario = 'Imprimir';
-    this.ActDesControles(2);
-  }
-  if (num === 3) {
-    this.TituloFormulario = 'Visualizar';
-    this.ActDesControles(0);
-  }
-}
-
-/************************************** EDITAR ELEMENTO  ******************************************************** */
-
-ActualizaEstado(elemento: CertificadoI) {
-  elemento.cert_esactivo = (elemento.cert_esactivo == '1' ? 0 : 1).toString();
-  this.api.PutCertificados(elemento).subscribe((x) => this.ListarElementos(1));
-}
-
-EliminarElemento(elemento: CertificadoI) {
-  this.alerta.EliminarRegistro().then((confirmado) => {
-    if (confirmado) {
-      elemento.cert_esactivo = '3';
-      this.api.PutCertificados(elemento).subscribe((x) => {
-        this.ListarElementos(1);
-        this.alerta.RegistroEliminado();
-      });
+  ActDesControles(num: number) {
+    if (num === 0) {
+      //inactivos
+      this.CertificadosForms.get('id_certificado')?.disable();
+      this.CertificadosForms.get('ope_cod_credito')?.disable();
+      this.CertificadosForms.get('cli_identificacion')?.disable();
+      this.CertificadosForms.get('cli_nombres')?.disable();
+      this.CertificadosForms.get('cart_descripcion')?.disable();
+      this.CertificadosForms.get('ope_producto')?.disable();
+      this.CertificadosForms.get('ope_fecha_compra')?.disable();
+      this.CertificadosForms.get('ope_estado_contacta')?.disable();
+      this.CertificadosForms.get('cart_fecha_compra')?.disable();
+      this.CertificadosForms.get('ges_nombres')?.disable();
+      this.CertificadosForms.get('gest_fecha_gestion')?.disable();
+      this.CertificadosForms.get('cert_fecha_act')?.disable();
+      this.CertificadosForms.get('cert_fecha_desact')?.disable();
+      this.CertificadosForms.get('cert_fecha_in')?.disable();
+      this.CertificadosForms.get('cert_fecha_up')?.disable();
     }
-  });
-}
-
-CargarElemento(datos: any, num: number) {
-  this.CertificadosForms.patchValue({
-    ope_cod_credito: datos.ope_cod_credito,
-    cli_identificacion: datos.cli_identificacion,
-    cli_nombres: datos.cli_nombres,
-    cart_descripcion: datos.cart_descripcion,
-    ope_producto: datos.ope_producto,
-    ope_estado_contacta: datos.ope_estado_contacta,
-    cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
-    ope_fecha_compra: datos.ope_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.ope_fecha_compra),
-    ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
-    gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion),
-    cert_fecha_act: this.fechas.fechaFormato(datos.cert_fecha_act),
-    cert_fecha_desact: this.fechas.fechaFormato(datos.cert_fecha_desact),
-    cert_fecha_in: this.fechas.fechaFormato(datos.cert_fecha_in),
-    cert_fecha_up: this.fechas.fechaFormato(datos.cert_fecha_up)
-  });
-  if (num != 1) {
-    this.BuscarCliente(datos.cli_identificacion);
+    if (num === 2) {
+      //edicion
+      this.CertificadosForms.get('ope_cod_credito')?.enable();
+      this.CertificadosForms.get('id_gestor')?.enable();
+      this.CertificadosForms.get('cert_hist_esactivo')?.enable();
+      this.CertificadosForms.get('cert_hist_baseactual')?.enable();
+      this.CertificadosForms.get('cert_hist_origendatos').enable();
+    }
   }
 
-  this.AgregarEditarElemento(num);
-}
+  AgregarEditarElemento(num: number) {
+    if (num === 2) {
+      this.ActDesControles(0);
+      this.TituloFormulario = 'Imprimir';
+      this.ActDesControles(2);
+    }
+    if (num === 3) {
+      this.TituloFormulario = 'Visualizar';
+      this.ActDesControles(0);
+    }
+  }
 
-CargarElementoDato(datos: any, num: number) {
-  this.DatosForms.patchValue({
-    id_certificado: datos.id_certificado,
-    id_gestor: datos.id_gestor,
-    ope_cod_credito: datos.ope_cod_credito,
-    cli_identificacion: datos.cli_identificacion,
-    cli_nombres: datos.cli_nombres,
-    cart_descripcion: datos.cart_descripcion,
-    cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
-    ope_fecha_compra: datos.ope_fecha_compra == null?'': this.fechas.fechaCorta(datos.ope_fecha_compra),
-    ope_producto: datos.ope_producto,
-    cert_modelo: datos.cert_modelo
-  });
+  /************************************** EDITAR ELEMENTO  ******************************************************** */
 
-  this.AgregarEditarElemento(num);
-}
+  ActualizaEstado(elemento: CertificadoI) {
+    elemento.cert_esactivo = (elemento.cert_esactivo == '1' ? 0 : 1).toString();
+    this.api.PutCertificados(elemento).subscribe((x) => this.ListarElementos(1));
+  }
 
-CargarCertificadoElementoDato(datos: any, num: number) {
-  this.CertificadoEditForms.patchValue({
-    id_certificado: datos.id_certificado,
-    id_gestor: datos.id_gestor,
-    ope_cod_credito: datos.ope_cod_credito,
-    cert_comentario: datos.cert_comentario,
-    cert_esactivo: datos.cert_esactivo === '1' ? true : false,
-    cert_baseactual: datos.cert_baseactual === '1' ? true : false,
-    cert_origendatos: datos.cert_origendatos
-  });
-
-  this.AgregarEditarElemento(num);
-}
-
-GuardarObjeto(datos: any) {
-  datos.cert_hist_esactivo = datos.cert_hist_esactivo.toString() === 'true' ? '1' : '0';
-  datos.cert_hist_baseactual = datos.cert_hist_baseactual.toString() === 'true' ? '1' : '0';
-
-  const opcionDescarga = this.DatosForms.get('cert_modelo')?.value;
-
-  // Generar Certificado
-  switch (opcionDescarga) {
-    case 'POLCOMP CIA. LTDA':
-      let listadoObjeto:any[] = [];
-      let ocD: any = {
-        CarteraNom: datos.cart_descripcion,
-        FechaCompra: datos.cart_fecha_compra,
-        Identificacion:datos.cli_identificacion,
-        Nombres: datos.cli_nombres,
-        CodCredito: datos.ope_cod_credito,
-        NumModelo: datos.cert_modelo
+  EliminarElemento(elemento: CertificadoI) {
+    this.alerta.EliminarRegistro().then((confirmado) => {
+      if (confirmado) {
+        elemento.cert_esactivo = '3';
+        this.api.PutCertificados(elemento).subscribe((x) => {
+          this.ListarElementos(1);
+          this.alerta.RegistroEliminado();
+        });
       }
-      listadoObjeto.push(ocD);
-      let om: generarCertificadoPDF = {
-        entidad: 'Credito', listado: listadoObjeto
-      };0
-      this.gCredito=om;
-      this.certificado.generarCertificadoPDF(this.gCredito);
-      break;
-    case 'SERVIGESUR CIA. LTDA':
-      let listadoObjeto2:any[] = [];
-      let ocD2: any = {
-        CarteraNom: datos.cart_descripcion,
-        FechaCompra: datos.cart_fecha_compra,
-        Identificacion:datos.cli_identificacion,
-        Nombres: datos.cli_nombres,
-        CodCredito: datos.ope_cod_credito,
-        FechaCompraCred: datos.ope_fecha_compra,
-        Producto: datos.ope_producto,
-        NumModelo: datos.cert_modelo
-      }
-      listadoObjeto2.push(ocD2);
-      let om2: generarCertificadoSergSurPDF = {
-        entidad: 'CreditoSerg', listado: listadoObjeto2
-      };
-      this.gCreditoSergSur=om2;
-      this.certficadoSergvSur.generarCertificadoSergSurPDF(this.gCreditoSergSur);
-      break;
-    default:
+    });
+  }
+
+  CargarElemento(datos: any, num: number) {
+    this.CertificadosForms.patchValue({
+      ope_cod_credito: datos.ope_cod_credito,
+      cli_identificacion: datos.cli_identificacion,
+      cli_nombres: datos.cli_nombres,
+      cart_descripcion: datos.cart_descripcion,
+      ope_producto: datos.ope_producto,
+      ope_estado_contacta: datos.ope_estado_contacta,
+      cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
+      ope_fecha_compra: datos.ope_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.ope_fecha_compra),
+      ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
+      gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion),
+      cert_fecha_act: this.fechas.fechaFormato(datos.cert_fecha_act),
+      cert_fecha_desact: this.fechas.fechaFormato(datos.cert_fecha_desact),
+      cert_fecha_in: this.fechas.fechaFormato(datos.cert_fecha_in),
+      cert_fecha_up: this.fechas.fechaFormato(datos.cert_fecha_up)
+    });
+    if (num != 1) {
+      this.BuscarCliente(datos.cli_identificacion);
+    }
+
+    this.AgregarEditarElemento(num);
+  }
+
+  CargarElementoDato(datos: any, num: number) {
+    this.DatosForms.patchValue({
+      id_certificado: datos.id_certificado,
+      id_gestor: datos.id_gestor,
+      ope_cod_credito: datos.ope_cod_credito,
+      cli_identificacion: datos.cli_identificacion,
+      cli_nombres: datos.cli_nombres,
+      cart_descripcion: datos.cart_descripcion,
+      cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
+      ope_fecha_compra: datos.ope_fecha_compra == null?'': this.fechas.fechaCorta(datos.ope_fecha_compra),
+      ope_producto: datos.ope_producto,
+      cert_modelo: datos.cert_modelo
+    });
+
+    this.AgregarEditarElemento(num);
+  }
+
+  CargarCertificadoElementoDato(datos: any, num: number) {
+    this.CertificadoEditForms.patchValue({
+      id_certificado: datos.id_certificado,
+      id_gestor: datos.id_gestor,
+      ope_cod_credito: datos.ope_cod_credito,
+      cert_comentario: datos.cert_comentario,
+      cert_esactivo: datos.cert_esactivo === '1' ? true : false,
+      cert_baseactual: datos.cert_baseactual === '1' ? true : false,
+      cert_origendatos: datos.cert_origendatos
+    });
+
+    this.AgregarEditarElemento(num);
+  }
+
+  GuardarObjeto(datos: any) {
+    datos.cert_hist_esactivo = datos.cert_hist_esactivo.toString() === 'true' ? '1' : '0';
+    datos.cert_hist_baseactual = datos.cert_hist_baseactual.toString() === 'true' ? '1' : '0';
+
+    const opcionDescarga = this.DatosForms.get('cert_modelo')?.value;
+
+    // Generar Certificado
+    switch (opcionDescarga) {
+      case 'POLCOMP CIA. LTDA':
+        let listadoObjeto:any[] = [];
+        let ocD: any = {
+          CarteraNom: datos.cart_descripcion,
+          FechaCompra: datos.cart_fecha_compra,
+          Identificacion:datos.cli_identificacion,
+          Nombres: datos.cli_nombres,
+          CodCredito: datos.ope_cod_credito,
+          NumModelo: datos.cert_modelo
+        }
+        listadoObjeto.push(ocD);
+        let om: generarCertificadoPDF = {
+          entidad: 'Credito', listado: listadoObjeto
+        };0
+        this.gCredito=om;
+        this.certificado.generarCertificadoPDF(this.gCredito);
+        break;
+      case 'SERVIGESUR CIA. LTDA':
+        let listadoObjeto2:any[] = [];
+        let ocD2: any = {
+          CarteraNom: datos.cart_descripcion,
+          FechaCompra: datos.cart_fecha_compra,
+          Identificacion:datos.cli_identificacion,
+          Nombres: datos.cli_nombres,
+          CodCredito: datos.ope_cod_credito,
+          FechaCompraCred: datos.ope_fecha_compra,
+          Producto: datos.ope_producto,
+          NumModelo: datos.cert_modelo
+        }
+        listadoObjeto2.push(ocD2);
+        let om2: generarCertificadoSergSurPDF = {
+          entidad: 'CreditoSerg', listado: listadoObjeto2
+        };
+        this.gCreditoSergSur=om2;
+        this.certficadoSergvSur.generarCertificadoSergSurPDF(this.gCreditoSergSur);
+        break;
+      default:
+        catchError((error) => {
+          this.alerta.ErrorEnLaOperacion();
+          this.ActDesControles(0);
+          console.log(error);
+          throw new Error(error);
+        })
+        break;
+    }
+
+    // Guardar Registro
+    this.api
+    .PostCertificadoHistorial(datos)
+    .pipe(
+      map((tracks) => {
+        const exito = tracks['exito'];
+        if (exito == 1) {
+          this.ListarElementos(1);
+          this.CerrarAgregarEditarElemento();
+          this.EncerarComponentes();
+          // this.TextoFiltro.patchValue('');
+          this.alerta.CertificadoGenerado();
+        } else {
+          this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+          this.ActDesControles(0);
+        }
+      }),
       catchError((error) => {
         this.alerta.ErrorEnLaOperacion();
         this.ActDesControles(0);
         console.log(error);
         throw new Error(error);
       })
-      break;
+    )
+    .subscribe();
   }
 
-  // Guardar Registro
-  this.api
-  .PostCertificadoHistorial(datos)
-  .pipe(
-    map((tracks) => {
-      const exito = tracks['exito'];
-      if (exito == 1) {
-        this.ListarElementos(1);
-        this.CerrarAgregarEditarElemento();
-        this.EncerarComponentes();
-        // this.TextoFiltro.patchValue('');
-        this.alerta.CertificadoGenerado();
-      } else {
-        this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
-        this.ActDesControles(0);
-      }
-    }),
-    catchError((error) => {
-      this.alerta.ErrorEnLaOperacion();
-      this.ActDesControles(0);
-      console.log(error);
-      throw new Error(error);
-    })
-  )
-  .subscribe();
-}
+  ActualizarObjetoCertificado(datos: any) {
+    datos.id_certificado = Number(datos.id_certificado);
+    datos.id_gestor = Number(datos.id_gestor);
+    datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+    datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
 
-ActualizarObjetoCertificado(datos: any) {
-  datos.id_certificado = Number(datos.id_certificado);
-  datos.id_gestor = Number(datos.id_gestor);
-  datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
-  datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
-
-  this.api
-  .PutCertificados(datos)
-  .pipe(
-    map((tracks) => {
-      const exito = tracks['exito'];
-      if (exito == 1) {
-        this.ListarElementos(1);
-        this.CerrarAgregarEditarElemento();
-        this.EncerarComponentes();
-        // this.TextoFiltro.patchValue('');
-      } else {
-        this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
-        this.ActDesControles(2);
-      }
-    }),
-    catchError((error) => {
-      this.alerta.ErrorEnLaOperacion();
-      this.ActDesControles(2);
-      throw new Error(error);
-    })
-  )
-  .subscribe(); 
-}
-
-CambiarEstadoObjeto(datos: any) {
-  datos.id_certificado = Number(datos.id_certificado);
-  datos.id_gestor = Number(datos.id_gestor);
-  datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
-  datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
-
-  this.api
-  .PutCertificados(datos)
-  .pipe(
-    map((tracks) => {
-      const exito = tracks['exito'];
-      if (exito == 1) {
-        this.ListarElementos(1);
-        this.CerrarAgregarEditarElemento();
-        this.EncerarComponentes();
-        // this.TextoFiltro.patchValue('');
-        this.alerta.RegistroActualizado();
-      } else {
-        this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
-        this.ActDesControles(2);
-      }
-    }),
-    catchError((error) => {
-      this.alerta.ErrorEnLaOperacion();
-      this.ActDesControles(2);
-      throw new Error(error);
-    })
-  )
-  .subscribe();
-}
-
-// ****************************************** OTROS ELEMENTOS ****************************************************************
-
-CarterasList: any[] = [];
-
-ListarCarteras() {
-  this.api
-    .GetCarteraFracionado(0, 0)
+    this.api
+    .PutCertificados(datos)
     .pipe(
       map((tracks) => {
-        console.log(tracks['data'])
-        this.CarterasList = tracks['data'];
+        const exito = tracks['exito'];
+        if (exito == 1) {
+          this.ListarElementos(1);
+          this.CerrarAgregarEditarElemento();
+          this.EncerarComponentes();
+          // this.TextoFiltro.patchValue('');
+        } else {
+          this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+          this.ActDesControles(2);
+        }
+      }),
+      catchError((error) => {
+        this.alerta.ErrorEnLaOperacion();
+        this.ActDesControles(2);
+        throw new Error(error);
+      })
+    )
+    .subscribe(); 
+  }
+
+  CambiarEstadoObjeto(datos: any) {
+    datos.id_certificado = Number(datos.id_certificado);
+    datos.id_gestor = Number(datos.id_gestor);
+    datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+    datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+
+    this.api
+    .PutCertificados(datos)
+    .pipe(
+      map((tracks) => {
+        const exito = tracks['exito'];
+        if (exito == 1) {
+          this.ListarElementos(1);
+          this.CerrarAgregarEditarElemento();
+          this.EncerarComponentes();
+          // this.TextoFiltro.patchValue('');
+          this.alerta.RegistroActualizado();
+        } else {
+          this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+          this.ActDesControles(2);
+        }
+      }),
+      catchError((error) => {
+        this.alerta.ErrorEnLaOperacion();
+        this.ActDesControles(2);
+        throw new Error(error);
       })
     )
     .subscribe();
-}
+  }
 
-/* Area para mostrar al cliente */
-ClienteSeleccionado!: ClienteI | null;
+  // ****************************************** OTROS ELEMENTOS ****************************************************************
 
-BuscarCliente(identificacion: any) {
-  this.ClienteInfo.patchValue('');
-  if (identificacion == '') {
-    this.alerta.ErrorEnLaPeticion(
-      'No ingreso ningun identificador para su busqueda'
-    );
-  } else {
+  CarterasList: any[] = [];
+
+  ListarCarteras() {
     this.api
-      .GetClienteFracionadoFiltro(identificacion, 10)
+      .GetCarteraFracionado(0, 0)
       .pipe(
         map((tracks) => {
-          const datos = tracks['data'];
-          if (!datos) {
-            this.alerta.NoExistenDatos();
-          } else {
-            this.ClienteSeleccionado = datos;
-            this.ClienteInfo.patchValue(datos.cli_nombres);
-          }
-          console.log(datos);
-        }),
-        catchError((error) => {
-          this.alerta.ErrorAlRecuperarElementos();
-          throw new Error(error);
+          console.log(tracks['data'])
+          this.CarterasList = tracks['data'];
         })
       )
       .subscribe();
   }
-}
 
-ListaInicio()
-{
-  this.ListarElementos(1);
-  this.ResetBuscarClienteForms();
-}
+  /* Area para mostrar al cliente */
+  ClienteSeleccionado!: ClienteI | null;
+
+  BuscarCliente(identificacion: any) {
+    this.ClienteInfo.patchValue('');
+    if (identificacion == '') {
+      this.alerta.ErrorEnLaPeticion(
+        'No ingreso ningun identificador para su busqueda'
+      );
+    } else {
+      this.api
+        .GetClienteFracionadoFiltro(identificacion, 10)
+        .pipe(
+          map((tracks) => {
+            const datos = tracks['data'];
+            if (!datos) {
+              this.alerta.NoExistenDatos();
+            } else {
+              this.ClienteSeleccionado = datos;
+              this.ClienteInfo.patchValue(datos.cli_nombres);
+            }
+            console.log(datos);
+          }),
+          catchError((error) => {
+            this.alerta.ErrorAlRecuperarElementos();
+            throw new Error(error);
+          })
+        )
+        .subscribe();
+    }
+  }
+
+  ListaInicio()
+  {
+    this.ListarElementos(1);
+    this.ResetBuscarClienteForms();
+  }
 
   ////////////////////////////////////////  PARAMETROS PARA IMPRESION   ////////////////////////////////////////////////
   ModeloEmpresa: any[] = [
@@ -759,101 +759,101 @@ ListaInicio()
     this.ResetClienteForms();
   }
 
-// ****************************************** ENCERAR COMPONENTES *****************************************************************
-EncerarComponentes() {
-  //this.CarterasList = [];
-  this.ClienteInfo.patchValue('');
-  this.ClienteSeleccionado = null;
-  this.ResetCertificadosForms();
-  this.ResetCertificadoEditForms();
-  this.loading = false;
-  this.TituloFormulario = '';
-  this.ActDesControles(0);
-}
-
-// ****************************************** PAGINACION *****************************************************************
-DatosCargaMasiva!: any[];
-DatosTemporales: any[] = [];
-ContadorDatos: number = 0;
-RangoPaginacion: number = 0;
-InicioPaginacion: number = 0;
-FinalPaginacion: number = 0;
-FraccionDatos: number = 0;
-ContadorDatosGeneral: number = 0;
-
-FraccionarValores(datos?: any, rango?: number) {
-  if (rango != null && datos != null) {
-    this.EncerarVariablesPaginacion();
-    this.ContadorDatos = datos.length;
-    this.DatosTemporales = datos;
-    this.RangoPaginacion = rango;
-    this.FinalPaginacion = rango;
-    this.DatosCargaMasiva = datos.slice(
-      this.InicioPaginacion,
-      this.FinalPaginacion
-    );
-  } else {
-    this.DatosCargaMasiva = this.DatosTemporales.slice(
-      this.InicioPaginacion,
-      this.FinalPaginacion
-    );
+  // ****************************************** ENCERAR COMPONENTES *****************************************************************
+  EncerarComponentes() {
+    //this.CarterasList = [];
+    this.ClienteInfo.patchValue('');
+    this.ClienteSeleccionado = null;
+    this.ResetCertificadosForms();
+    this.ResetCertificadoEditForms();
+    this.loading = false;
+    this.TituloFormulario = '';
+    this.ActDesControles(0);
   }
-}
 
-BtnNext(rango?: number) {
-  if (this.ModoBusqueda) {
-    if (rango != null) {
-    this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
-    this.GetFiltrarElemento(this.BuscarForms.value);
+  // ****************************************** PAGINACION *****************************************************************
+  DatosCargaMasiva!: any[];
+  DatosTemporales: any[] = [];
+  ContadorDatos: number = 0;
+  RangoPaginacion: number = 0;
+  InicioPaginacion: number = 0;
+  FinalPaginacion: number = 0;
+  FraccionDatos: number = 0;
+  ContadorDatosGeneral: number = 0;
+
+  FraccionarValores(datos?: any, rango?: number) {
+    if (rango != null && datos != null) {
+      this.EncerarVariablesPaginacion();
+      this.ContadorDatos = datos.length;
+      this.DatosTemporales = datos;
+      this.RangoPaginacion = rango;
+      this.FinalPaginacion = rango;
+      this.DatosCargaMasiva = datos.slice(
+        this.InicioPaginacion,
+        this.FinalPaginacion
+      );
+    } else {
+      this.DatosCargaMasiva = this.DatosTemporales.slice(
+        this.InicioPaginacion,
+        this.FinalPaginacion
+      );
     }
-    this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
-    this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
-    this.FraccionarValores();
-  } else {
-    // Si no es modo búsqueda, paginación normal
-    if (rango != null) {
+  }
+
+  BtnNext(rango?: number) {
+    if (this.ModoBusqueda) {
+      if (rango != null) {
       this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
-      this.ListarElementos(2);
-    }
-    this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
-    this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
-    this.FraccionarValores();
-  }
-}
-
-BtnPrevious(rango?: number) {
-  if (this.ModoBusqueda) {
-    if (rango != null) {
-      this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
       this.GetFiltrarElemento(this.BuscarForms.value);
-    }
-
-    if (this.InicioPaginacion >= this.RangoPaginacion) {
-      this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
-      this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+      }
+      this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
+      this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
       this.FraccionarValores();
-    }
-  } else {
-    if (rango != null) {
-      this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
-      this.ListarElementos(2);
-    }
-
-    if (this.InicioPaginacion >= this.RangoPaginacion) {
-      this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
-      this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+    } else {
+      // Si no es modo búsqueda, paginación normal
+      if (rango != null) {
+        this.FraccionDatos = this.FraccionDatos + this.RangoDatos;
+        this.ListarElementos(2);
+      }
+      this.InicioPaginacion = this.InicioPaginacion + this.RangoPaginacion;
+      this.FinalPaginacion = this.FinalPaginacion + this.RangoPaginacion;
       this.FraccionarValores();
     }
   }
-}
 
-EncerarVariablesPaginacion() {
-  this.ContadorDatos = 0;
-  this.RangoPaginacion = 0;
-  this.InicioPaginacion = 0;
-  this.FinalPaginacion = 0;
-  this.DatosTemporales = [];
-}
+  BtnPrevious(rango?: number) {
+    if (this.ModoBusqueda) {
+      if (rango != null) {
+        this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
+        this.GetFiltrarElemento(this.BuscarForms.value);
+      }
+
+      if (this.InicioPaginacion >= this.RangoPaginacion) {
+        this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
+        this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+        this.FraccionarValores();
+      }
+    } else {
+      if (rango != null) {
+        this.FraccionDatos = this.FraccionDatos - this.RangoDatos;
+        this.ListarElementos(2);
+      }
+
+      if (this.InicioPaginacion >= this.RangoPaginacion) {
+        this.InicioPaginacion = this.InicioPaginacion - this.RangoPaginacion;
+        this.FinalPaginacion = this.FinalPaginacion - this.RangoPaginacion;
+        this.FraccionarValores();
+      }
+    }
+  }
+
+  EncerarVariablesPaginacion() {
+    this.ContadorDatos = 0;
+    this.RangoPaginacion = 0;
+    this.InicioPaginacion = 0;
+    this.FinalPaginacion = 0;
+    this.DatosTemporales = [];
+  }
 
   /*********************  FILTRO MODO GENERAL *********************** */
   DatosTemporalesBusqueda: any[] = [];
