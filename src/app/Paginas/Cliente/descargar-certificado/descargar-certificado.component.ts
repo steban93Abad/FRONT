@@ -224,9 +224,12 @@ CertificadosForms = new FormGroup({
   ope_estado_contacta: new FormControl(''),
   cart_fecha_compra: new FormControl(''),
   ope_fecha_compra: new FormControl(''),
-  cert_comentario: new FormControl(''),
   ges_nombres: new FormControl(''),
-  gest_fecha_gestion: new FormControl('')
+  gest_fecha_gestion: new FormControl(''),
+  cert_fecha_act: new FormControl(this.fechas.fecha()),
+  cert_fecha_desact: new FormControl(this.fechas.fecha()),
+  cert_fecha_in: new FormControl(this.fechas.fecha()),
+  cert_fecha_up: new FormControl(this.fechas.fecha()),
 });
 
 ResetCertificadosForms() {
@@ -239,9 +242,12 @@ ResetCertificadosForms() {
     ope_estado_contacta: '',
     cart_fecha_compra: '',
     ope_fecha_compra: '',
-    cert_comentario: '',
     ges_nombres: '',
-    gest_fecha_gestion: ''
+    gest_fecha_gestion: '',
+    cert_fecha_act: this.fechas.fecha(),
+    cert_fecha_desact: this.fechas.fecha(),
+    cert_fecha_in: this.fechas.fecha(),
+    cert_fecha_up: this.fechas.fecha(),
   });
 }
 
@@ -255,7 +261,8 @@ DatosForms = new FormGroup({
   cart_fecha_compra: new FormControl(''),
   ope_fecha_compra: new FormControl(''),
   ope_producto: new FormControl(''),
-  cert_modelo: new FormControl(''),
+  //cert_modelo: new FormControl('', Validators.required),
+  cert_modelo: new FormControl('', Validators.required),
   gest_fecha_gestion: new FormControl(''),
   cert_hist_esactivo: new FormControl(true),
   cert_hist_baseactual: new FormControl(true),
@@ -318,9 +325,12 @@ ActDesControles(num: number) {
     this.CertificadosForms.get('ope_fecha_compra')?.disable();
     this.CertificadosForms.get('ope_estado_contacta')?.disable();
     this.CertificadosForms.get('cart_fecha_compra')?.disable();
-    this.CertificadosForms.get('cert_comentario')?.disable();
     this.CertificadosForms.get('ges_nombres')?.disable();
     this.CertificadosForms.get('gest_fecha_gestion')?.disable();
+    this.CertificadosForms.get('cert_fecha_act')?.disable();
+    this.CertificadosForms.get('cert_fecha_desact')?.disable();
+    this.CertificadosForms.get('cert_fecha_in')?.disable();
+    this.CertificadosForms.get('cert_fecha_up')?.disable();
   }
   if (num === 2) {
     //edicion
@@ -373,9 +383,12 @@ CargarElemento(datos: any, num: number) {
     ope_estado_contacta: datos.ope_estado_contacta,
     cart_fecha_compra: datos.cart_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.cart_fecha_compra),
     ope_fecha_compra: datos.ope_fecha_compra == null?'':this.fechas.getFechaEnLetras(datos.ope_fecha_compra),
-    cert_comentario: datos.cert_comentario,
     ges_nombres: datos.ges_nombres+' '+datos.ges_apellidos,
-    gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion)
+    gest_fecha_gestion: datos.gest_fecha_gestion == null?'':this.fechas.getFechaEnLetras(datos.gest_fecha_gestion),
+    cert_fecha_act: this.fechas.fechaFormato(datos.cert_fecha_act),
+    cert_fecha_desact: this.fechas.fechaFormato(datos.cert_fecha_desact),
+    cert_fecha_in: this.fechas.fechaFormato(datos.cert_fecha_in),
+    cert_fecha_up: this.fechas.fechaFormato(datos.cert_fecha_up)
   });
   if (num != 1) {
     this.BuscarCliente(datos.cli_identificacion);
@@ -496,6 +509,37 @@ GuardarObjeto(datos: any) {
   .subscribe();
 }
 
+ActualizarObjetoCertificado(datos: any) {
+  datos.id_certificado = Number(datos.id_certificado);
+  datos.id_gestor = Number(datos.id_gestor);
+  datos.cert_esactivo = datos.cert_esactivo.toString() === 'true' ? '1' : '0';
+  datos.cert_baseactual = datos.cert_baseactual.toString() === 'true' ? '1' : '0';
+
+  this.api
+  .PutCertificados(datos)
+  .pipe(
+    map((tracks) => {
+      const exito = tracks['exito'];
+      if (exito == 1) {
+        this.ListarElementos(1);
+        this.CerrarAgregarEditarElemento();
+        this.EncerarComponentes();
+        // this.TextoFiltro.patchValue('');
+        this.alerta.RegistroActualizado();
+      } else {
+        this.alerta.ErrorEnLaPeticion(tracks['mensaje']);
+        this.ActDesControles(2);
+      }
+    }),
+    catchError((error) => {
+      this.alerta.ErrorEnLaOperacion();
+      this.ActDesControles(2);
+      throw new Error(error);
+    })
+  )
+  .subscribe(); 
+}
+
 CambiarEstadoObjeto(datos: any) {
   datos.id_certificado = Number(datos.id_certificado);
   datos.id_gestor = Number(datos.id_gestor);
@@ -580,6 +624,12 @@ ListaInicio()
   this.ListarElementos(1);
   this.ResetBuscarClienteForms();
 }
+
+  ////////////////////////////////////////  PARAMETROS PARA IMPRESION   ////////////////////////////////////////////////
+  ModeloEmpresa: any[] = [
+    { id: 1, name: 'POLCOMP CIA. LTDA', value:'1' },
+    { id: 2, name: 'SERVIGESUR CIA. LTDA', value:'2' },
+  ];
 
   ////////////////////////////////////////  CLIENTE   ////////////////////////////////////////////////
   TipoIdentificacion: any[] = [

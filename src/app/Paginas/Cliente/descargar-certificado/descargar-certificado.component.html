@@ -237,14 +237,6 @@
 
                     <div class="col-lg-4 col-12">
                       <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="cert_comentario" placeholder=""
-                          formControlName="cert_comentario" />
-                        <label class="truncate-text" for="cert_comentario">Comentario</label>
-                      </div>
-                    </div>
-
-                    <div class="col-lg-4 col-12">
-                      <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="ges_nombres" placeholder=""
                           formControlName="ges_nombres" />
                         <label class="truncate-text" for="ges_nombres">Gestor</label>
@@ -258,6 +250,39 @@
                         <label class="truncate-text" for="gest_fecha_gestion">Fecha de Gestion</label>
                       </div>
                     </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="cert_fecha_act"
+                              placeholder="" formControlName="cert_fecha_act">
+                          <label class="truncate-text" for="cert_fecha_act">Fecha de Activación</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="cert_fecha_desact"
+                              placeholder="" formControlName="cert_fecha_desact">
+                          <label class="truncate-text" for="cert_fecha_desact">Fecha de Desactivación</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                      <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="cert_fecha_in" placeholder=""
+                              formControlName="cert_fecha_in">
+                          <label class="truncate-text" for="cert_fecha_in">Fecha de Ingreso</label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4 col-12">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="cert_fecha_up" placeholder=""
+                                formControlName="cert_fecha_up">
+                            <label class="truncate-text" for="cert_fecha_up">Fecha de Actualización</label>
+                        </div>
+                    </div>
+
                   </div>
                 </form>
               </div>
@@ -267,7 +292,7 @@
                 <h2 class="Centrar">Descargar Certificado</h2>
               </div>
 
-              <div class="card-body" style="background-color: var(--color-formulario-secundario)" hidden>
+              <div class="card-body" style="background-color: var(--color-formulario-secundario)">
                 <form [formGroup]="DatosForms">
                   <div class="row">
 
@@ -303,6 +328,29 @@
                         </Section>
                       </div>
                     </div>
+
+                    <div class="col-md-2 col-12">
+                      <div class="form-group">
+                          <span><small>*</small>Modelo</span>
+                          <select style="height: 35px;" class="form-select"
+                          formControlName="cert_modelo">
+                              <option value="" disabled selected>
+                                Seleccione ...
+                              </option>
+                              <option *ngFor="let s of ModeloEmpresa"
+                                  [value]="s.name">
+                                  {{s.name}}
+                              </option>
+                          </select>
+                          <Section>
+                            <div class="error-message" *ngIf="DatosForms.get('cert_modelo')?.hasError('required')
+                            && DatosForms.get('cert_modelo')?.touched">
+                                <span style="color: brown;">*Campo obligatorio.</span>
+                            </div>
+                        </Section>
+                      </div>
+                    </div>
+
                   </div>
                 </form>
               </div>
@@ -363,7 +411,7 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-4 col-12" hidden>
+                    <div class="col-lg-4 col-12">
                       <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="cert_comentario" placeholder=""
                           formControlName="cert_comentario" />
@@ -371,7 +419,7 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-4 col-12">
+                    <!-- <div class="col-lg-4 col-12">
                       <div class="Centrar">
                           <div class="btn-group">
                               <div class="form-group">
@@ -389,7 +437,7 @@
                               </div>
                           </div>
                       </div>
-                    </div>
+                    </div> -->
 
                   </div>
                 </form>
@@ -399,13 +447,13 @@
                 <div class="row Centrar">
                   <small>
 
-                    <button class="btnAceptar ml-3"
+                    <!-- <button class="btnAceptar ml-3"
                       (click)="CambiarEstadoObjeto(CertificadoEditForms.value)">
                       Cambiar Estado
-                    </button>
+                    </button> -->
 
                     <button class="btnImprimir ml-3"
-                      (click)="GuardarObjeto(DatosForms.value)">
+                      (click)="GuardarObjeto(DatosForms.value);ActualizarObjetoCertificado(CertificadoEditForms.value);">
                       Imprimir
                     </button>
 
@@ -482,7 +530,7 @@
                     <th>{{ datos.cli_nombres }}</th>
                     <th>{{ datos.ges_nombres+' '+datos.ges_apellidos }}</th>
                     <th>{{ datos.cart_descripcion }}</th>
-                    <th>{{ datos.cert_fecha_up==null?null:fechas.fechaCorta(datos.cert_fecha_up) }}</th>
+                    <th>{{ datos.cert_fecha_in==null?null:fechas.fechaCorta(datos.cert_fecha_in) }}</th>
                     <th>{{ datos.cert_modelo }}</th>
                     <th class="OcultarMax450px ContenidoCentrado" *ngIf="LecturaEscritura != 0">
                       <div class="custom-switch">
