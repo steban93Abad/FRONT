@@ -71,6 +71,7 @@ import { Alertas } from '../Control/Alerts';
 @Injectable({
   providedIn: 'root',
 })
+
 export class ApiService {
   constructor(
     private http: HttpClient,
@@ -87,7 +88,6 @@ export class ApiService {
   url: string = 'https://localhost/api/';
 
   /********************** INICIAR Y CERRAR SESIÓN *************************** */
-
   PostIniciarSesion(loginData: LoginI): Observable<ResponseI> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(loginData),
@@ -128,6 +128,7 @@ export class ApiService {
       })
     );
   }
+
   SesionEnOtroDispocitivo() {
     Swal.fire({
       // position: 'top-end',
@@ -146,6 +147,7 @@ export class ApiService {
     this.cookieService.delete('img');
     this.router.navigate(['login']);
   }
+
   GetRestablecerUsuario(usuario: string): Observable<ResponseI> {
     let direccion = this.url + 'Login/Restablecer' + usuario;
     return this.http.get<any>(direccion).pipe(
@@ -173,6 +175,7 @@ export class ApiService {
     let direccion = this.url + 'Chat/' + mensaje + ',' + user + ',' + para;
     return this.http.get<any>(direccion).pipe();
   }
+
   //********************* TOKEN *********************** */
   GetTokenExiste(): Observable<ResponseI> {
     let direccion = this.url + 'Tokens';
@@ -212,6 +215,7 @@ export class ApiService {
       })
     );
   }
+
   GetCarteraFracionadoDesactivos(
     codigo: number,
     rango: number
@@ -233,6 +237,7 @@ export class ApiService {
       })
     );
   }
+
   GetCarteraFracionadoFiltro(
     variable: string,
     tipo: number
@@ -255,6 +260,7 @@ export class ApiService {
       })
     );
   }
+
   PostCartera(elemento: CarteraI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -276,6 +282,7 @@ export class ApiService {
       })
     );
   }
+
   PutCartera(elemento: CarteraI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -317,6 +324,7 @@ export class ApiService {
       })
     );
   }
+
   PostCertificado(elemento: CertificadoI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -338,6 +346,7 @@ export class ApiService {
       })
     );
   }
+
   GetCertificadoFracionadoFiltro(
     variable: string,
     tipo: number
@@ -360,6 +369,7 @@ export class ApiService {
       })
     );
   }
+
   GetCertificadoDatoFracionadoFiltro(filtro: FiltroCertificado): Observable<ResponseI> {
     let direccion = this.url + 'Certificado/FiltroCertificado';
     const params = new HttpParams({ fromObject: filtro });
@@ -378,6 +388,7 @@ export class ApiService {
       })
     );
   }
+
   PutCertificados(elemento: CertificadoI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -442,6 +453,7 @@ export class ApiService {
       })
     );
   }
+
   GetClienteDesactivados(
     codigo: number,
     rango: number,
@@ -465,6 +477,7 @@ export class ApiService {
       })
     );
   }
+
   GetClienteFracionadoFiltro(
     variable: string,
     tipo: number
@@ -487,6 +500,7 @@ export class ApiService {
       })
     );
   }
+
   PostCliente(elemento: ClienteI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -508,6 +522,7 @@ export class ApiService {
       })
     );
   }
+
   PutCliente(elemento: ClienteI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -529,6 +544,7 @@ export class ApiService {
       })
     );
   }
+
   //********************* CONECTIVIDAD *********************** */
   GetConectividadFracionado(
     codigo: number,
@@ -551,6 +567,7 @@ export class ApiService {
       })
     );
   }
+
   GetConectividadFracionadoFiltro(
     variable: string,
     tipo: number
@@ -573,6 +590,7 @@ export class ApiService {
       })
     );
   }
+
   PostConectividad(elemento: ConectividadI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -594,6 +612,7 @@ export class ApiService {
       })
     );
   }
+
   PutConectividad(elemento: ConectividadI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -615,6 +634,7 @@ export class ApiService {
       })
     );
   }
+
   /***************************DESACTIVAR TODAS LAS CONECTIVIDADES*************************************** */
   GetDesactivadosConectividadFracionado(
     codigo: number,
@@ -638,6 +658,7 @@ export class ApiService {
       })
     );
   }
+
   //********************* CONTACTABILIDAD *********************** */
   GetContactabilidadFracionado(
     codigo: number,
@@ -660,6 +681,7 @@ export class ApiService {
       })
     );
   }
+
   GetContactabilidadFracionadoFiltro(
     variable: string,
     tipo: number
@@ -682,6 +704,7 @@ export class ApiService {
       })
     );
   }
+
   PostContactabilidad(elemento: ContactabilidadI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -703,6 +726,7 @@ export class ApiService {
       })
     );
   }
+
   PutContactabilidad(elemento: ContactabilidadI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -724,6 +748,7 @@ export class ApiService {
       })
     );
   }
+
   /******************************************Desactivar todas Contactibilidades************************************************* */
   GetDesactivadosContactabilidadFracionado(
     codigo: number,
@@ -747,6 +772,7 @@ export class ApiService {
       })
     );
   }
+
   //********************* CORREOS   *********************** */
   GetCorreosFracionado(codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'Correo/Todos' + codigo + ',' + rango;
@@ -766,6 +792,7 @@ export class ApiService {
       })
     );
   }
+
   GetCorreosFracionadoDesactivados(
     codigo: number,
     rango: number
@@ -787,6 +814,7 @@ export class ApiService {
       })
     );
   }
+
   GetCorreosFracionadoFiltro(
     variable: string,
     tipo: number
@@ -809,6 +837,7 @@ export class ApiService {
       })
     );
   }
+
   PostCorreos(elemento: CorreoI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -830,6 +859,7 @@ export class ApiService {
       })
     );
   }
+
   PutCorreos(elemento: CorreoI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -851,7 +881,8 @@ export class ApiService {
       })
     );
   }
-  //********************* CUENTAS   *********************** */
+
+  //********************* CUENTAS *********************** */
   GetCuentasFracionado(codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'Cuenta/Todos' + codigo + ',' + rango;
     return this.http.get<any>(direccion).pipe(
@@ -870,6 +901,7 @@ export class ApiService {
       })
     );
   }
+
   GetCuentasFracionadoFiltro(
     variable: string,
     tipo: number
@@ -892,6 +924,7 @@ export class ApiService {
       })
     );
   }
+
   PostCuentas(elemento: CuentaI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -913,6 +946,7 @@ export class ApiService {
       })
     );
   }
+
   PutCuentas(elemento: CuentaI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -934,7 +968,8 @@ export class ApiService {
       })
     );
   }
-  //********************* CUENTAS_CARTERA   *********************** */
+
+  //********************* CUENTAS_CARTERA *********************** */
   GetCuentaCarteraFracionado(
     codigo: number,
     rango: number
@@ -957,6 +992,7 @@ export class ApiService {
       })
     );
   }
+
   GetCuentaCarteraDesactivados(
     codigo: number,
     rango: number,
@@ -986,6 +1022,7 @@ export class ApiService {
       })
     );
   }
+
   GetCuentaCartera(codigo: number, rango: number): Observable<ResponseI> {
     let direccion =
       this.url + 'Cuenta_Tipo_Cartera/Todos' + codigo + ',' + rango;
@@ -1005,6 +1042,7 @@ export class ApiService {
       })
     );
   }
+
   GetCuentaCarteraFracionadoFiltro(
     variable: string,
     tipo: number
@@ -1027,6 +1065,7 @@ export class ApiService {
       })
     );
   }
+
   PostCuentaCartera(elemento: CuentaCarteraI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1048,6 +1087,7 @@ export class ApiService {
       })
     );
   }
+
   PutCuentaCartera(elemento: CuentaCarteraI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1092,7 +1132,8 @@ export class ApiService {
       })
     );
   }
-  //********************* Cxc Operacion   *********************** */
+
+  //********************* Cxc Operacion *********************** */
   GetCxcOperacionFracionado(
     codigo: number,
     rango: number
@@ -1114,6 +1155,7 @@ export class ApiService {
       })
     );
   }
+
   GetCxcOperacionFracionadoDesactivado(
     codigo: number,
     rango: number,
@@ -1143,6 +1185,7 @@ export class ApiService {
       })
     );
   }
+
   GetCxcOperacionFracionadoFiltro(
     variable: string,
     tipo: number
@@ -1165,6 +1208,7 @@ export class ApiService {
       })
     );
   }
+
   PostCxcOperacion(elemento: CxcOperacionI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1186,6 +1230,7 @@ export class ApiService {
       })
     );
   }
+
   PutCxcOperacion(elemento: CxcOperacionI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1207,6 +1252,7 @@ export class ApiService {
       })
     );
   }
+
   GetCreditoFracionado(codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'CxcOperacion/Creditos' + codigo + ',' + rango;
     return this.http.get<any>(direccion).pipe(
@@ -1225,6 +1271,7 @@ export class ApiService {
       })
     );
   }
+
   GetCreditoFracionadoFiltro(filtro: FiltroCredito, codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'CxcOperacion/FiltroCredito';
     const params = new HttpParams({ fromObject: { ...(filtro as any), codigo: codigo.toString(), rango: rango.toString() } });
@@ -1243,6 +1290,7 @@ export class ApiService {
       })
     );
   }
+
   //********************* DETALLE TELEFONO   *********************** */
   GetDetTelefonoFracionado(
     codigo: number,
@@ -1265,6 +1313,7 @@ export class ApiService {
       })
     );
   }
+
   GetDetTelefonoFracionadoDesactivados(
     codigo: number,
     rango: number
@@ -1287,6 +1336,7 @@ export class ApiService {
       })
     );
   }
+
   GetDetTelefonoFracionadoFiltro(
     variable: string,
     tipo: number
@@ -1309,6 +1359,7 @@ export class ApiService {
       })
     );
   }
+
   PostDetTelefono(elemento: DetalleTelefonoI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1330,6 +1381,7 @@ export class ApiService {
       })
     );
   }
+
   PutDetTelefono(elemento: DetalleTelefonoI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1351,6 +1403,7 @@ export class ApiService {
       })
     );
   }
+
   //********************* DIRECCIONES   *********************** */
   GetDireccionesFracionado(
     codigo: number,
@@ -1373,6 +1426,7 @@ export class ApiService {
       })
     );
   }
+
   GetDireccionesFracionadoDesactivados(
     codigo: number,
     rango: number
@@ -1394,6 +1448,7 @@ export class ApiService {
       })
     );
   }
+
   GetDireccionesFracionadoFiltro(
     variable: string,
     tipo: number
@@ -1416,6 +1471,7 @@ export class ApiService {
       })
     );
   }
+
   PostDirecciones(elemento: DireccionI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1437,6 +1493,7 @@ export class ApiService {
       })
     );
   }
+
   PutDirecciones(elemento: DireccionI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1458,6 +1515,7 @@ export class ApiService {
       })
     );
   }
+
   //********************* GARANTE   *********************** */
   GetGarantesFracionado(codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'Garante/Todos' + codigo + ',' + rango;
@@ -1477,6 +1535,7 @@ export class ApiService {
       })
     );
   }
+
   GetGarantesFracionadoDesactivados(
     codigo: number,
     rango: number
@@ -1498,6 +1557,7 @@ export class ApiService {
       })
     );
   }
+
   GetGarantesFracionadoFiltro(
     variable: string,
     tipo: number
@@ -1520,6 +1580,7 @@ export class ApiService {
       })
     );
   }
+
   PostGarantes(elemento: GaranteI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1541,6 +1602,7 @@ export class ApiService {
       })
     );
   }
+
   PutGarantes(elemento: GaranteI): Observable<any> {
     let Encryptado: EntidadEncriptado = {
       valor: this.objeto.encriptarAES(elemento),
@@ -1562,6 +1624,7 @@ export class ApiService {
       })
     );
   }
+
   //********************* MENU *********************** */
   GetMenuFracionado(codigo: number, rango: number): Observable<ResponseI> {
     let direccion = this.url + 'Menu/Todos' + codigo + ',' + rango;
@@ -1581,6 +1644,7 @@ export class ApiService {
       })
     );
   }
+  
   GetMenuFracionadoFiltro(
     variable: string,
     tipo: number

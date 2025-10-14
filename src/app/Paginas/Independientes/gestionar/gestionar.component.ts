@@ -59,6 +59,7 @@ import Swal from 'sweetalert2';
   templateUrl: './gestionar.component.html',
   styleUrls: ['./gestionar.component.css'],
 })
+
 export class GestionarComponent implements OnInit {
   constructor(
     private api: ApiService,
@@ -71,6 +72,7 @@ export class GestionarComponent implements OnInit {
     private CargarArchivos: CargaArchivos,
     public reporte: GeneradorReporte
   ) {}
+
   // ============================================================ DOCUMENTOS  ============================================================================
 
   DocumentosItem = [
@@ -98,6 +100,7 @@ export class GestionarComponent implements OnInit {
   SeleccionAccion(vista: number) {
     this.DocumentosPage = vista;
   }
+
   ResetAccion() {
     this.DocumentosPage = 0;
   }
@@ -222,8 +225,7 @@ export class GestionarComponent implements OnInit {
   pdfUrl: string | null = null;
   originalUrl: string | null = null; 
 
-  subirArchivoTemporal(file: File){
-    
+  subirArchivoTemporal(file: File) {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -261,8 +263,6 @@ export class GestionarComponent implements OnInit {
   }
 
   // ===========================================================================================================================================
-
- 
 
   PaginaEstilo: string = '';
   ParametrosDeDescarga: Array<string> = ['PDF', 'EXCEL', 'CSV'];
@@ -310,7 +310,7 @@ export class GestionarComponent implements OnInit {
                 throw new Error(error);
               })
             )
-            .subscribe();
+          .subscribe();
         }
       } else {
         this.CarterasGestor();
@@ -324,6 +324,7 @@ export class GestionarComponent implements OnInit {
       }
     }
   }
+
   GetDescargaPor(val: string) {
     if (val === 'PDF') {
       this.reporte.generarPDF(this.gGestion);
@@ -335,6 +336,7 @@ export class GestionarComponent implements OnInit {
       this.reporte.generarCSV(this.gGestion);
     }
   }
+
   Animacion() {}
 
   CarteraGestor: any[] = [];
@@ -373,17 +375,20 @@ export class GestionarComponent implements OnInit {
     { id: 4, name: 'Email', value: 4 },
     // { id: 5, name: 'CLI_ID', value: 5 },
   ];
+
   // ****************************************** CONTROLES *****************************************************************
   OpcionesPagos: any[] = [
     { id: 0, name: 'Todos', value: '0' },
     { id: 1, name: 'SI', value: '1' },
     { id: 2, name: 'NO', value: '2' },
   ];
+
   OpcionesPrioridades: any[] = [
     { id: 0, name: 'Ninguno', value: '0' },
     { id: 1, name: 'SI', value: '1' },
     { id: 2, name: 'NO', value: '2' },
   ];
+
   BuscarForms = new FormGroup({
     identificacion: new FormControl('', Validators.required),
     nombres_cliente: new FormControl('', Validators.required),
@@ -428,8 +433,9 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
+
   ListaGestores: GestorI[] = [];
 
   ListarGestores() {
@@ -446,7 +452,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   // ****************************************** CONTROLES DE BUSQUEDA *****************************************************************
@@ -480,6 +486,7 @@ export class GestionarComponent implements OnInit {
   // ConvertirMayusculas() {
   //   this.txtBusqueda.patchValue(this.txtBusqueda.value!.toUpperCase());
   // }
+  
   // ****************************************** LISTAR ELEMENTOS *****************************************************************
   ListaGestionar: any[] = [];
   FraccionDatos: number = 0;
@@ -575,7 +582,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   /************************************** AGREGAR ELEMENTO  ******************************************************** */
@@ -808,7 +815,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   VolverLlamarCheck() {
@@ -847,7 +854,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   ActDesControles(num: number) {
@@ -1039,7 +1046,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       console.log(datos);
       this.api
@@ -1062,12 +1069,11 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     }
   }
 
   /************************************** EDITAR ELEMENTO  ******************************************************** */
-
   CargarElemento(datos: any, num: number) {
     const minDate = new Date('1969-12-31').toISOString().split('T')[0];
     this.ListarTG_Cone_Contac(0);
@@ -1141,6 +1147,7 @@ export class GestionarComponent implements OnInit {
     });
     this.BuscarInfCliente(dato, tipo);
   }
+
   NotificacionForms = new FormGroup({
     id_notificacion: new FormControl(0, Validators.required),
     cli_identificacion: new FormControl('', Validators.required),
@@ -1175,6 +1182,7 @@ export class GestionarComponent implements OnInit {
     });
     this.CamposVisuales.patchValue(0);
   }
+
   EnviarNotificacion(datos: any) {
     datos.not_fecha_env = this.fechas.fechaActualCorta();
     datos.not_hora_env = this.fechas.HoraActual();
@@ -1202,10 +1210,10 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
-  // ****************************************** INFORMACION DEL CLIENTE  *****************************************************************
 
+  // ****************************************** INFORMACION DEL CLIENTE  *****************************************************************
   ClienteInf!: ClienteI | null;
   TipoVistaInfCliente: number = 0;
 
@@ -1255,37 +1263,38 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
+
   BuscarComplementos(dato: any) {
     (dato.tipo = 1),
       this.api
-        .GetGestionarFracionadoFiltro(dato)
-        .pipe(
-          map((tracks) => {
-            const datos = tracks['data'];
-            if (!datos) {
-              this.alerta.NoExistenDatos();
-            } else {
-              this.ListaCorreos = datos.correos;
-              this.ListaDirecciones = datos.direcciones;
-              this.ListaGarantes = datos.garantes;
-              this.ListaTelefonos = datos.telefonos;
-              this.ListaTrabajos = datos.trabajos;
+      .GetGestionarFracionadoFiltro(dato)
+      .pipe(
+        map((tracks) => {
+          const datos = tracks['data'];
+          if (!datos) {
+            this.alerta.NoExistenDatos();
+          } else {
+            this.ListaCorreos = datos.correos;
+            this.ListaDirecciones = datos.direcciones;
+            this.ListaGarantes = datos.garantes;
+            this.ListaTelefonos = datos.telefonos;
+            this.ListaTrabajos = datos.trabajos;
 
-              // this.ListaCorreosCount = datos.correos.length;
-              // this.ListaDireccionesCount = datos.direcciones.length;
-              // this.ListaGarantesCount = datos.garantes.length;
-              // this.ListaTelefonosCount = datos.telefonos.length;
-              // this.ListaTrabajosCount = datos.trabajos.length;
-            }
-          }),
-          catchError((error) => {
-            this.alerta.ErrorAlRecuperarElementos();
-            throw new Error(error);
-          })
-        )
-        .subscribe();
+            // this.ListaCorreosCount = datos.correos.length;
+            // this.ListaDireccionesCount = datos.direcciones.length;
+            // this.ListaGarantesCount = datos.garantes.length;
+            // this.ListaTelefonosCount = datos.telefonos.length;
+            // this.ListaTrabajosCount = datos.trabajos.length;
+          }
+        }),
+        catchError((error) => {
+          this.alerta.ErrorAlRecuperarElementos();
+          throw new Error(error);
+        })
+      )
+    .subscribe();
   }
 
   ProductoSeleccionado: any | null;
@@ -1402,7 +1411,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   ListaProductos: any[] = [];
@@ -1421,7 +1430,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   ListaPagos: any[] = [];
@@ -1468,8 +1477,9 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
+
   PagosTotal: number = 0;
   PagosVerificados: number = 0;
   PagosSinVerificados: number = 0;
@@ -1591,7 +1601,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   ListaContactabilidadGestion: any[] = [];
@@ -1610,7 +1620,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   ListarTG_Cone_Contac(tipo: number) {
@@ -1656,7 +1666,7 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   CamposVisuales = new FormControl<number>(0);
@@ -1702,6 +1712,7 @@ export class GestionarComponent implements OnInit {
     cor_id_tipo_correo: new FormControl('', Validators.required),
     cor_origendatos: new FormControl('Sistema_CobroSys'),
   });
+
   ResetCorreosForms() {
     this.CorreosForms.reset({
       id_correo: 0,
@@ -1714,6 +1725,7 @@ export class GestionarComponent implements OnInit {
       cor_origendatos: 'Sistema_CobroSys',
     });
   }
+
   TipoCorreoList: Tipo_CorreoI[] = [];
 
   ListarTipoCorreos() {
@@ -1724,8 +1736,9 @@ export class GestionarComponent implements OnInit {
           this.TipoCorreoList = tracks['data'];
         })
       )
-      .subscribe();
+    .subscribe();
   }
+
   GuardarObjetoCorreo(datos: any) {
     datos.cor_esactivo = datos.cor_esactivo.toString() === 'true' ? '1' : '0';
     if (this.TituloFormularioAgregarCorreos === 'Editar') {
@@ -1753,7 +1766,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       datos.cor_origendatos =
         'Sistema_CobroSys IN/' +
@@ -1778,7 +1791,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     }
   }
 
@@ -1797,6 +1810,7 @@ export class GestionarComponent implements OnInit {
       'modal--show'
     );
   }
+
   CerrarModalAgregarCorreos() {
     (<HTMLElement>(
       document.getElementById('ModalAgregarCorreos')
@@ -1804,6 +1818,7 @@ export class GestionarComponent implements OnInit {
     this.TituloFormularioAgregarCorreos = '';
     this.ResetCorreosForms();
   }
+
   CargarElementoAgregarCorreos(datos: any) {
     this.CorreosForms.patchValue({
       id_correo: datos.id_correo,
@@ -1818,6 +1833,7 @@ export class GestionarComponent implements OnInit {
     this.ListarTipoCorreos();
     this.AbrirModalAgregarCorreos(1);
   }
+
   EliminarElementoCorreos(elemento: CorreoI) {
     this.alerta.EliminarRegistro().then((confirmado) => {
       if (confirmado) {
@@ -1878,7 +1894,7 @@ export class GestionarComponent implements OnInit {
           this.TipoDireccionList = tracks['data'];
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   GuardarObjetoDirecciones(datos: any) {
@@ -1908,7 +1924,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       datos.dir_origendatos =
         'Sistema_CobroSys IN/' +
@@ -1933,7 +1949,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     }
   }
 
@@ -1952,6 +1968,7 @@ export class GestionarComponent implements OnInit {
       document.getElementById('ModalAgregarDereccion')
     )).classList.add('modal--show');
   }
+
   CerrarModalAgregarDirecciones() {
     (<HTMLElement>(
       document.getElementById('ModalAgregarDereccion')
@@ -1959,6 +1976,7 @@ export class GestionarComponent implements OnInit {
     this.TituloFormularioAgregarDirecciones = '';
     this.ResetDireccionesForms();
   }
+
   CargarElementoAgregarDirecciones(datos: any) {
     this.DireccionesForms.patchValue({
       id_direccion: datos.id_direccion,
@@ -1979,6 +1997,7 @@ export class GestionarComponent implements OnInit {
     this.ListarTipoDirecciones();
     this.AbrirModalAgregarDirecciones(1);
   }
+
   EliminarElementoDirecciones(elemento: DireccionI) {
     this.alerta.EliminarRegistro().then((confirmado) => {
       if (confirmado) {
@@ -2080,9 +2099,10 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     }
   }
+
   AbrirModalAgregarGarante(num: number) {
     if (num == 0) {
       this.TituloFormularioAgregarGarante = 'Agregar';
@@ -2098,6 +2118,7 @@ export class GestionarComponent implements OnInit {
       'modal--show'
     );
   }
+
   CerrarModalAgregarGarante() {
     (<HTMLElement>(
       document.getElementById('ModalAgregarGarante')
@@ -2105,6 +2126,7 @@ export class GestionarComponent implements OnInit {
     this.TituloFormularioAgregarGarante = '';
     this.ResetGarantesForms();
   }
+
   CargarElementoAgregarGarante(datos: any) {
     this.GarantesForms.patchValue({
       id_garante: datos.id_garante,
@@ -2124,6 +2146,7 @@ export class GestionarComponent implements OnInit {
 
     this.AbrirModalAgregarGarante(1);
   }
+
   EliminarElementoGarantes(elemento: GaranteI) {
     this.alerta.EliminarRegistro().then((confirmado) => {
       if (confirmado) {
@@ -2135,6 +2158,7 @@ export class GestionarComponent implements OnInit {
       }
     });
   }
+
   // ****************************************** MODAL AGREGAR TELEFONOS *****************************************************************
   TituloFormularioAgregarTelefonos = '';
 
@@ -2178,8 +2202,9 @@ export class GestionarComponent implements OnInit {
           this.TipoTelefonoList = tracks['data'];
         })
       )
-      .subscribe();
+    .subscribe();
   }
+
   DetalleTelefonoList: DetalleTelefonoI[] = [];
 
   ListarDetTelefono() {
@@ -2190,8 +2215,9 @@ export class GestionarComponent implements OnInit {
           this.DetalleTelefonoList = tracks['data'];
         })
       )
-      .subscribe();
+    .subscribe();
   }
+
   Operadora: any[] = [
     { id: 1, name: 'MOVISTAR', value: 'MOVISTAR' },
     { id: 2, name: 'CLARO', value: 'CLARO' },
@@ -2254,7 +2280,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     }
   }
 
@@ -2274,6 +2300,7 @@ export class GestionarComponent implements OnInit {
       document.getElementById('ModalAgregarTelefono')
     )).classList.add('modal--show');
   }
+
   CerrarModalAgregarTelefonos() {
     (<HTMLElement>(
       document.getElementById('ModalAgregarTelefono')
@@ -2281,6 +2308,7 @@ export class GestionarComponent implements OnInit {
     this.TituloFormularioAgregarTelefonos = '';
     this.ResetTelefonosForms();
   }
+
   CargarElementoAgregarTelefonos(datos: any) {
     this.TelefonosForms.patchValue({
       id_telefono: datos.id_telefono,
@@ -2295,10 +2323,12 @@ export class GestionarComponent implements OnInit {
       tel_id_detal_telefono: datos.tel_id_detal_telefono,
       tel_origendatos: datos.tel_origendatos,
     });
+
     this.ListarTipoTelefonos();
     this.ListarDetTelefono();
     this.AbrirModalAgregarTelefono(1);
   }
+
   EliminarElementoTelefonos(elemento: TelefonoI) {
     this.alerta.EliminarRegistro().then((confirmado) => {
       if (confirmado) {
@@ -2355,7 +2385,7 @@ export class GestionarComponent implements OnInit {
           this.TipoTrabajoList = tracks['data'];
         })
       )
-      .subscribe();
+    .subscribe();
   }
 
   GuardarObjetoTrabajos(datos: any) {
@@ -2385,7 +2415,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       datos.tra_origendatos =
         'Sistema_CobroSys IN/' +
@@ -2410,7 +2440,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     }
   }
 
@@ -2429,6 +2459,7 @@ export class GestionarComponent implements OnInit {
       document.getElementById('ModalAgregarTrabajos')
     )).classList.add('modal--show');
   }
+
   CerrarModalAgregarTrabajos() {
     (<HTMLElement>(
       document.getElementById('ModalAgregarTrabajos')
@@ -2455,6 +2486,7 @@ export class GestionarComponent implements OnInit {
     this.ListarTipoTrabajo();
     this.AbrirModalAgregarTrabajos(1);
   }
+
   EliminarElementoTrabajos(elemento: TrabajoI) {
     this.alerta.EliminarRegistro().then((confirmado) => {
       if (confirmado) {
@@ -2466,6 +2498,7 @@ export class GestionarComponent implements OnInit {
       }
     });
   }
+
   // ****************************************** MODAL AGREGAR PAGOS *****************************************************************
   TituloFormularioAgregarPagos = '';
   ClientePago = new FormControl(
@@ -2589,6 +2622,7 @@ export class GestionarComponent implements OnInit {
       'modal--show'
     );
   }
+
   CerrarModalAgregarPagos() {
     (<HTMLElement>(
       document.getElementById('ModalAgregarPagos')
@@ -2597,6 +2631,7 @@ export class GestionarComponent implements OnInit {
     this.ResetPagosForms();
     this.GetFiltrarElementoPagos();
   }
+
   /*******************   BUSCAR INFORMACION Y VER IMAGEN  **************************** */
   BuscarCliente() {
     const CargandoLoad = document.getElementById(
@@ -2624,7 +2659,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       this.ClientePago.patchValue('');
       this.PagosForms.patchValue({
@@ -2635,6 +2670,7 @@ export class GestionarComponent implements OnInit {
       this.ListaContacto = [];
     }
   }
+
   ListaCuentas: CuentaI[] = [];
 
   ListarCuentas() {
@@ -2666,6 +2702,7 @@ export class GestionarComponent implements OnInit {
       this.alerta.AlertaEnLaPeticion('Verificar informacion del producto');
     }
   }
+
   ListaCreditos: CxcOperacionI[] = [];
 
   ListarCreditos() {
@@ -2685,11 +2722,12 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       this.alerta.AlertaEnLaPeticion('Verificar informacion del cliente');
     }
   }
+
   ListaContacto: TelefonoI[] = [];
 
   ListarContacto() {
@@ -2709,7 +2747,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       this.alerta.AlertaEnLaPeticion('Verificar informacion del cliente');
     }
@@ -2743,6 +2781,7 @@ export class GestionarComponent implements OnInit {
     };
     reader.readAsDataURL(this.selectedFile as Blob);
   }
+
   verImagen() {
     let file = this.selectedFile;
 
@@ -2793,7 +2832,7 @@ export class GestionarComponent implements OnInit {
       })
       .catch((error) => {
         console.error('Error recreating file from URL:', error);
-      });
+    });
   }
 
   VerElemento(datos: any) {
@@ -2912,7 +2951,7 @@ export class GestionarComponent implements OnInit {
                       throw new Error(error);
                     })
                   )
-                  .subscribe();
+                .subscribe();
               } else {
                 datos.pag_id_gestor_ingresa = Number(this.Usuario.id_gestor);
                 this.api
@@ -2932,7 +2971,7 @@ export class GestionarComponent implements OnInit {
                       throw new Error(error);
                     })
                   )
-                  .subscribe();
+                .subscribe();
               }
             } else {
               this.alerta.ErrorEnLaPeticion(
@@ -2946,7 +2985,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
       // this.alerta.ErrorEnLaPeticion('Seleccione la imagen del pago');
       this.alerta
@@ -2993,16 +3032,17 @@ export class GestionarComponent implements OnInit {
                     throw new Error(error);
                   })
                 )
-                .subscribe();
+              .subscribe();
             }
           } else {
-            this.alerta.ErrorEnLaPeticion(
-              'Error al subir la imagen al servidor'
-            );
-          }
-        });
+          this.alerta.ErrorEnLaPeticion(
+            'Error al subir la imagen al servidor'
+          );
+        }
+      });
     }
   }
+
   CargarElementoPagos(datos: any, num: number) {
     this.PagosForms.patchValue({
       id_pagos: datos.Pagos.id_pagos,
@@ -3118,7 +3158,7 @@ export class GestionarComponent implements OnInit {
             throw new Error(error);
           })
         )
-        .subscribe();
+      .subscribe();
     } else {
     }
   }
@@ -3239,6 +3279,7 @@ export class GestionarComponent implements OnInit {
 
     this.CambiarParentezco(18);
   }
+
   CambiarParentezco(num: number) {
     this.FraccionDatosInicio = 0;
     this.FraccionDatosFinal = 5;
@@ -3327,6 +3368,7 @@ export class GestionarComponent implements OnInit {
     const whatsappUrl = `https://consulta.cobrosystem.com/#/sesion/${idusuario_SD}/${numero}/${token_SD}`;
     window.open(whatsappUrl, '_blank');
   }
+
   // ****************************************** MODAL GESTIONES ANTERIORES *****************************************************************
   ListaGestionesAnt: any[] = [];
   AbrirModalGestionesAnteriores() {
@@ -3342,6 +3384,7 @@ export class GestionarComponent implements OnInit {
     )).classList.remove('modal--show');
     // this.ResetGestionForms();
   }
+
   // ****************************************** MODAL VER ACTUALIZACIONES *****************************************************************
   ListaActualizacionesCredito: any[] = [];
   AbrirModalActualizaciones() {
@@ -3357,8 +3400,8 @@ export class GestionarComponent implements OnInit {
       document.getElementById('ModalActualizaciones')
     )).classList.remove('modal--show');
   }
-  // ****************************************** MODAL VER DOCUMENTOS *****************************************************************
 
+  // ****************************************** MODAL VER DOCUMENTOS *****************************************************************
   AbrirModalDocumentos() {
     (<HTMLElement>document.getElementById('ModalDocumentos')).classList.add(
       'modal--show'
@@ -3402,6 +3445,7 @@ export class GestionarComponent implements OnInit {
       this.FraccionDatosFinal
     );
   }
+
   BtnNextFamilia() {
     this.FraccionDatosInicio = this.FraccionDatosInicio + 5;
     this.FraccionDatosFinal = this.FraccionDatosFinal + 5;
@@ -3415,6 +3459,7 @@ export class GestionarComponent implements OnInit {
       this.FraccionarValoresFamilia(this.DatosTemporalesFamilia);
     }
   }
+
   // ****************************************** BUSCAR CLIENTES GENERAL *****************************************************************
   TipoBusquedaGeneral = new FormControl(1);
   ValorBusquedaGeneral = new FormControl('', Validators.required);
@@ -3462,12 +3507,14 @@ export class GestionarComponent implements OnInit {
           throw new Error(error);
         })
       )
-      .subscribe();
+    .subscribe();
   }
+
   EncerarClienteGeneral() {
     this.TipoBusquedaGeneral.patchValue(1);
     this.ValorBusquedaGeneral.patchValue('');
   }
+
   // ****************************************** ENCERAR COMPONENTES *****************************************************************
   EncerarComponentes() {
     this.ResetGestionForms();
@@ -3547,6 +3594,7 @@ export class GestionarComponent implements OnInit {
     this.FinalPaginacion = 0;
     this.DatosTemporales = [];
   }
+  
   /*********************  FILTRO MODO GENERAL *********************** */
   OpcionesFiltro: any[] = [
     { id: 0, name: 'Identificación', value: '0' },
